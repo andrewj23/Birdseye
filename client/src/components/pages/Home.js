@@ -39,6 +39,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
         <TopTab/>
         <div>
         <div>
+          <p className="Home-greeting">Welcome, Andrew!</p>
           <Summary/>
           <Visuals/>
         </div>
