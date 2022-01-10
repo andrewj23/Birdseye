@@ -16,7 +16,8 @@ const Wallet = require("./models/wallet");
 const MessageGroup = require("./models/messagegroup");
 const Message = require("./models/message");
 const Summary = require("./models/summary");
-const Visuals = require("./models/visuals")
+const Visuals = require("./models/visuals");
+const Transactions = require("./models/transactions");
 
 // import authentication library
 const auth = require("./auth");
@@ -115,6 +116,22 @@ router.get("/visuals",(req,res)=>{
 
 router.get("/summary",(req,res)=>{
   Summary.find({}).then((summary) => res.send(summary));
+});
+
+router.get("/transactions"), (req,res)=>{
+  Transactions.find({}).then((transactions) => res.send(transactions));
+}
+
+router.post("/transactions",(req,res)=>{
+  const newTransaction = new Transactions({
+    id: req.body.id,
+    name: req.body.name,
+    type: req.body.type,
+    amount: req.body.amount,
+    native_amount: req.body.native_amount,
+  });
+
+  newTransaction.save().then((transaction) => res.send(transaction));
 });
 
 // anything else falls to this "not found" case
