@@ -1,0 +1,59 @@
+.Summary-container {
+    position: absolute;
+    width: 450px;
+    height: 350px;
+    left: 200px;
+    top: 85px;
+
+    background: linear-gradient(0deg, #312F62, #312F62);
+    mix-blend-mode: normal;
+    border-radius: 9.10004px;
+}
+
+.Summary-PV {
+    color: white;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 60px;
+    line-height: 75px;
+
+    padding: var(--s) var(--l);
+}
+
+.Summary-percentage {
+    color: red;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 27px;
+}
+
+.Summary-principal {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 27px;
+
+    color: #FFFFFF;
+
+    padding-left: var(--l);
+    position: absolute;
+    top: 285px;
+
+}
+
+.Summary-change {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 27px;
+
+    color: #FFFFFF;
+
+    padding-left: var(--l);
+    position: absolute;
+    top: 310px;
+}
