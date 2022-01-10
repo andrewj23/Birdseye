@@ -21,7 +21,9 @@ client.getAccounts({limit: 200}, function (err, accounts) {
 //   accounts.push(accounts)
 // });
 let accountsArray = [];
-client.getAccounts({limit: 200}, (err,accounts) => {accountsArray.push(accounts)})
+client.getAccounts({limit: 200}, function(err,accounts){console.log(typeof(accounts))});
+  // .then((accountsArray)=>{console.log(accountsArray)}));
+
 //   .then((accountsArray) =>{
 //   console.log(accountsArray.push("worked"))
 // });
