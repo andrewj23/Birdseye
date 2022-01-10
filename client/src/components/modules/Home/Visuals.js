@@ -1,7 +1,13 @@
 import React, { Component } from "react";
+import "./Visuals.css"
+
 const Visuals = (props) => {
   return (
-    <p>Visuals</p>
+    
+    <div className="Visuals-container">
+      <p>insert charts here</p>
+    </div>
+
   );
 };
 
