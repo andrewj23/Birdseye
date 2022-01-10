@@ -113,6 +113,10 @@ router.get("/visuals",(req,res)=>{
   Visuals.find({}).then((visuals) => res.send(visuals));
 });
 
+router.get("/summary",(req,res)=>{
+  Summary.find({}).then((summary) => res.send(summary));
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
