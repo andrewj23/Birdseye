@@ -32,19 +32,21 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
           onFailure={(err) => console.log(err)}
         />
       )}
-      <div className='Home-greeting'>Welcome, Andrew!</div>
-      <div className='Home-flex'>
-        <div className='overall-container'>
-          <Summary/>
-          <Visuals/>
-        </div>
-        <div className="feed-container">
-          <SearchBar/>
-          <CoinFeed/>
-        </div>
+
+      <h1>BIRDSEYE</h1>
+      <SideBar/>
+      <TopTab/>
+      <div className='Home-leftContainer'>
+        <div className='Home-greeting'>Welcome, Andrew!</div>
+        <Summary/>
+        <Visuals/>
       </div>
-      </>
-      );
-        };
+      <div className="feed-container">
+        <SearchBar/>
+        <CoinFeed/>
+      </div>
+    </>
+  );
+};
 
 export default Home;
