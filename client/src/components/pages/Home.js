@@ -42,7 +42,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
           <Summary/>
           <Visuals/>
         </div>
-        <div>
+        <div className={"feed-container"}>
           <SearchBar/>
           <Feed/>
         </div>

@@ -13,3 +13,9 @@
 
     color: #312F62; 
 }
+
+.feed-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
