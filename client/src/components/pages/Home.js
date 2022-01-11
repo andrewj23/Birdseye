@@ -37,7 +37,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
       <div>
         <TopTab/>
         <div>
-        <div>
+        <div className="Home-leftContainer">
           <p className="Home-greeting">Welcome, Andrew!</p>
           <Summary/>
           <Visuals/>

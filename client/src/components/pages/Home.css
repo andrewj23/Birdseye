@@ -1,9 +1,7 @@
 .Home-greeting {
-    position: absolute;
-    width: 475px;
-    height: 48px;
+    /* position: absolute;
     left: 201px;
-    top: 12px;
+    top: 12px; */
 
     font-family: Poppins;
     font-style: normal;
@@ -12,4 +10,14 @@
     line-height: 72px;
 
     color: #312F62; 
+
+    margin-bottom: 0px;
+}
+
+.Home-leftContainer {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 200px;
+    top: 100px;
 }
