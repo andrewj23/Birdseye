@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Home from "./pages/Home.js";
+import Wallets from "./pages/Wallets";
+import Messages from "./pages/Messages";
 //hello friend
 
 import "../utilities.css";
@@ -9,6 +11,8 @@ import "../utilities.css";
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
+import SideBar from "./modules/SideBar";
+import TopTab from "./modules/TopTab";
 
 /**
  * Define the "App" component
@@ -41,13 +45,16 @@ const App = () => {
 
   return (
     <>
+      <SideBar />
+      <TopTab />
+      <div>
       <Router>
         <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-        <Home path="/Home" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-        {/*<Wallets path="/Wallets" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />*/}
-        {/*<Messages path="/Messages" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />*/}
+        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+        <Messages path="/messages/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <NotFound default />
       </Router>
+      </div>
     </>
   );
 };

@@ -1,8 +1,4 @@
 .Home-greeting {
-    /* position: absolute;
-    left: 201px;
-    top: 12px; */
-
     font-family: Poppins;
     font-style: normal;
     font-weight: 600;
@@ -10,14 +6,29 @@
     line-height: 72px;
 
     color: #312F62; 
-
-    margin-bottom: 0px;
+    /* margin-bottom: 0px; */
 }
 
-.Home-leftContainer {
+/* .Home-leftContainer {
     display: flex;
     flex-direction: column;
     position: absolute;
     left: 200px;
     top: 100px;
+}
+ */
+.Home-leftContainer {
+    position: relative;
+    top:100px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    /* flex-direction: column; 
+    left: 200px; */
+}
+
+.feed-container {
+}
+
+.overall-container {
 }

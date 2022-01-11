@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import './SideBar.css'
+// import { div } from "react-router-dom";
+import { Link } from "@reach/router";
 
 const SideBar = (props) => {
   return (
-    <div className='sidebar'>
+    <nav className='flex-container'>
       <div className='SideBar-logo' />
-      <div className='SideBar-link'>Coins</div>
-      <div className='SideBar-link'>Wallets</div>
-      <div className='SideBar-link'>Messages</div>
-    </div>
+      <ul>
+      <li><Link to='/' className='SideBar-link'>Home</Link></li>
+        <li><Link to='/wallets/' className='SideBar-link'>Wallets</Link></li>
+        <li><Link to='/messages/' className='SideBar-link'>Messages</Link></li>
+      </ul>
+      <div className='SideBar-name'>BIRDSEYE</div>
+    </nav>
   );
 };
 

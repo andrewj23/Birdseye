@@ -4,7 +4,7 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 import "../../utilities.css";
 import "./Home.css";
 import Summary from "../modules/Home/Summary";
-import Feed from "../modules/Home/Feed";
+import CoinFeed from "../modules/Home/Feed";
 import Visuals from "../modules/Home/Visuals";
 import TopTab from "../modules/TopTab";
 import SearchBar from "../modules/Home/SearchBar";
@@ -32,24 +32,21 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
           onFailure={(err) => console.log(err)}
         />
       )}
+
       <h1>BIRDSEYE</h1>
       <SideBar/>
-      <div>
-        <TopTab/>
-        <div>
-        <div className="Home-leftContainer">
-          <p className="Home-greeting">Welcome, Andrew!</p>
-          <Summary/>
-          <Visuals/>
-        </div>
-        <div>
-          <SearchBar/>
-          <Feed/>
-        </div>
-        </div>
+      <TopTab/>
+      <div className='Home-leftContainer'>
+        <div className='Home-greeting'>Welcome, Andrew!</div>
+        <Summary/>
+        <Visuals/>
       </div>
-      </>
-      );
-        };
+      <div className="feed-container">
+        <SearchBar/>
+        <CoinFeed/>
+      </div>
+    </>
+  );
+};
 
 export default Home;
