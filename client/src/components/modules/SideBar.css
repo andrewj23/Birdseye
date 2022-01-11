@@ -32,3 +32,8 @@
     bottom: 0px;
     align-self: center;
 }
+
+.link-container {
+    display: flex;
+    flex-flow: column nowrap;
+}

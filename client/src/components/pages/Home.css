@@ -17,6 +17,7 @@
 .Home-flex {
     position: relative;
     top:100px;
+    left: 200px;
     display: flex;
     justify-content: center;
     gap: 50px;
