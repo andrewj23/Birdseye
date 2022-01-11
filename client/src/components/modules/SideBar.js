@@ -5,14 +5,14 @@ import { Link } from "@reach/router";
 
 const SideBar = (props) => {
   return (
-    <nav>
-    <div className='flex-container'>
+    <nav className='flex-container'>
       <div className='SideBar-logo' />
-      <Link to='/' className='SideBar-link'>Home</Link>
-      <Link to='/Wallets/' className='SideBar-link'>Wallets</Link>
-      <Link to='/Messages/' className='SideBar-link'>Messages</Link>
+      <ul>
+      <li><Link to='/' className='SideBar-link'>Home</Link></li>
+        <li><Link to='/wallets/' className='SideBar-link'>Wallets</Link></li>
+        <li><Link to='/messages/' className='SideBar-link'>Messages</Link></li>
+      </ul>
       <div className='SideBar-name'>BIRDSEYE</div>
-    </div>
     </nav>
   );
 };

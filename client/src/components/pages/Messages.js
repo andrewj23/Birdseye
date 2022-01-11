@@ -11,7 +11,7 @@ const GOOGLE_CLIENT_ID = "121479668229-t5j82jrbi9oejh7c8avada226s75bopn.apps.goo
 const Messages = ({ userId, handleLogin, handleLogout }) => {
   return (
     <div>
-      <SearchBar />
+      {/*<SearchBar />*/}
       <p>hi</p>
     </div>
   );
