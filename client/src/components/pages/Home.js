@@ -4,7 +4,7 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 import "../../utilities.css";
 import "./Home.css";
 import Summary from "../modules/Home/Summary";
-import Feed from "../modules/Home/Feed";
+import CoinFeed from "../modules/Home/Feed";
 import Visuals from "../modules/Home/Visuals";
 import TopTab from "../modules/TopTab";
 import SearchBar from "../modules/Home/SearchBar";
@@ -40,7 +40,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
         </div>
         <div className="feed-container">
           <SearchBar/>
-          <Feed/>
+          <CoinFeed/>
         </div>
       </div>
       </>

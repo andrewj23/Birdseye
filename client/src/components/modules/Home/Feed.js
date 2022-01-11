@@ -16,7 +16,7 @@ const coins = [
 },
 ]
 
-const Feed = (props) => {
+const CoinFeed = (props) => {
   // const [coins, setCoins] = useState([]);
   // useEffect(() => {
   //   document.title = "Coins";
@@ -53,4 +53,4 @@ const Feed = (props) => {
   // );
 };
 
-export default Feed;
+export default CoinFeed;
