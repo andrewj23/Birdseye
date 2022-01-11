@@ -1,9 +1,6 @@
 .Summary-container {
-    position: absolute;
     width: 450px;
     height: 350px;
-    left: 200px;
-    top: 135px;
 
     background: linear-gradient(0deg, #312F62, #312F62);
     mix-blend-mode: normal;

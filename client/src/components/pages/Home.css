@@ -1,6 +1,6 @@
 .Home-greeting {
     position: absolute;
-    width: 475px;
+    width: 600px;
     height: 48px;
     left: 201px;
     top: 12px;
@@ -14,8 +14,16 @@
     color: #312F62; 
 }
 
-.feed-container {
+.Home-flex {
+    position: relative;
+    top:100px;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
+    gap: 50px;
+}
+
+.feed-container {
+}
+
+.overall-container {
 }

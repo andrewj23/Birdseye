@@ -32,20 +32,15 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
           onFailure={(err) => console.log(err)}
         />
       )}
-      <h1>BIRDSEYE</h1>
-      <SideBar/>
-      <div>
-        <TopTab/>
-        <div>
-        <div>
-          <p className="Home-greeting">Welcome, Andrew!</p>
+      <div className='Home-greeting'>Welcome, Andrew!</div>
+      <div className='Home-flex'>
+        <div className='overall-container'>
           <Summary/>
           <Visuals/>
         </div>
-        <div className={"feed-container"}>
+        <div className="feed-container">
           <SearchBar/>
           <Feed/>
-        </div>
         </div>
       </div>
       </>
