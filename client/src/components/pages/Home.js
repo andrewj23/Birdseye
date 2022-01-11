@@ -32,11 +32,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
           onFailure={(err) => console.log(err)}
         />
       )}
-
-      <h1>BIRDSEYE</h1>
-      <SideBar/>
-      <TopTab/>
-      <div className='Home-leftContainer'>
+      <div>
         <div className='Home-greeting'>Welcome, Andrew!</div>
         <Summary/>
         <Visuals/>
