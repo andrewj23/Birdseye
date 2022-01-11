@@ -1,0 +1,23 @@
+.sidebar {
+    height: 100%;
+    width: 150px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 40px;
+    background-color: #312F62FF;
+}
+
+.SideBar-link {
+    color: white;
+    padding: 8px;
+    font-size: 16px;
+    display: block;
+}
+
+.SideBar-logo {
+    background-image: url("./logo.png");
+    background-repeat: no-repeat;
+    width: 10px;
+    height: 20px;
+}

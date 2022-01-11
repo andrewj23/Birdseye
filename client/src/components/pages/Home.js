@@ -33,8 +33,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
         />
       )}
       <h1>BIRDSEYE</h1>
-      <div>
-        <SideBar/>
+      <SideBar/>
       <div>
         <TopTab/>
         <div>
@@ -48,7 +47,6 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
           <Feed/>
         </div>
         </div>
-      </div>
       </div>
       </>
       );
