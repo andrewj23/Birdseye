@@ -16,7 +16,7 @@
     grid-row-start: 1;
     grid-row-end: 3;
     background-color: #312F62FF;
-    height: 100vh;
+    height: 100%;
 }
 
 .SideBar-flex {
