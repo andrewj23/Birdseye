@@ -46,7 +46,10 @@ const App = () => {
   return (
     <div className={"wrapper"}>
       <SideBar/>
-      <TopTab />
+      <TopTab
+      userId={userId}
+      handleLogin={handleLogin}
+      handleLogout={handleLogout}/>
       <Router>
         <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />

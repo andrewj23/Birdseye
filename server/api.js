@@ -27,6 +27,8 @@ const router = express.Router();
 
 //initialize socket
 const socketManager = require("./server-socket");
+const qs = require("qs");
+const axios = require("axios");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -133,6 +135,82 @@ router.post("/transactions",(req,res)=>{
 
   newTransaction.save().then((transaction) => res.send(transaction));
 });
+
+//coinbase
+const CLIENT_ID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678";
+const CLIENT_SECRET = "4514e203850ae432ce980d16ba56b7c06b2c5726ac7bb7c28a50bc8aaea721d0";
+const REDIRECT_URI = "http://localhost:3000/api/callback/"
+const SECRET = "134ef5504a94"
+
+// User gets redirected to this endpoint on successful login
+router.get("/callback", async (req, res) => {
+  const { code, state } = req.query;
+  if (state==SECRET) {
+    const data = qs.stringify({
+      'grant_type': 'authorization_code',
+      'code': code,
+      'client_id': CLIENT_ID,
+      'client_secret': CLIENT_SECRET,
+      'redirect_uri': REDIRECT_URI,
+    });
+    const config = {
+      method: 'post',
+      url: 'https://api.coinbase.com/oauth/token',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      data
+    };
+
+    try {
+      const response = await axios(config);
+
+      // saving tokens for other requests
+      accessToken = response.data.access_token;
+      refreshToken = response.data.refresh_token;
+      console.log("access token " + accessToken)
+      console.log("state " + state)
+      res.send({ response: response?.data });
+    } catch (e) {
+      console.log("Could not trade code for tokens", e.response.data)
+    }
+  }
+});
+// Gets the user details
+router.get("/user", async (req, res) => {
+  const config = {
+    method: 'get',
+    url: 'https://api.coinbase.com/v2/user',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`
+    }
+  };
+
+  try {
+    const response = await axios(config);
+    res.send({ response: response?.data })
+  } catch (e) {
+    console.log("Could not get user", e.response.data)
+  }
+});
+
+router.get("/account", async (req, res) => {
+  const config = {
+    method: 'get',
+    url: 'https://api.coinbase.com/v2/accounts?limit=200',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`
+    }
+  };
+
+  try {
+    const response = await axios(config);
+    res.send({ response: response?.data })
+  } catch (e) {
+    console.log("Could not get accounts", e.response.data)
+  }
+});
+
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
