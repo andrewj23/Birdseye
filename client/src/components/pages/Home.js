@@ -17,21 +17,6 @@ const GOOGLE_CLIENT_ID = "121479668229-t5j82jrbi9oejh7c8avada226s75bopn.apps.goo
 const Home = ({ userId, handleLogin, handleLogout }) => {
   return (
     <div className={"home-container"}>
-      {/*{userId ? (*/}
-      {/*  <GoogleLogout*/}
-      {/*    clientId={GOOGLE_CLIENT_ID}*/}
-      {/*    buttonText="Logout"*/}
-      {/*    onLogoutSuccess={handleLogout}*/}
-      {/*    onFailure={(err) => console.log(err)}*/}
-      {/*  />*/}
-      {/*) : (*/}
-      {/*  <GoogleLogin*/}
-      {/*    clientId={GOOGLE_CLIENT_ID}*/}
-      {/*    buttonText="Login"*/}
-      {/*    onSuccess={handleLogin}*/}
-      {/*    onFailure={(err) => console.log(err)}*/}
-      {/*  />*/}
-      {/*)}*/}
         {/*<div className='Home-greeting'>Welcome, Andrew!</div>*/}
         <Summary/>
         <Visuals/>
