@@ -4,18 +4,15 @@ import "./CoinCard.css"
 const CoinCard = (props) => {
   return (
     <div className={"Card-container"}>
-      <span>
-  <div>
-<img />
-<h1 className={"coin-name"}>{props.token}</h1>
-</div>
-<div>
-<h1 className={"coin-holding"}>{props.balance}</h1>
+{/*<img />*/}
+<span className={"coin-name"}>{props.token}</span>
+<span>
+<span className={"coin-holding"}>{props.balance}</span>
   <div className={"coin-info"}>
-<p>{props.currentPrice}</p>
+<span>{props.currentPrice}</span>
+    <span className={"coin-change"}>-1.83</span>
 <p>23% of portfolio value</p>
     </div>
-</div>
 </span>
     </div>
   );
