@@ -9,13 +9,28 @@
 /*    background-color: #312F62FF;*/
 /*}*/
 
+.sideBar-graphic {
+    grid-area: sideBar;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    display: grid;
+    grid-template-areas:
+    "color waves";
+    grid-template-columns: 2fr 1fr;
+    grid-column-gap: 0px;
+    height: 100%;
+    background-image: url("../../../dist/Frame.svg");
+    background-size: 175px;
+}
+
 .sideBar-container{
     grid-area: sideBar;
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 3;
-    background-color: #312F62FF;
     height: 100%;
 }
 
@@ -24,27 +39,30 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
 .SideBar-link {
     color: white;
     padding: 8px;
     font-size: 16px;
+    align-self: flex-start;
 }
 
 .SideBar-logo {
-    background-image: url("../../../dist/logo.png");
+    background-image: url("../../../dist/logo.svg");
     background-repeat: no-repeat;
     background-size: contain;
     width: 100px;
     height: 100px;
-    align-self: center;
 }
 
 .SideBar-name {
     margin-top: auto;
-    font-size: 25px;
-    color: white;
     bottom: 0px;
     align-self: center;
+    background-image: url("../../../dist/sb-name.svg");
+    height: 20px;
+    width: 100px;
+    background-repeat: no-repeat;
 }
