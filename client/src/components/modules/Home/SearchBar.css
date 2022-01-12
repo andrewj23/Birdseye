@@ -1,6 +1,8 @@
 .searchbar-container {
-    width: auto;
-    height: auto;
-    outline: 2px solid #312F62;
+    grid-area: searchBar;
+    grid-column: 1;
+    grid-row: 1 ;
+    outline: 2px solid var(--primary);
+    height: 25px;
     border-radius: 5px;
 }

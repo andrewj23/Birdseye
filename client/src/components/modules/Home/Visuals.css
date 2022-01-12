@@ -1,10 +1,8 @@
 .Visuals-container {
-    /* position: absolute; */
-    width: 450px;
-    height: 250px;
-    /* left: 200px;
-    top: 500px; */
-    background: linear-gradient(0deg, #312F62, #312F62);
-    mix-blend-mode: normal;
+    grid-area: visuals;
+    grid-column: 1;
+    grid-row: 2 / 3;
+    background-color: var(--primary);
     border-radius: 9.10004px;
+    height: 250px;
 }

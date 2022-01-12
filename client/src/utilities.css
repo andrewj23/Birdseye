@@ -32,30 +32,23 @@
 }
 
 body {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  margin: 0;
+}
+
+.wrapper{
   display: grid;
   grid-template-areas:
-    "topBar topBar"
+    "sidedBar topBar"
     "sideBar mainPage"
     "sideBar mainPage";
   grid-template-rows: 80px 1fr;
   grid-template-columns: 10% 1fr;
-  grid-row-gap: 10px;
-  grid-column-gap: 10px;
+  grid-row-gap: 0px;
+  grid-column-gap: 0px;
   height: 100vh;
-  margin: 0;
-  /*padding: 0;*/
-  font-family: "Poppins", sans-serif;
-  font-weight: 300;
-}
-
-#pageTopBar {
-  grid-area: topBar;
-}
-#pageContent {
-  grid-area: mainPage;
-}
-#mainSideBar {
-  grid-area: sideBar;
+  overflow: hidden;
 }
 
 form {

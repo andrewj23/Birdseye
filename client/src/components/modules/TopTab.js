@@ -4,8 +4,8 @@ import './TopTab.css'
 
 const TopTab = (props) => {
   return (
-    <div className='TT-flex-container'>
-      <div className='TT-text'>Top Tab</div>
+    <div className='topTab-container'>
+      <div className='Home-greeting'>Welcome, Andrew!</div>
     </div>
   );
 };

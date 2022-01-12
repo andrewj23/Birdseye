@@ -23,6 +23,36 @@ const coins = [
   currentPrice: 40000,
   wallets: ["Coinbase"]
 },
+  {
+    token: "BTC",
+    balance: 1.2,
+    currentPrice: 40000,
+    wallets: ["Coinbase"]
+  },
+  {
+    token: "BTC",
+    balance: 1.2,
+    currentPrice: 40000,
+    wallets: ["Coinbase"]
+  },
+  {
+    token: "BTC",
+    balance: 1.2,
+    currentPrice: 40000,
+    wallets: ["Coinbase"]
+  },
+  {
+    token: "BTC",
+    balance: 1.2,
+    currentPrice: 40000,
+    wallets: ["Coinbase"]
+  },
+  {
+    token: "BTC",
+    balance: 1.2,
+    currentPrice: 40000,
+    wallets: ["Coinbase"]
+  },
 ]
 
 const CoinFeed = (props) => {
@@ -49,10 +79,10 @@ const CoinFeed = (props) => {
     coinsList = <div>No coins!</div>;
   }
   return (
-    <>
+    <div className={"Feed-container"}>
       {/*{props.userId && <NewStory addNewStory={addNewStory} />}*/}
       {coinsList}
-    </>
+    </div>
   );
 
 

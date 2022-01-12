@@ -44,16 +44,16 @@ const App = () => {
   };
 
   return (
-    <>
-      <sideBar id={"mainSideBar"}><SideBar/></sideBar>
-      <topBar id={"pageTopBar"}><TopTab /></topBar>
+    <div className={"wrapper"}>
+      <SideBar/>
+      <TopTab />
       <Router>
         <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <Messages path="/messages/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <NotFound default />
       </Router>
-    </>
+    </div>
   );
 };
 

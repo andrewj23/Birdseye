@@ -1,13 +1,8 @@
 .Card-container {
-  display: flex;
-  justify-content: center;
+  height: 200px;
   background: var(--primary);
   border-radius: 9.1px;
-  /*position: absolute;*/
-  width: 380px;
-  /*left: 719px;*/
-  /*top: 390px;*/
-  margin-top: var(--m);
+  margin-bottom: var(--m);
 }
 
 .coin-name {
