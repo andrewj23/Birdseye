@@ -1,6 +1,13 @@
 .walletsFeed-container{
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-areas:
+    "searchBar"
+    "wallets";
+    grid-template-rows: 25px 1fr;
+    grid-row-gap: 0px;
+    grid-column-gap: 30px;
+    margin: 0px;
+    height: 100vh;
     justify-content: center;
-    size: auto;
+    overflow: scroll;
 }

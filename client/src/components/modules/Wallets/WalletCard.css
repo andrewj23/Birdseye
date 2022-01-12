@@ -1,12 +1,7 @@
 .walletCard-container {
-    display: flex;
-    justify-content: center;
-    background: var(--primary);
+    background-color: var(--primary);
     border-radius: 9.1px;
-    /*position: absolute;*/
-    width: 380px;
-    /*left: 719px;*/
-    /*top: 390px;*/
-    margin-top: var(--m);
-    color: var(--white);
+    height: 150px;
+    width: 900px;
+    margin-bottom: 15px;
 }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import WalletCard from "./WalletCard";
+import "./Feed.css"
 
 const wallets = [
   {
@@ -14,6 +15,22 @@ const wallets = [
       {token: "SOL",
       balance: 1000
       },
+    ],
+  },
+  {
+    name: "MetaMask",
+    tokens: [{
+      token:"ETH",
+      balance:3.6
+    },
+    ],
+  },
+  {
+    name: "MetaMask",
+    tokens: [{
+      token:"ETH",
+      balance:3.6
+    },
     ],
   },
   {
@@ -40,10 +57,10 @@ const Feed = (props) => {
     walletsList = <div>No wallets!</div>;
   }
   return (
-    <>
+    <div className={"walletFeed-container"}>
       {/*{props.userId && <NewStory addNewStory={addNewStory} />}*/}
       {walletsList}
-    </>
+    </div>
   );
 };
 

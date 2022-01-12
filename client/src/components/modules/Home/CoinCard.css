@@ -1,5 +1,6 @@
 .Card-container {
   height: 200px;
+  width: 350px;
   background: var(--primary);
   border-radius: 9.1px;
   margin-bottom: var(--m);
