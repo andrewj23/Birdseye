@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { useState,useEffect,Component } from "react";
 import WalletCard from "./WalletCard";
+import {get} from "../../../utilities";
 import "./Feed.css"
 
 const wallets = [
@@ -44,6 +45,7 @@ const wallets = [
 ]
 
 const Feed = (props) => {
+
   let walletsList = null;
   const hasWallets = wallets.length !== 0;
   if (hasWallets) {

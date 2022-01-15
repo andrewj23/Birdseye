@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const coinbaseUser = require("./coinbaseUser")
 
 const UserSchema = new mongoose.Schema({
   name: String,

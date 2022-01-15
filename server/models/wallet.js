@@ -1,16 +1,9 @@
 const mongoose = require("mongoose");
 
 const WalletSchema = new mongoose.Schema({
-  name: String,
-  img:
-    {
-      data: Buffer,
-      contentType: String
-    },
-  holding: Number,
-  value: Number,
-  percent: Number
-
+  parent: String,
+  accessToken: String,
+  refreshToken: String,
 });
 
 // compile model from schema

@@ -20,7 +20,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
         <Visuals/>
       <div className="coinFeed-container">
         <SearchBar/>
-        <CoinFeed/>
+        <CoinFeed userId={userId}/>
       </div>
     </div>
   );

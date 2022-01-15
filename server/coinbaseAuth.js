@@ -6,8 +6,27 @@ const clientSecret = "4514e203850ae432ce980d16ba56b7c06b2c5726ac7bb7c28a50bc8aae
 const redirectURL = "http://localhost:5000/auth/coinbase/callback"
 const authURL = "https://www.coinbase.com/oauth/authorize?response_type=code&client_id="+clientID+"&redirect_uri="+redirectURL+"&state=134ef5504a94&scope=wallet:accounts:read";
 
-console.log(authURL)
-fetch(authURL).then((something)=>{console.log(something)});
+function getOrCreateCoinbaseUser(user) {
+  // the "sub" field means "subject", which is a unique identifier for each user
+  return coinbaseUser.findOne({ coinbaseid: user.id }).then((existingUser) => {
+    if (existingUser) return existingUser;
+
+    const newCoinbaseUser = new coinbaseUser({
+      name: user.name,
+      coinbaseid: user.coinbaseid,
+      refreshToken: user.refresh_token,
+      accessToken: user.token,
+    });
+
+    return newCoinbaseUser.save();
+  });
+}
+
+module.exports = {
+  getOrCreateCoinbaseUser,
+}
+// console.log(authURL)
+// fetch(authURL).then((something)=>{console.log(something)});
 // const myKey = 'uikHmVg1bjwSaFqr';
 // const mySecret = 'oW0fqj7qiqL08OyJ9ViFSlDCBLzfUvrx';
 // var client = new coinbase.Client({'apiKey': myKey, 'apiSecret': mySecret, strictSSL: false});

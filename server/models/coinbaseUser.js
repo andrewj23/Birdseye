@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 
 const coinbaseUserSchema = new mongoose.Schema({
-  name: String,
-  googleid: String,
+  parent: String,
+  accessToken: String,
+  refreshToken: String,
 });
 
 // compile model from schema

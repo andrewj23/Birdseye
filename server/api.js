@@ -8,7 +8,6 @@
 */
 
 const express = require("express");
-
 // import models so we can interact with the database
 const User = require("./models/user");
 const Coin = require("./models/coin");
@@ -18,9 +17,11 @@ const Message = require("./models/message");
 const Summary = require("./models/summary");
 const Visuals = require("./models/visuals");
 const Transactions = require("./models/transactions");
+const coinbaseUser = require("./models/coinbaseUser");
 
 // import authentication library
 const auth = require("./auth");
+const coinbaseAuth = require("./coinbaseAuth")
 
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
@@ -50,91 +51,8 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+//
 
-router.get("/coins",(req,res)=>{
-  Coin.find({}).then((coins) => res.send(coins));
-});
-
-router.post("/coin",(req,res)=>{
-  const newCoin = new Coin({
-    name: req.body.name,
-    img: req.body.img,
-    holding: req.body.holding,
-    value: req.body.value,
-    percent: req.body.percent
-  });
-
-  newCoin.save().then((coin) => res.send(coin));
-});
-
-router.get("/wallets",(req,res)=>{
-  Wallet.find({}).then((wallets) => res.send(wallets));
-});
-
-router.post("/wallet",(req,res)=>{
-  const newWallet = new Wallet({
-    name: req.body.name,
-    img: req.body.img,
-    holding: req.body.holding,
-    value: req.body.value,
-    percent: req.body.percent
-  });
-
-  newWallet.save().then((wallet) => res.send(wallet));
-});
-
-router.get("/messagegroups",(req,res)=>{
-  MessageGroup.find({}).then((messagegroups) => res.send(messagegroups));
-});
-
-router.post("/messagegroup",(req,res)=>{
-  const newMessageGroup = new MessageGroup({
-    name: req.body.name,
-    img: req.body.img,
-    lastMessage: req.body.lastMessage,
-    time: req.body.time,
-  });
-
-  newMessageGroup.save().then((messagegroup) => res.send(messagegroup));
-});
-
-router.get("/messages",(req,res)=>{
-  Message.find({}).then((messages) => res.send(messages));
-});
-
-router.post("/message",(req,res)=>{
-  const newMessage = new Message({
-    creatorName: req.body.name,
-    content: req.body.content,
-    time: req.body.time
-  });
-
-  newMessage.save().then((message) => res.send(message));
-});
-
-router.get("/visuals",(req,res)=>{
-  Visuals.find({}).then((visuals) => res.send(visuals));
-});
-
-router.get("/summary",(req,res)=>{
-  Summary.find({}).then((summary) => res.send(summary));
-});
-
-router.get("/transactions"), (req,res)=>{
-  Transactions.find({}).then((transactions) => res.send(transactions));
-}
-
-router.post("/transactions",(req,res)=>{
-  const newTransaction = new Transactions({
-    id: req.body.id,
-    name: req.body.name,
-    type: req.body.type,
-    amount: req.body.amount,
-    native_amount: req.body.native_amount,
-  });
-
-  newTransaction.save().then((transaction) => res.send(transaction));
-});
 
 //coinbase
 const CLIENT_ID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678";
@@ -161,45 +79,81 @@ router.get("/callback", async (req, res) => {
       },
       data
     };
-
     try {
       const response = await axios(config);
-
       // saving tokens for other requests
       accessToken = response.data.access_token;
       refreshToken = response.data.refresh_token;
-      console.log("access token " + accessToken)
-      console.log("state " + state)
-      res.send({ response: response?.data });
+      res.redirect('http://localhost:5000/');
+      // res.send({ response: response?.data });
     } catch (e) {
-      console.log("Could not trade code for tokens", e.response.data)
+      console.log("Could not trade code for tokens", e)
     }
   }
 });
-// Gets the user details
-router.get("/user", async (req, res) => {
-  const config = {
-    method: 'get',
-    url: 'https://api.coinbase.com/v2/user',
-    headers: {
-      'Authorization': `Bearer ${accessToken}`
-    }
-  };
 
+router.get("/addWallet",(req,res) => {
+  if (!req.user) {
+    // not logged in
+    console.log("User not logged in. Cannot add wallet.")
+    return res.send({});
+  }
+    const newWallet = new Wallet({
+      parent: req.user._id,
+    accessToken: accessToken,
+    refreshToken: refreshToken,
+  });
+  newWallet.save().then((wallet) => res.send(wallet));
+});
+
+
+// router.post("/coinbase",(req,res) => {
+//   if (accessToken && refreshToken) {
+//     const newCoinbaseUser = new coinbaseUser({
+//       accessToken: accessToken,
+//       refreshToken: refreshToken,
+//     })
+//     newCoinbaseUser.save().then((coinbaseUser) => res.send(coinbaseUser));
+//   };
+// });
+
+
+// Gets the user details TODO: ADD BODY WITH TOKEN
+router.get("/coinbaseUser", async (req, res) => {
   try {
+    const config = {
+      method: 'get',
+      url: 'https://api.coinbase.com/v2/user',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      }
+    };
     const response = await axios(config);
     res.send({ response: response?.data })
   } catch (e) {
-    console.log("Could not get user", e.response.data)
+    console.log("No coinbase user")
+    return res.send({})
   }
 });
 
-router.get("/account", async (req, res) => {
+router.get("/allWallets", (req,res) =>{
+  try {
+    Wallet.find({ parent: req.user._id }).then((coinbaseUsers) => {
+      res.send(coinbaseUsers)
+    });
+  }
+  catch(e) {
+    console.log("Could not pull wallets.: "+e)
+    res.send("Could not pull wallets.: "+e)
+  }
+})
+
+router.post("/coinbaseAccount", async (req, res) => {
   const config = {
     method: 'get',
     url: 'https://api.coinbase.com/v2/accounts?limit=200',
     headers: {
-      'Authorization': `Bearer ${accessToken}`
+      'Authorization': `Bearer ${req.body.accessToken}`
     }
   };
 
@@ -207,10 +161,9 @@ router.get("/account", async (req, res) => {
     const response = await axios(config);
     res.send({ response: response?.data })
   } catch (e) {
-    console.log("Could not get accounts", e.response.data)
+    console.log("Could not get accounts",e)
   }
-});
-
+})
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
