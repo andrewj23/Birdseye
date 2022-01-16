@@ -31,11 +31,12 @@ const auth = require("./auth");
 // socket stuff
 const socketManager = require("./server-socket");
 
+//coinbase
+const passport = require('passport')
+const CoinbaseStrategy = require('passport-coinbase').Strategy;
 
 // Server configuration below
-// TODO change connection URL after setting up your team database
 const mongoConnectionURL = "mongodb+srv://apj23:xIMGO5ay02p0Ij7D@cluster0.71f0p.mongodb.net/BirdseyeDB?retryWrites=true&w=majority";
-// TODO change database name to the name you chose
 const databaseName = "Birdseye";
 
 // connect to mongodb
@@ -70,6 +71,34 @@ app.use(auth.populateCurrentUser);
 
 // connect user-defined routes
 app.use("/api", api);
+
+//Coinbase
+// const COINBASE_CLIENT_ID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678";
+// const COINBASE_CLIENT_SECRET = "4514e203850ae432ce980d16ba56b7c06b2c5726ac7bb7c28a50bc8aaea721d0";
+//
+// app.use(passport.initialize());
+// app.use(passport.session());
+// passport.use(new CoinbaseStrategy({
+//     clientID: COINBASE_CLIENT_ID,
+//     clientSecret: COINBASE_CLIENT_SECRET,
+//     callbackURL: "http://localhost:5000/auth/coinbase/callback"
+//   },
+//   function(accessToken, refreshToken, profile, cb) {
+//     User.findOrCreate({ coinbaseId: profile.id }, function (err, user) {
+//       return cb(err, user);
+//     });
+//       }
+//     ));
+//     app.get('/auth/coinbase',
+//       passport.authenticate('coinbase'));
+//
+//     app.get('/auth/coinbase/callback',
+//       passport.authenticate('coinbase', { failureRedirect: '/login' }),
+//       function(req, res) {
+//         // Successful authentication, redirect home.
+//         res.redirect('/');
+//       });
+//
 
 // load the compiled react files, which will serve /index.html and /bundle.js
 const reactPath = path.resolve(__dirname, "..", "client", "dist");

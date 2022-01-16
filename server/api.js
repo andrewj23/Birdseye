@@ -84,6 +84,12 @@ router.get("/callback", async (req, res) => {
       // saving tokens for other requests
       accessToken = response.data.access_token;
       refreshToken = response.data.refresh_token;
+      const newWallet = new Wallet({
+        parent: req.user._id,
+        accessToken: response.data.access_token,
+        refreshToken: response.data.refresh_token,
+      });
+      newWallet.save();
       res.redirect('http://localhost:5000/');
       // res.send({ response: response?.data });
     } catch (e) {
@@ -97,6 +103,7 @@ router.get("/newCoinbaseToken", async (req, res) => {
       'grant_type': 'refresh_token',
       'client_id': CLIENT_ID,
       'client_secret': CLIENT_SECRET,
+    'redirect_uri': "http://localhost:3000/api/newCoinbaseToken/",
       'refresh_token': req.query.refreshToken,
     });
     const config = {
@@ -113,10 +120,11 @@ router.get("/newCoinbaseToken", async (req, res) => {
       // saving tokens for other requests
       // accessToken = response.data.access_token;
       // refreshToken = response.data.refresh_token;
-      res.send(response);
-      res.send({ response: response?.data });
+      console.log('LOOK HERE'+response)
+      // res.send(response);
+      // res.send({ response: response?.data });
     } catch (e) {
-      console.log("Could not trade refresh token for new token",e)
+      console.log("Could not trade refresh token for new token",e.response.data)
     }
 });
 

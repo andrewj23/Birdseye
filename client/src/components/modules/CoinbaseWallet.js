@@ -1,6 +1,5 @@
 import React, { Component, useEffect, useState } from "react";
 import { get, post } from "../../utilities";
-import { onWalletLogin } from "../../../../server/coinImports";
 const clientID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678";
 const clientSecret = "4514e203850ae432ce980d16ba56b7c06b2c5726ac7bb7c28a50bc8aaea721d0";
 const redirectURL = "http://localhost:3000/api/callback/"
@@ -21,7 +20,7 @@ const CoinbaseWallet = (props) => {
   // },[]);
   return (
     <div>
-      <a href={authURL} onClick={onWalletLogin}>COINBASE</a>
+      <a href={authURL}>COINBASE</a>
     </div>
   )
 }
