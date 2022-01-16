@@ -3,7 +3,7 @@ import "./CoinCard.css"
 
 const CoinCard = (props) => {
   return (
-    <div className={"Card-container"}>
+    <div className="Card-container">
 {/*<img />*/}
 <span className={"coin-name"}>{props.token}</span>
 <span>
