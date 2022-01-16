@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import CoinCard from "./CoinCard";
 import { get, post } from "../../../utilities";
 import { div } from "react-router-dom";
-import getCoins from "../../../../../server/coinImports";
+import { getCoins } from "../../../../../server/coinImports";
 // const CoinGecko = require('coingecko-api');
 
 //2. Initiate the CoinGecko API Client
@@ -67,9 +67,13 @@ const CoinFeed = (props) => {
     if (props.userId)
     {
       getCoins().then((coinsObj)=>{
+        console.log("HEREEEE: "+JSON.stringify(coinsObj))
+        if (coinsObj.length === 0) {
+          return
+        }
         const cleanedCoinObj = coinsObj.map((coinObj)=>(coinObj.response.data))
         console.log(JSON.stringify(cleanedCoinObj))
-        setCoins(cleanedCoinObj[0])
+          setCoins(cleanedCoinObj[0])
     });
       //////////WORKS
     //   get("/api/allWallets").then((walletCodeObjs) => {
@@ -83,7 +87,6 @@ const CoinFeed = (props) => {
       ////////////////////
     }
   }, [props.userId]);
-
   let coinsList = null;
   const hasCoins = coins.length !== 0;
   if (hasCoins && props.userId) {

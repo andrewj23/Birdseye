@@ -92,6 +92,35 @@ router.get("/callback", async (req, res) => {
   }
 });
 
+router.get("/newCoinbaseToken", async (req, res) => {
+  const data = qs.stringify({
+      'grant_type': 'refresh_token',
+      'client_id': CLIENT_ID,
+      'client_secret': CLIENT_SECRET,
+      'refresh_token': req.query.refreshToken,
+    });
+    const config = {
+      method: 'post',
+      url: 'https://api.coinbase.com/oauth/token',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      data
+    };
+    console.log(config)
+    try {
+      const response = await axios(config);
+      // saving tokens for other requests
+      // accessToken = response.data.access_token;
+      // refreshToken = response.data.refresh_token;
+      res.send(response);
+      res.send({ response: response?.data });
+    } catch (e) {
+      console.log("Could not trade refresh token for new token",e)
+    }
+});
+
+
 router.get("/addWallet",(req,res) => {
   if (!req.user) {
     // not logged in
@@ -100,23 +129,20 @@ router.get("/addWallet",(req,res) => {
   }
     const newWallet = new Wallet({
       parent: req.user._id,
-    accessToken: accessToken,
-    refreshToken: refreshToken,
+    // accessToken: req.query.accessToken,
+    // refreshToken: req.query.refreshToken,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
   });
   newWallet.save().then((wallet) => res.send(wallet));
+  console.log("Added wallet")
 });
 
-
-// router.post("/coinbase",(req,res) => {
-//   if (accessToken && refreshToken) {
-//     const newCoinbaseUser = new coinbaseUser({
-//       accessToken: accessToken,
-//       refreshToken: refreshToken,
-//     })
-//     newCoinbaseUser.save().then((coinbaseUser) => res.send(coinbaseUser));
-//   };
-// });
-
+router.get("/deleteWallet", (req,res) => {
+  Wallet.findOneAndDelete({accessToken: req.query.accessToken}).then(()=>{
+    console.log("wallet deleted");
+  });
+})
 
 // Gets the user details TODO: ADD BODY WITH TOKEN
 router.get("/coinbaseUser", async (req, res) => {
@@ -159,9 +185,10 @@ router.post("/coinbaseAccount", async (req, res) => {
 
   try {
     const response = await axios(config);
-    res.send({ response: response?.data })
+    res.send({ response: response?.data, expired: false })
   } catch (e) {
-    console.log("Could not get accounts",e)
+    console.log("Could not get accounts")
+    res.send({expired:true})
   }
 })
 

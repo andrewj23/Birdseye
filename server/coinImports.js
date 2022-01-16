@@ -1,10 +1,17 @@
-import { useEffect, useState } from "react";
 import { get, post } from "../client/src/utilities";
 
-async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
+async function onWalletLogin() {
+  try {
+    return await get("/api/addWallet");
   }
+  catch (e) {
+    console.log("Could not add wallet")
+  }
+}
+
+
+async function refreshAccessToken(tokenObj) {
+  return await get("/api/newCoinbaseToken", { refreshToken: tokenObj.refreshToken});
 }
 
 async function getWalletsHelper() {
@@ -12,18 +19,33 @@ async function getWalletsHelper() {
   }
 
 async function getCoinsHelper(walletObj) {
-  const body = {
-    accessToken: walletObj.accessToken,
-  };
-  return await post("/api/coinbaseAccount", body);
-}
-
+    const response = await post("/api/coinbaseAccount", {accessToken: walletObj.accessToken});
+    if(response.expired) {
+      console.log("token expired... Log in again")
+      return
+      // console.log("response.expired: "+response.expired);
+      // await get("/api/deleteWallet",{accessToken: walletObj.accessToken})
+      // const refreshResponse = await refreshAccessToken(walletObj);
+      // console.log("refresh response: "+JSON.stringify(refreshResponse));
+      // const body = {
+      //   accessToken: refreshResponse.data.access_token,
+      //   refreshToken: refreshResponse.data.refresh_token,
+      // }
+      // await get("/api/addWallet",body)
+      // console.log("COMPLETED");
+      // return
+      // return getCoinsHelper(body)
+    }
+    return response
+  }
 
 async function getCoins() {
-  try {
     let coins = [];
     const tokens = await getWalletsHelper();
-    // console.log("wallets: " + JSON.stringify(tokens));
+  // console.log("wallets: " + JSON.stringify(tokens));
+    if (!tokens) {
+      return coins
+    }
 
     const helper = async(tokens,coins)=>{
     for (const token of tokens) {
@@ -33,27 +55,6 @@ async function getCoins() {
 
     await helper(tokens,coins)
     return coins
-  }
-  catch(e){
-    console.log("Could not get wallets: "+e);
-  }
 }
 
-
-// async function getCoins(body) {
-//   post("/api/coinbaseAccount", body).then((coinObjs) => {
-//     return setCoins(coins.concat(coinObjs.response.data));
-//   });
-// }
-// useEffect(() => {
-//   if (props.userId)
-//   {
-//     get("/api/allWallets").then((walletCodeObjs) => {
-//       const body = {
-//         accessToken: walletCodeObjs.accessToken,
-//       };
-//     }).then();
-//   }
-// }, [props.userId]);
-
-export default getCoins;
+export {getCoins, onWalletLogin};
