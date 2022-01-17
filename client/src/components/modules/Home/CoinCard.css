@@ -3,7 +3,10 @@
   width: 375px;
   background: var(--primary);
   border-radius: 9.1px;
+  margin-top: 0px; 
+  margin-left: 0px; 
   margin-bottom: var(--m);
+  margin-right: 0px;
   box-shadow: 5px 5px 5px grey;
 }
 
