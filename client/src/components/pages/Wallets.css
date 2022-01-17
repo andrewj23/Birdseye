@@ -4,10 +4,10 @@
     "searchBar"
     "walletFeed";
     grid-template-rows: 25px 1fr;
-    grid-row-gap: 0px;
-    grid-column-gap: 30px;
-    margin: 0px;
-    height: 100vh;
-    justify-content: center;
-    overflow: scroll;
+    grid-row-gap: 15px;
+    margin-top: 20px;
+    margin-left: 25px;
+    height: 800px;
+    width: 1150px;
+    padding-top: 2px;
 }

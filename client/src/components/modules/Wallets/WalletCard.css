@@ -1,7 +1,44 @@
 .walletCard-container {
+    display: grid;
+    grid-template-areas:
+    "title tokens transactions";
+    grid-template-columns: 383.33px 383.33px 383.33px;
+    grid-column-gap: 5px;
     background-color: var(--primary);
     border-radius: 9.1px;
     height: 150px;
-    width: 900px;
-    margin-bottom: 15px;
+}
+
+.walletCard-type {
+    grid-area: title;
+    grid-column: 1;
+    grid-row: 1;
+    color: white;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 75px;
+    padding-left: 15px;
+    margin-top: 0px;
+}
+
+.walletCard-holdings {
+    grid-area: holdings;
+    grid-column: 2;
+    grid-row: 1;
+    color: white;
+    font-family: Poppins;
+    font-style: normal;
+    padding-top: 5px;
+}
+
+.walletCard-transactions {
+    grid-area: transactions;
+    grid-column: 3;
+    grid-row: 1;
+    color: white;
+    font-family: Poppins;
+    font-style: normal;
+    padding-top: 5px;
 }
