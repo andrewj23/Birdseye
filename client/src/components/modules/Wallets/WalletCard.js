@@ -5,19 +5,24 @@ const WalletCard = (props) => {
   let coinsList = null;
   const hasCoins = props.tokens.length !== 0;
   if (hasCoins) {
-    coinsList = props.tokens.map((CoinObj) => (
-      <>
-        {CoinObj.token} | {CoinObj.balance}</>
+    coinsList = props.tokens.map((tokenObj) => (
+      <div>{tokenObj.balance} {tokenObj.token}</div>
     ));
   } else {
     coinsList = <div>No coins in wallet!</div>;
   }
   return (
   <div className={"walletCard-container"}>
-    {props.name}
-    {coinsList}
+    <div className="walletCard-type">{props.name}</div>
+    <div className="walletCard-holdings">
+      Holdings:
+      <div className="walletCard-balance">{coinsList}</div>
+    </div>
+    <div className="walletCard-transactions">
+      Transaction History:
+    </div>
   </div>
   );
 };
 
-export default WalletCard
+export default WalletCard;
