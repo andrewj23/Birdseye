@@ -1,6 +1,16 @@
 .searchfield-container {
-    outline: 2px solid var(--primary);
-    height: 25px;
-    width: 325px;
+    outline: 1px solid var(--primary);
+    height: 20px;
+    width: 320px;
     border-radius: 5px;
+    font-size: 13px;
+    padding-left: 5px;
+    color: var(--primary);
+    font-weight: 500;
+    font-family: Poppins;
+}
+
+.searchfield-container::placeholder {
+    color: var(--primary);
+    opacity: 0.5;
 }

@@ -3,7 +3,7 @@ import './SearchField.css';
 
 const SearchField = (props) => {
   return(
-<div className='searchfield-container' />
+    <input type="text" placeholder="Search" className="searchfield-container"></input>
   );
 };
 
