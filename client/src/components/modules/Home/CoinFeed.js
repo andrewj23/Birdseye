@@ -37,7 +37,7 @@ const CoinFeed = (props) => {
   const hasCoins = coins.length !== 0;
 
   if (!props.userId) {
-    return (<div> Log in! </div>);
+    return (<div>Log in!</div>);
   } else if (!hasCoins) {
     return (<div>No coins!</div>);
   }
