@@ -27,7 +27,7 @@
 
 .Home-greeting {
     position: absolute;
-    width: 600px;
+    width: fit-content;
     height: 48px;
     left: 201px;
     top: 12px;
