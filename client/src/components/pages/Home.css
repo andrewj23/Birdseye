@@ -1,13 +1,11 @@
 .home-container {
     display: grid;
     grid-template-areas:
-    "summary coins"
-    "visuals coins";
-    grid-template-rows: 500px 1fr;
-    grid-template-columns: 60% 1fr;
-    grid-row-gap: 15px;
+    "summary coins";
+    grid-template-columns: 700px 450px;
     grid-column-gap: 15px;
-    margin: 50px 15px 0 50px;
+    margin-top: 20px;
+    margin-left: 25px;
     height: 800px;
     justify-items: center;
 }
@@ -22,7 +20,8 @@
     grid-row-gap: 15px;
     grid-column-gap: 15px;
     margin: 0px;
-    height: 100vh;
-    width: 400px;
+    height: 675px;
+    width: 410px;
     justify-content: left;
+    overflow-y: hidden;
 }

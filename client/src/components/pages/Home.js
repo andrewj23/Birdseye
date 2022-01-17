@@ -17,7 +17,6 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
     <div className={"home-container"}>
         {/*<div className='Home-greeting'>Welcome, Andrew!</div>*/}
         <Summary/>
-        <Visuals/>
       <div className="coinFeed-container">
         <SearchBar/>
         <CoinFeed userId={userId}/>

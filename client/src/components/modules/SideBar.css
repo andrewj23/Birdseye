@@ -20,7 +20,7 @@
     "color waves";
     grid-template-columns: 2fr 1fr;
     grid-column-gap: 0px;
-    height: 100%;
+    height: 100vh;
     background-image: url("../../../dist/Frame.svg");
     background-size: 175px;
 }
@@ -43,6 +43,15 @@
 }
 
 .SideBar-link {
+    text-decoration: none;
+    color: white;
+    padding: 8px;
+    font-size: 16px;
+    align-self: flex-start;
+}
+
+.SideBar-link:hover {
+    margin-left: 3px;
     color: white;
     padding: 8px;
     font-size: 16px;
