@@ -7,3 +7,13 @@
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
+.Feed-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.Feed-container::-webkit-scrollbar-thumb {
+    background-color: #848484;
+    border-radius: 9.10004px;
+    opacity: 1;
+}
