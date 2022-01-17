@@ -4,8 +4,9 @@
     grid-row: 1 / 2;
     background-color: var(--primary);
     border-radius: 9.10004px;
-    height: 500px;
+    height: 670px;
     width: 700px;
+    box-shadow: 5px 5px 5px grey;
 }
 
 .Summary-PV {

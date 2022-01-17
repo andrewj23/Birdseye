@@ -4,6 +4,7 @@
   background: var(--primary);
   border-radius: 9.1px;
   margin-bottom: var(--m);
+  box-shadow: 5px 5px 5px grey;
 }
 
 .coin-name {
