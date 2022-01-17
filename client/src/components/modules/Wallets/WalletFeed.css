@@ -1,5 +1,5 @@
 .walletFeed-container{
-    grid-area: wallets;
+    grid-area: walletFeed;
     justify-content: end;
     grid-column: 1;
     grid-row: 2;

@@ -1,8 +1,8 @@
-.walletsFeed-container{
+.wallets-container{
     display: grid;
     grid-template-areas:
     "searchBar"
-    "wallets";
+    "walletFeed";
     grid-template-rows: 25px 1fr;
     grid-row-gap: 0px;
     grid-column-gap: 30px;

@@ -1,7 +1,8 @@
 import React, { useState,useEffect,Component } from "react";
 import WalletCard from "./WalletCard";
 import {get} from "../../../utilities";
-import "./Feed.css"
+import "./WalletFeed.css"
+import { getWallets } from "../../../../../server/coinImports";
 
 const wallets = [
   {
@@ -44,11 +45,24 @@ const wallets = [
   },
 ]
 
-const Feed = (props) => {
+const WalletFeed = (props) => {
+  const [wallets, setWallets] = useState([]);
+
+  useEffect(() => {
+    if (props.userId) {
+      getWallets().then((walletsObj) => {
+        console.log("Wallets: " + JSON.stringify(walletsObj))
+        if (walletsObj.length === 0) {
+          return
+        }
+        setWallets(walletsObj)
+      });
+    }
+  }, [props.userId]);
 
   let walletsList = null;
   const hasWallets = wallets.length !== 0;
-  if (hasWallets) {
+  if (hasWallets && props.userId) {
     walletsList = wallets.map((WalletObj) => (
       <WalletCard
         name={WalletObj.name}
@@ -66,4 +80,4 @@ const Feed = (props) => {
   );
 };
 
-export default Feed
+export default WalletFeed;

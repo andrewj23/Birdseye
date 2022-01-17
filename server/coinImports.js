@@ -54,5 +54,29 @@ async function getCoins() {
     return coins
 }
 
+async function getWallets() {
+  let structWallets = [];
+  const wallets = await getWalletsHelper();
+  if (!wallets) { return structWallets }
+  
+  const helper = async (wallets, structWallets) => {
+    for (const wallet of wallets) {
+      let name = "Coinbase";  // set to Coinbase because currently only supported wallet type
+      let tokens = [];
+      const tokensObj = await getCoinsHelper(wallet);
+      const cleanedTokensObj = tokensObj.response.data
+      const filteredTokens = cleanedTokensObj.filter((tokenObj) => (parseFloat(tokenObj.balance.amount) !== 0))
+      tokens = filteredTokens.map((TokenObj) => (
+        { token: TokenObj.currency.code, balance: TokenObj.balance.amount }
+      ));
+      let structWallet = { name: name, tokens: tokens }
+      await structWallets.push(structWallet);
+    }
+  }
 
-export {getCoins};
+  await helper (wallets, structWallets)
+  return structWallets
+}
+
+
+export { getCoins, getWallets };
