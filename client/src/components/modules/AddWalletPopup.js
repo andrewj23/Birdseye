@@ -31,7 +31,7 @@ const AddWalletPopup = (props) => {
         </header>
         <div className={"icons-container"}>
         <a href={authURL}><img src={coinbaseLogo}/></a>
-        <MetamaskConnect/>
+        {/*<MetamaskConnect/>*/}
         </div>
         <footer className="modal-footer">
           <button onClick={togglePopup}>
