@@ -3,6 +3,7 @@
     grid-column: 1;
     grid-row: 2;
     border-radius: 9.10004px;
-    height: 700px;
+    height: 630px;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
