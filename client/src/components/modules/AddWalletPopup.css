@@ -1,0 +1,65 @@
+.addWallet-container {
+    outline: 2px dashed var(--primary);
+    width: auto;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.addWallet-container:hover{
+    background-color: var(--primary);
+    color: var(--white);
+    outline: 2px solid var(--white);
+}
+
+img{
+    padding: 20px;
+}
+
+.modal {
+    background: var(--white);
+    outline: 0;
+    min-width: 250px;
+    max-width: 500px;
+    border-radius: 4px;
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+    padding: 0.5em 1.5em;
+}
+
+.modal-header {
+    border-bottom: 1px solid #eee;
+}
+
+.modal-title {
+    color: var(--primary);
+    margin: 0;
+}
+
+.modal-footer {
+    text-align: center;
+}
+
+button {
+    background: transparent;
+    border: 0;
+    border-radius: 3px;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+
+button {
+    background: var(--primary);
+    color: white;
+    padding: 0.5em 1em;
+    cursor: pointer;
+}
