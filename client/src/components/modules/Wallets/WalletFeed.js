@@ -37,12 +37,10 @@ const WalletFeed = (props) => {
   const hasWallets = wallets.length !== 0;
 
   if (!props.userId) {
-    return (<div> Log in! </div>);
-  } else if (!hasWallets) {
-    return (<div>No wallets!</div>);
+    return (<div>Log in!</div>);
   }
 
-  return (
+  return hasWallets ? (
     <>
     <div className="walletfeed-topContainer">
       <div className="walletfeed-search">
@@ -62,6 +60,17 @@ const WalletFeed = (props) => {
         <WalletCard name={walletObj.name} tokens={walletObj.tokens} />
       ))}
     </div>
+    </>
+  ) : (
+    <>
+    <div className="walletfeed-topContainer">
+      <div className="walletfeed-search">
+        <input type="text" placeholder="Search" className="walletfeed-input" 
+          onChange={(event) => { setSearchTerm(event.target.value); }} />
+      </div>
+      <AddWalletPopup />
+    </div>
+    <div>No wallets!</div>
     </>
   );
 };

@@ -38,12 +38,10 @@ const CoinFeed = (props) => {
 
   if (!props.userId) {
     return (<div>Log in!</div>);
-  } else if (!hasCoins) {
-    return (<div>No coins!</div>);
   }
   
   const filteredCoins = coins.filter((CoinObj)=>(parseFloat(CoinObj.balance.amount)!==0))
-  return (
+  return hasCoins ? (
     <>
     <div className='coinfeed-topContainer'>
       <div className="coinfeed-search">
@@ -67,6 +65,17 @@ const CoinFeed = (props) => {
         )
       )}
     </div>
+    </>
+  ) : (
+    <>
+    <div className='coinfeed-topContainer'>
+      <div className="coinfeed-search">
+        <input type="text" placeholder="Search" className="coinfeed-input" 
+          onChange={(event) => { setSearchTerm(event.target.value); }} />
+      </div>
+      <AddWalletPopup />
+    </div>
+    <div>No coins!</div>
     </>
   );
 };
