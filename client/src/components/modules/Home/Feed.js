@@ -3,6 +3,7 @@ import CoinCard from "./CoinCard";
 import { get, post } from "../../../utilities";
 import { div } from "react-router-dom";
 import { getCoins } from "../../../../../server/coinImports";
+import './Feed.css'
 // const CoinGecko = require('coingecko-api');
 
 //2. Initiate the CoinGecko API Client
@@ -12,51 +13,6 @@ import { getCoins } from "../../../../../server/coinImports";
 // var func = async() => {
 //   let data = await CoinGeckoClient.ping();
 // };
-
-const coins = [
-  {
-  token: "ETH",
-  balance: 23.234,
-  currentPrice: 3000,
-  wallets: ["Coinbase","MetaMask"]
-},
-{
-  token: "BTC",
-  balance: 1.2,
-  currentPrice: 40000,
-  wallets: ["Coinbase"]
-},
-  {
-    token: "BTC",
-    balance: 1.2,
-    currentPrice: 40000,
-    wallets: ["Coinbase"]
-  },
-  {
-    token: "BTC",
-    balance: 1.2,
-    currentPrice: 40000,
-    wallets: ["Coinbase"]
-  },
-  {
-    token: "BTC",
-    balance: 1.2,
-    currentPrice: 40000,
-    wallets: ["Coinbase"]
-  },
-  {
-    token: "BTC",
-    balance: 1.2,
-    currentPrice: 40000,
-    wallets: ["Coinbase"]
-  },
-  {
-    token: "BTC",
-    balance: 1.2,
-    currentPrice: 40000,
-    wallets: ["Coinbase"]
-  },
-]
 
 const CoinFeed = (props) => {
   const [coins, setCoins] = useState([]);
@@ -106,7 +62,7 @@ const CoinFeed = (props) => {
     return (<div> Log in! </div>);
   }
   return (
-    <div className={"Feed-container"}>
+    <div className="Feed-container">
       {/*{props.userId && <NewStory addNewStory={addNewStory} />}*/}
       {coinsList}
     </div>

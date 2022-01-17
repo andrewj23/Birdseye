@@ -86,6 +86,7 @@ router.get("/callback", async (req, res) => {
       refreshToken = response.data.refresh_token;
       const newWallet = new Wallet({
         parent: req.user._id,
+        googleName: req.user.name,
         accessToken: response.data.access_token,
         refreshToken: response.data.refresh_token,
       });
@@ -103,7 +104,6 @@ router.get("/newCoinbaseToken", async (req, res) => {
       'grant_type': 'refresh_token',
       'client_id': CLIENT_ID,
       'client_secret': CLIENT_SECRET,
-    'redirect_uri': "http://localhost:3000/api/newCoinbaseToken/",
       'refresh_token': req.query.refreshToken,
     });
     const config = {
@@ -120,32 +120,32 @@ router.get("/newCoinbaseToken", async (req, res) => {
       // saving tokens for other requests
       // accessToken = response.data.access_token;
       // refreshToken = response.data.refresh_token;
-      console.log('LOOK HERE'+response)
+      console.log('LOOK HERE'+JSON.stringify(response))
       // res.send(response);
       // res.send({ response: response?.data });
     } catch (e) {
-      console.log("Could not trade refresh token for new token",e.response.data)
+      console.log("Could not trade refresh token for new token",e)
     }
 });
 
-
-router.get("/addWallet",(req,res) => {
-  if (!req.user) {
-    // not logged in
-    console.log("User not logged in. Cannot add wallet.")
-    return res.send({});
-  }
-    const newWallet = new Wallet({
-      parent: req.user._id,
-    // accessToken: req.query.accessToken,
-    // refreshToken: req.query.refreshToken,
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-  });
-  newWallet.save().then((wallet) => res.send(wallet));
-  console.log("Added wallet")
-});
-
+//PROBABLY DONT NEED////////
+// router.get("/addWallet",(req,res) => {
+//   if (!req.user) {
+//     // not logged in
+//     console.log("User not logged in. Cannot add wallet.")
+//     return res.send({});
+//   }
+//     const newWallet = new Wallet({
+//       parent: req.user._id,
+//     // accessToken: req.query.accessToken,
+//     // refreshToken: req.query.refreshToken,
+//       accessToken: accessToken,
+//       refreshToken: refreshToken,
+//   });
+//   newWallet.save().then((wallet) => res.send(wallet));
+//   console.log("Added wallet")
+// });
+////////////////////////////
 router.get("/deleteWallet", (req,res) => {
   Wallet.findOneAndDelete({accessToken: req.query.accessToken}).then(()=>{
     console.log("wallet deleted");

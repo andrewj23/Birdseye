@@ -13,6 +13,7 @@ import { socket } from "../client-socket.js";
 import { get, post } from "../utilities";
 import SideBar from "./modules/SideBar";
 import TopTab from "./modules/TopTab";
+import AddWalletPopup from "../components/pages/AddWalletPopup"
 
 /**
  * Define the "App" component

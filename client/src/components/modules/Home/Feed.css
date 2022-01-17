@@ -1,7 +1,9 @@
 .Feed-container {
     grid-area: coins;
     grid-column: 1;
-    grid-row: 1 / 2;
-    background-color: var(--primary);
+    grid-row: 2;
     border-radius: 9.10004px;
+    height: 700px;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
