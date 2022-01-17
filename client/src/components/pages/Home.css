@@ -10,7 +10,7 @@
     justify-items: center;
 }
 
-.coinFeed-container {
+.home-coinFeed{
     display: grid;
     grid-template-areas:
     "searchBar"

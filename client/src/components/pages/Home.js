@@ -1,28 +1,20 @@
 import React, { Component } from "react";
-
 import "../../utilities.css";
 import "./Home.css";
 import Summary from "../modules/Home/Summary";
-import CoinFeed from "../modules/Home/Feed";
-import Visuals from "../modules/Home/Visuals";
-import TopTab from "../modules/TopTab";
-import SearchBar from "../modules/SearchBar";
-import SideBar from "../modules/SideBar";
-import Coinbase from "../modules/coinbase";
+import CoinFeed from "../modules/Home/CoinFeed";
 
-//TODO: REPLACE WITH YOUR OWN CLIENT_ID
 
 const Home = ({ userId, handleLogin, handleLogout }) => {
   return (
     <div className={"home-container"}>
-        {/*<div className='Home-greeting'>Welcome, Andrew!</div>*/}
-        <Summary/>
-      <div className="coinFeed-container">
-        <SearchBar/>
+      <Summary/>
+      <div className="home-coinFeed">
         <CoinFeed userId={userId}/>
       </div>
     </div>
   );
 };
+
 
 export default Home;

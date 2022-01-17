@@ -8,7 +8,9 @@ import AddWalletPopup from "./AddWalletPopup";
 const SearchBar = (props) => {
   return (
     <div className='searchbar-container'>
-      <SearchField />
+      <div className="searchfield-container">
+        <input type="text" placeholder="Search" className="searchfield-input"></input>
+      </div>
       <AddWalletPopup />
     </div>
   );
