@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const WalletSchema = new mongoose.Schema({
   parent: String,
+  googleName: String,
   accessToken: String,
   refreshToken: String,
 });

@@ -7,7 +7,7 @@ const authURL = "https://www.coinbase.com/oauth/authorize?response_type=code&cli
 
 
 async function refreshAccessToken(tokenObj) {
-  return await get("/api/newCoinbaseToken", { refreshToken: tokenObj.refreshToken});
+  return await get("/api/newCoinbaseToken",{refreshToken: tokenObj.refreshToken,});
 }
 
 async function getWalletsHelper() {
@@ -16,14 +16,14 @@ async function getWalletsHelper() {
 
 async function getCoinsHelper(walletObj) {
     const response = await post("/api/coinbaseAccount", {accessToken: walletObj.accessToken});
-    console.log(JSON.stringify(response))
+    console.log("get accounts response: "+JSON.stringify(response))
     if(response.expired) {
       console.log("token expired... Log in again")
-      return
       // console.log("response.expired: "+response.expired);
       // await get("/api/deleteWallet",{accessToken: walletObj.accessToken})
       // const refreshResponse = await refreshAccessToken(walletObj);
       // console.log("refresh response: "+JSON.stringify(refreshResponse));
+      return
       // const body = {
       //   accessToken: refreshResponse.data.access_token,
       //   refreshToken: refreshResponse.data.refresh_token,
