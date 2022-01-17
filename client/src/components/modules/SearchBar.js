@@ -9,7 +9,7 @@ const SearchBar = (props) => {
   return (
     <div className='searchbar-container'>
       <SearchField />
-      <AddWalletPopup/>
+      <AddWalletPopup />
     </div>
   );
 };
