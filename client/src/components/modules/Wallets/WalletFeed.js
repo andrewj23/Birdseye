@@ -1,52 +1,26 @@
 import React, { useState,useEffect,Component } from "react";
 import WalletCard from "./WalletCard";
-import {get} from "../../../utilities";
+import AddWalletPopup from "../AddWalletPopup";
 import "./WalletFeed.css"
 import { getWallets } from "../../../../../server/coinImports";
 
-const wallets = [
-  {
-    name: "Coinbase",
-    tokens: [{
-      token:"ETH",
-      balance:1.3
-    },
-      {token: "BTC",
-      balance: 0.5
-      },
-      {token: "SOL",
-      balance: 1000
-      },
-    ],
-  },
-  {
-    name: "MetaMask",
-    tokens: [{
-      token:"ETH",
-      balance:3.6
-    },
-    ],
-  },
-  {
-    name: "MetaMask",
-    tokens: [{
-      token:"ETH",
-      balance:3.6
-    },
-    ],
-  },
-  {
-    name: "MetaMask",
-    tokens: [{
-      token:"ETH",
-      balance:3.6
-    },
-    ],
-  },
-]
+
+// const wallets = [
+//   {name: "Coinbase", tokens: [
+//     {token: "ETH", balance: 1.3},
+//     {token: "BTC", balance: 0.5},
+//     {token: "SOL", balance: 1000}]},
+//   {name: "MetaMask", tokens: [
+//     {token:"ETH", balance: 3.6}]},
+//   {name: "MetaMask", tokens: [
+//     {token:"ETH", balance: 3.6}]},
+//   {name: "MetaMask", tokens: [
+//     {token:"ETH", balance: 3.6}]}
+// ]
 
 const WalletFeed = (props) => {
   const [wallets, setWallets] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (props.userId) {
@@ -60,24 +34,37 @@ const WalletFeed = (props) => {
     }
   }, [props.userId]);
 
-  let walletsList = null;
   const hasWallets = wallets.length !== 0;
-  if (hasWallets && props.userId) {
-    walletsList = wallets.map((WalletObj) => (
-      <WalletCard
-        name={WalletObj.name}
-        tokens={WalletObj.tokens}
-      />
-    ));
-  } else {
-    walletsList = <div>No wallets!</div>;
+
+  if (!props.userId) {
+    return (<div> Log in! </div>);
+  } else if (!hasWallets) {
+    return (<div>No wallets!</div>);
   }
+
   return (
-    <div className={"walletFeed-container"}>
-      {/*{props.userId && <NewStory addNewStory={addNewStory} />}*/}
-      {walletsList}
+    <>
+    <div className="walletfeed-topContainer">
+      <div className="walletfeed-search">
+        <input type="text" placeholder="Search" className="walletfeed-input" 
+          onChange={(event) => { setSearchTerm(event.target.value); }} />
+      </div>
+      <AddWalletPopup />
     </div>
+    <div className={"walletfeed-container"}>
+      {wallets.filter((walletObj) => {
+        if (searchTerm === "") { 
+          return walletObj 
+        } else if (walletObj.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+          return walletObj
+        }
+      }).map((walletObj) => (
+        <WalletCard name={walletObj.name} tokens={walletObj.tokens} />
+      ))}
+    </div>
+    </>
   );
 };
+
 
 export default WalletFeed;
