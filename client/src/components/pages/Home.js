@@ -6,7 +6,7 @@ import Summary from "../modules/Home/Summary";
 import CoinFeed from "../modules/Home/Feed";
 import Visuals from "../modules/Home/Visuals";
 import TopTab from "../modules/TopTab";
-import SearchBar from "../modules/Home/SearchBar";
+import SearchBar from "../modules/SearchBar";
 import SideBar from "../modules/SideBar";
 import Coinbase from "../modules/coinbase";
 

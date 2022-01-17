@@ -3,7 +3,7 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 
 import "../../utilities.css";
 import "./Wallets.css";
-import SearchBar from "../modules/Wallets/SearchBar";
+import SearchBar from "../modules/SearchBar"
 import WalletFeed from "../modules/Wallets/WalletFeed";
 import WalletCard from "../modules/Wallets/WalletCard";
 

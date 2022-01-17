@@ -1,7 +1,7 @@
 import React, { Component, useState} from "react";
 import './SearchBar.css'
-import SearchField from "../SearchField";
-import AddWalletPopup from "../AddWalletPopup";
+import SearchField from "./SearchField";
+import AddWalletPopup from "./AddWalletPopup";
 
 
 
