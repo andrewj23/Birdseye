@@ -1,0 +1,11 @@
+.searchbar-container {
+    grid-area: searchBar;
+    padding-left: 2px;
+    grid-column: 1;
+    grid-row: 1 ;
+    display: inline-flex;
+    justify-content: left;
+    height: 25px;
+    width: 400px;
+    border-radius: 5px;
+}

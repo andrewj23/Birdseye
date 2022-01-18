@@ -114,7 +114,6 @@ router.get("/newCoinbaseToken", async (req, res) => {
       },
       data
     };
-    console.log(config)
     try {
       const response = await axios(config);
       // saving tokens for other requests
@@ -200,8 +199,26 @@ router.post("/coinbaseAccount", async (req, res) => {
   }
 })
 
+router.get("/coinbaseTransactions",async (req,res) => {
+  const config = {
+    method: 'get',
+    url: `https://api.coinbase.com/v2/accounts/${req.query.accountID}/transactions`,
+    headers: {
+      'Authorization': `Bearer ${req.query.accessToken}`
+    }
+  };
+  try {
+    const response = await axios(config);
+    res.send({ response: response?.data })
+  } catch (e) {
+    console.log("Could not get transactions")
+    res.send("Could not get transactions")
+  }
+})
+
+
 ///////// METAMASK
-router.get("/ethTransactions",(req,res) =>{
+router.get("/ethTransactions", (req,res) =>{
 
 })
 // anything else falls to this "not found" case

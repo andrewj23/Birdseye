@@ -31,10 +31,6 @@ const auth = require("./auth");
 // socket stuff
 const socketManager = require("./server-socket");
 
-//coinbase
-const passport = require('passport')
-const CoinbaseStrategy = require('passport-coinbase').Strategy;
-
 // Server configuration below
 const mongoConnectionURL = "mongodb+srv://apj23:xIMGO5ay02p0Ij7D@cluster0.71f0p.mongodb.net/BirdseyeDB?retryWrites=true&w=majority";
 const databaseName = "Birdseye";

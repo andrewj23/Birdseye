@@ -5,12 +5,12 @@ import Summary from "../modules/Home/Summary";
 import CoinFeed from "../modules/Home/CoinFeed";
 
 
-const Home = ({ userId, handleLogin, handleLogout }) => {
+const Home = (props) => {
   return (
     <div className={"home-container"}>
-      <Summary/>
+      <Summary userId ={props.userId} principal={props.principal}/>
       <div className="home-coinFeed">
-        <CoinFeed userId={userId}/>
+        <CoinFeed userId={props.userId}/>
       </div>
     </div>
   );

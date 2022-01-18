@@ -5,9 +5,59 @@ const redirectURL = "http://localhost:3000/api/callback/"
 const SECRET = "134ef5504a94"
 const authURL = "https://www.coinbase.com/oauth/authorize?response_type=code&client_id="+clientID+"&redirect_uri="+redirectURL+"&state=134ef5504a94&scope=wallet:accounts:read&account=all";
 
-
 async function refreshAccessToken(tokenObj) {
   return await get("/api/newCoinbaseToken",{refreshToken: tokenObj.refreshToken,});
+}
+
+async function getTransactionsHelper(walletObj) {
+  const transactionsById = {};
+  let allTransactions = [];
+  console.log('started')
+  const accountIDs = await post("/api/coinbaseAccount", {accessToken: walletObj.accessToken});
+  for (const accountID of accountIDs.response.data) {
+    const body = {
+      accessToken: walletObj.accessToken,
+      accountID: accountID.id,
+    }
+    await get("/api/coinbaseTransactions", body).then((trans)=>{
+        transactionsById[accountID.id] = trans.response.data;
+      if (trans.response.data.length !== 0) {
+        allTransactions = allTransactions.concat(trans.response.data);
+      }
+    });
+  }
+  return [transactionsById, allTransactions]
+}
+
+async function getTransactions() {
+  let walletTransactions = {};
+  const tokens = await getWalletsHelper();
+  // console.log("wallets: " + JSON.stringify(tokens));
+  if (!tokens) {
+    return walletTransactions
+  }
+
+  // const helper = async(tokens,walletTransactions)=>{
+  //   for (const token of tokens) {
+  //     const [transactionsById, allTransactions] = await getTransactionsHelper(token);
+  //     walletTransactions[token.googleName] = allTransactions;
+  //   }}
+
+  // await helper(tokens,walletTransactions)
+  // console.log(walletTransactions)
+  const [transactionsById, allTransactions] = await getTransactionsHelper(tokens[0]);
+  return [transactionsById, allTransactions];
+}
+
+async function getTotalDeposited() {
+  const [transactionsById, allTransactions] = await getTransactions();
+  let deposited = 0.0;
+  for (const transaction of allTransactions){
+    if (transaction.type === "buy"){
+      deposited = deposited + parseFloat(transaction.native_amount.amount);
+    };
+  };
+  return deposited
 }
 
 async function getWalletsHelper() {
@@ -78,5 +128,4 @@ async function getWallets() {
   return structWallets
 }
 
-
-export { getCoins, getWallets };
+export { getCoins, getWallets, getTransactions, getTotalDeposited};

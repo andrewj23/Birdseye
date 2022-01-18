@@ -1,9 +1,15 @@
-// import React from "react";
+import React from "react";
 // // import Web3 from "web3/dist/web3.min";
-// // import { MoralisProvider } from "react-moralis";
-// // const Moralis = require('moralis');
-// const serverUrl = "https://dy3uthh5jfkf.usemoralis.com:2053/server";
-// const appId = "ft3ZqRMe79xbTPBDmu9aZtY443Lgu7EHNMSpvhOh";
+// import { MoralisProvider } from "react-moralis";
+// const Moralis = require('moralis');
+// import Web3 from 'web3'; // Only when using package mananger.
+// import Moralis from 'moralis';  // Only when using package mananger
+// import Moralis from "moralis/react-native.js";
+
+// await Moralis.enableWeb3()
+// const web3 = new Web3(Moralis.provider)
+const serverUrl = "https://dy3uthh5jfkf.usemoralis.com:2053/server";
+const appId = "ft3ZqRMe79xbTPBDmu9aZtY443Lgu7EHNMSpvhOh";
 // // Moralis.start({ serverUrl, appId });
 // // async function login() {
 // //   let user = Moralis.User.current();

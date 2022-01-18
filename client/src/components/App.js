@@ -14,6 +14,7 @@ import { get, post } from "../utilities";
 import SideBar from "./modules/SideBar";
 import TopTab from "./modules/TopTab";
 import AddWalletPopup from "./modules/AddWalletPopup"
+import { getTotalDeposited } from "../../../server/coinImports";
 
 /**
  * Define the "App" component
@@ -29,6 +30,15 @@ const App = () => {
       }
     });
   }, []);
+
+  const [principal, setPrincipal] = useState(0);
+
+  useEffect(()=>{
+    if (userId){
+      getTotalDeposited().then((response) =>{
+        setPrincipal(response)
+      })}
+  },[])
 
   const handleLogin = (res) => {
     console.log(`Logged in as ${res.profileObj.name}`);
@@ -52,7 +62,7 @@ const App = () => {
       handleLogin={handleLogin}
       handleLogout={handleLogout}/>
       <Router>
-        <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+        <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal} />
         <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <Messages path="/messages/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <NotFound default />
