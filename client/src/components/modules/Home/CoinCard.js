@@ -11,9 +11,9 @@ const CoinCard = (props) => {
       <div className="card-balance">{props.balance}</div>
       <div className="card-ticker">{props.token}</div>
       <div className="card-data">
-        <span className="card-currval">Current Value: {props.curval}</span>
-        <span className="card-changeinval">{/* api data */}-1.83%</span>
-        <div className="card-percentage">{/* calculation */}23% of Portfolio Value</div>
+        <span className="card-currval">Current Value: ${props.curval}</span>
+        {/*<span className="card-changeinval">/!* api data *!/-1.83%</span>*/}
+        {/*<div className="card-percentage">/!* calculation *!/23% of Portfolio Value</div>*/}
       </div>
     </div>
   );
