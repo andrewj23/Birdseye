@@ -10,7 +10,7 @@ const Home = (props) => {
     <div className={"home-container"}>
       <Summary userId ={props.userId} principal={props.principal}/>
       <div className="home-coinFeed">
-        <CoinFeed userId={props.userId}/>
+        <CoinFeed userId={props.userId} priceData={props.priceData}/>
       </div>
     </div>
   );

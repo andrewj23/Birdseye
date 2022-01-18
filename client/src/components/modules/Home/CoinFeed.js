@@ -2,7 +2,8 @@ import React, { Component, useEffect, useState } from "react";
 import CoinCard from "./CoinCard";
 import AddWalletPopup from "../AddWalletPopup";
 import { getCoins } from "../../../../../server/coinImports";
-import './CoinFeed.css'
+import getCoinData from "../../../../../server/nomics";
+import './CoinFeed.css';
 // const CoinGecko = require('coingecko-api');
 
 //2. Initiate the CoinGecko API Client
@@ -38,9 +39,10 @@ const CoinFeed = (props) => {
 
   if (!props.userId) {
     return (<div>Log in!</div>);
-  }
-  
+  };
+
   const filteredCoins = coins.filter((CoinObj)=>(parseFloat(CoinObj.balance.amount)!==0))
+
   return hasCoins ? (
     <>
     <div className='coinfeed-topContainer'>
@@ -62,6 +64,7 @@ const CoinFeed = (props) => {
         token={CoinObj.currency.code}
         balance={CoinObj.balance.amount}
         slug={CoinObj.currency.slug}
+        curval={(CoinObj.balance.amount*props.priceData[CoinObj.currency.code]).toFixed(2)}
         />
         )
       )}

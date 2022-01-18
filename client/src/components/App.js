@@ -4,6 +4,7 @@ import NotFound from "./pages/NotFound.js";
 import Home from "./pages/Home.js";
 import Wallets from "./pages/Wallets";
 import Messages from "./pages/Messages";
+import { getAllPrices } from "../../../server/nomics";
 //hello friend
 
 import "../utilities.css";
@@ -40,6 +41,14 @@ const App = () => {
       })}
   },[])
 
+  const [priceData, setPriceData] = useState({})
+
+  useEffect(()=>{
+    getAllPrices().then((prices)=>{
+      setPriceData(prices)
+    })
+  }, [])
+
   const handleLogin = (res) => {
     console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
@@ -62,7 +71,8 @@ const App = () => {
       handleLogin={handleLogin}
       handleLogout={handleLogout}/>
       <Router>
-        <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal} />
+        <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal}
+              priceData={priceData}/>
         <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <Messages path="/messages/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <NotFound default />
