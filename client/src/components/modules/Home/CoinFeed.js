@@ -61,6 +61,7 @@ const CoinFeed = (props) => {
         <CoinCard
         token={CoinObj.currency.code}
         balance={CoinObj.balance.amount}
+        slug={CoinObj.currency.slug}
         />
         )
       )}

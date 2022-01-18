@@ -1,4 +1,66 @@
-.Card-container {
+body {
+  color: white;
+}
+
+.card-container {
+  display: grid;
+  grid-template-areas: "icon ticker balance data";
+  height: 200px;
+  width: 375px;
+  background: var(--primary);
+  border-radius: 9.1px;
+  margin-top: 0px; 
+  margin-left: 0px; 
+  margin-bottom: var(--m);
+  margin-right: 0px;
+  box-shadow: 5px 5px 5px grey;
+}
+
+.card-icon {
+  grid-area: icon;
+  grid-row: 1;
+  grid-column: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-img {
+  height: 50px;
+  width: 50px;
+}
+
+.card-ticker {
+  grid-area: ticker;
+  grid-row: 2;
+  grid-column: 1;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.card-balance {
+  grid-area: balance;
+  grid-row: 1;
+  grid-column: 2;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 40px;
+}
+
+.card-data {
+  grid-area: data;
+  grid-row: 2;
+  grid-column: 2;
+  text-align: center;
+}
+
+/* .Card-container {
   height: 200px;
   width: 375px;
   background: var(--primary);
@@ -46,4 +108,4 @@
 }
 
 
-
+ */
