@@ -33,11 +33,13 @@ const App = () => {
   }, []);
 
   useEffect(()=>{
-    setPrincipal("Loading")
-      getTotalDeposited().then((response) =>{
-        setPrincipal("$"+String((Math.round(response * 100) / 100).toFixed(2)))
+    if (userId){
+      setPrincipal("Loading...")
+      getTotalDeposited().then((response) => {
+        setPrincipal("$" + String((Math.round(response * 100) / 100).toFixed(2)))
       })
-  },[])
+    }
+  },[userId])
 
   const handleLogin = (res) => {
     console.log(`Logged in as ${res.profileObj.name}`);
