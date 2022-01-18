@@ -57,7 +57,10 @@ router.post("/initsocket", (req, res) => {
 //coinbase
 const CLIENT_ID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678";
 const CLIENT_SECRET = "4514e203850ae432ce980d16ba56b7c06b2c5726ac7bb7c28a50bc8aaea721d0";
-const REDIRECT_URI = "http://localhost:3000/api/callback/"
+//USE FOR LOCALHOST///////////////////////////
+// const REDIRECT_URI = "http://localhost:3000/api/callback/"
+//USE FOR HEROKU DEPLOYMENT///////////////////////////
+const REDIRECT_URI = "https://birdseye-crypto.herokuapp.com/api/callback/"
 const SECRET = "134ef5504a94"
 
 // User gets redirected to this endpoint on successful login
@@ -91,7 +94,8 @@ router.get("/callback", async (req, res) => {
         refreshToken: response.data.refresh_token,
       });
       newWallet.save();
-      res.redirect('http://localhost:5000/');
+      // res.redirect('http://localhost:5000/');
+      res.redirect('https://birdseye-crypto.herokuapp.com/');
       // res.send({ response: response?.data });
     } catch (e) {
       console.log("Could not trade code for tokens", e)

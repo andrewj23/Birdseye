@@ -2,8 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import CoinCard from "./CoinCard";
 import AddWalletPopup from "../AddWalletPopup";
 import { getCoins } from "../../../../../server/coinImports";
-import getCoinData from "../../../../../server/nomics";
-import './CoinFeed.css';
+import './CoinFeed.css'
 // const CoinGecko = require('coingecko-api');
 
 //2. Initiate the CoinGecko API Client
@@ -24,12 +23,10 @@ const CoinFeed = (props) => {
   useEffect(() => {
     if (props.userId) {
       getCoins().then((coinsObj)=>{
-        console.log("HEREEEE: "+JSON.stringify(coinsObj))
         if (coinsObj.length === 0) {
           return
         }
         const cleanedCoinObj = coinsObj.map((coinObj)=>(coinObj.response.data))
-        console.log(JSON.stringify(cleanedCoinObj))
           setCoins(cleanedCoinObj[0])
       });
     }
@@ -38,11 +35,10 @@ const CoinFeed = (props) => {
   const hasCoins = coins.length !== 0;
 
   if (!props.userId) {
-    return (<div>Log in!</div>);
-  };
-
+    return (<div>Log in with Google!</div>);
+  }
+  
   const filteredCoins = coins.filter((CoinObj)=>(parseFloat(CoinObj.balance.amount)!==0))
-
   return hasCoins ? (
     <>
     <div className='coinfeed-topContainer'>
@@ -79,7 +75,7 @@ const CoinFeed = (props) => {
       </div>
       <AddWalletPopup />
     </div>
-    <div>No coins!</div>
+    <div>No coins or no wallet connected!</div>
     </>
   );
 };

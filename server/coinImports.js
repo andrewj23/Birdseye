@@ -15,6 +15,7 @@ async function getTransactionsHelper(walletObj) {
   console.log('started')
   const accountIDs = await post("/api/coinbaseAccount", {accessToken: walletObj.accessToken});
   for (const accountID of accountIDs.response.data) {
+    console.log(accountID)
     const body = {
       accessToken: walletObj.accessToken,
       accountID: accountID.id,
@@ -64,11 +65,12 @@ async function getWalletsHelper() {
   return await get("/api/allWallets");
   }
 
+  //TODO fix refresh token exchange
 async function getCoinsHelper(walletObj) {
     const response = await post("/api/coinbaseAccount", {accessToken: walletObj.accessToken});
-    console.log("get accounts response: "+JSON.stringify(response))
+    // console.log("get accounts response: "+JSON.stringify(response))
     if(response.expired) {
-      console.log("token expired... Log in again")
+      console.log("token expired... authorize coinbase again")
       // console.log("response.expired: "+response.expired);
       // await get("/api/deleteWallet",{accessToken: walletObj.accessToken})
       // const refreshResponse = await refreshAccessToken(walletObj);

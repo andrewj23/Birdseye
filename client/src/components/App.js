@@ -22,6 +22,7 @@ import { getTotalDeposited } from "../../../server/coinImports";
  */
 const App = () => {
   const [userId, setUserId] = useState(undefined);
+  const [principal, setPrincipal] = useState("$0.00");
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -32,14 +33,14 @@ const App = () => {
     });
   }, []);
 
-  const [principal, setPrincipal] = useState(0);
-
   useEffect(()=>{
     if (userId){
-      getTotalDeposited().then((response) =>{
-        setPrincipal(response)
-      })}
-  },[])
+      setPrincipal("Loading...")
+      getTotalDeposited().then((response) => {
+        setPrincipal("$" + String((Math.round(response * 100) / 100).toFixed(2)))
+      })
+    }
+  },[userId])
 
   const [priceData, setPriceData] = useState({})
 

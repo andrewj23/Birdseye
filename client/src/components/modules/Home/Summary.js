@@ -18,7 +18,7 @@ const Summary = (props) => {
       <span className="Summary-PV">$420,069</span>
       <span className="Summary-percentage">-1.83%</span>
       <p>insert chart here</p>
-      <div className="Summary-principal">Principal: ${(Math.round(props.principal * 100) / 100).toFixed(2)}</div>
+      <div className="Summary-principal">Principal: {props.principal}</div>
       <div className="Summary-change">Net Change: -$79,931</div>
     </div>
   
