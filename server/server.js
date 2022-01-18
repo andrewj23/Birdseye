@@ -30,9 +30,9 @@ const auth = require("./auth");
 
 // socket stuff
 const socketManager = require("./server-socket");
-
+require('dotenv').config();
 // Server configuration below
-const mongoConnectionURL = "mongodb+srv://apj23:xIMGO5ay02p0Ij7D@cluster0.71f0p.mongodb.net/BirdseyeDB?retryWrites=true&w=majority";
+const mongoConnectionURL = process.env.MONGO;
 const databaseName = "Birdseye";
 
 // connect to mongodb
@@ -56,7 +56,7 @@ app.use(express.json());
 // set up a session, which will persist login data across requests
 app.use(
   session({
-    secret: "session-secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
@@ -123,7 +123,7 @@ app.use((err, req, res, next) => {
 
 
 // hardcode port to 3000 for now
-const port = 3000;
+const port = process.env.PORT || 3000;
 const server = http.Server(app);
 socketManager.init(server);
 
