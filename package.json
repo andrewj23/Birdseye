@@ -36,6 +36,7 @@
     "node": "^17.3.0",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "nodemon": "^2.0.6",
+    "nomics": "^0.5.7",
     "os-browserify": "^0.3.0",
     "passport": "^0.5.2",
     "passport-coinbase": "^0.1.4",
