@@ -23,24 +23,12 @@ const CoinFeed = (props) => {
     if (props.userId)
     {
       getCoins().then((coinsObj)=>{
-        console.log("HEREEEE: "+JSON.stringify(coinsObj))
         if (coinsObj.length === 0) {
           return
         }
         const cleanedCoinObj = coinsObj.map((coinObj)=>(coinObj.response.data))
-        console.log(JSON.stringify(cleanedCoinObj))
           setCoins(cleanedCoinObj[0])
     });
-      //////////WORKS
-    //   get("/api/allWallets").then((walletCodeObjs) => {
-    //     const body = {
-    //       accessToken: walletCodeObjs.accessToken,
-    //     };
-    //     post("/api/coinbaseAccount", body).then((coinObjs) => {
-    //       setCoins(coinObjs.response.data);
-    //     });
-    //   });
-      ////////////////////
     }
   }, [props.userId]);
   let coinsList = null;
@@ -56,10 +44,10 @@ const CoinFeed = (props) => {
       />
     ));
   } else {
-    coinsList = <div>No coins!</div>;
+    coinsList = <div>No coins or no wallet connected!</div>;
   }
   if (!props.userId) {
-    return (<div> Log in! </div>);
+    return (<div> Log in to Google! </div>);
   }
   return (
     <div className="Feed-container">

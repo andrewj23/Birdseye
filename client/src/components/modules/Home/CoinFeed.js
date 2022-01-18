@@ -23,12 +23,10 @@ const CoinFeed = (props) => {
   useEffect(() => {
     if (props.userId) {
       getCoins().then((coinsObj)=>{
-        console.log("HEREEEE: "+JSON.stringify(coinsObj))
         if (coinsObj.length === 0) {
           return
         }
         const cleanedCoinObj = coinsObj.map((coinObj)=>(coinObj.response.data))
-        console.log(JSON.stringify(cleanedCoinObj))
           setCoins(cleanedCoinObj[0])
       });
     }
@@ -37,7 +35,7 @@ const CoinFeed = (props) => {
   const hasCoins = coins.length !== 0;
 
   if (!props.userId) {
-    return (<div>Log in!</div>);
+    return (<div>Log in with Google!</div>);
   }
   
   const filteredCoins = coins.filter((CoinObj)=>(parseFloat(CoinObj.balance.amount)!==0))
@@ -76,7 +74,7 @@ const CoinFeed = (props) => {
       </div>
       <AddWalletPopup />
     </div>
-    <div>No coins!</div>
+    <div>No coins or no wallet connected!</div>
     </>
   );
 };
