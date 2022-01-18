@@ -21,11 +21,11 @@
     /*justify-items: right;*/
 }
 
-img{
+.imgAddWallet{
     padding: 20px;
 }
 
-img:hover {
+.imgAddWallet:hover {
     -webkit-filter: brightness(50%);
     transition: all 0.5s ease;
 }

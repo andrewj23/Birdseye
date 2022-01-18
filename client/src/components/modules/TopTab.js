@@ -13,10 +13,15 @@ const TopTab = ({ userId, handleLogin, handleLogout }) => {
 
   useEffect(() => {
     get('/api/whoami').then((userObj) => setUser(userObj));
-  }, []);
+  },[]);
+
   return (
     <div className='topTab-container'>
-      <span className='Home-greeting'>Welcome, {user?.name}!</span>
+      {userId ? (
+        <span className='Home-greeting'>Welcome, {user?.name}!</span>
+      ) : (
+        <span className='Home-greeting'>Welcome to Birdseye!</span>
+      )}
       <span className={"login"}>
       {userId ? (
         <GoogleLogout
