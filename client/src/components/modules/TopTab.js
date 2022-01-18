@@ -3,7 +3,10 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { div } from "react-router-dom";
 import './TopTab.css'
 import { get } from "../../utilities";
-const GOOGLE_CLIENT_ID = "121479668229-t5j82jrbi9oejh7c8avada226s75bopn.apps.googleusercontent.com";
+// require('dotenv').config();
+
+// const GOOGLE_CLIENT_ID = process.env.GOOGLE_ID;
+const GOOGLE_CLIENT_ID = "950199412699-d6sfpl52prce9n34uu94qgh1f0ubd5gn.apps.googleusercontent.com";
 
 const TopTab = ({ userId, handleLogin, handleLogout }) => {
   const [user, setUser] = useState();
