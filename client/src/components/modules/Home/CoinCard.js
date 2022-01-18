@@ -1,21 +1,23 @@
 import React, { Component } from "react";
-import "./CoinCard.css"
+import "./CoinCard.css";
+
 
 const CoinCard = (props) => {
+  let imgFile = "./icons/" + props.slug + ".png";
+
   return (
-    <div className="Card-container">
-{/*<img />*/}
-<span className={"coin-name"}>{props.token}</span>
-<span>
-<span className={"coin-holding"}>{props.balance}</span>
-  <div className={"coin-info"}>
-<span>{props.currentPrice}</span>
-    <span className={"coin-change"}>-1.83</span>
-<p>23% of portfolio value</p>
-    </div>
-</span>
+    <div className="card-container">
+      <div className="card-icon"><img src={imgFile} alt="icon" className="card-img" /></div>
+      <div className="card-balance">{props.balance}</div>
+      <div className="card-ticker">{props.token}</div>
+      <div className="card-data">
+        <span className="card-currval">Current Value: {/* api data */}$20,800</span>
+        <span className="card-changeinval">{/* api data */}-1.83%</span>
+        <div className="card-percentage">{/* calculation */}23% of Portfolio Value</div>
+      </div>
     </div>
   );
 };
+
 
 export default CoinCard;
