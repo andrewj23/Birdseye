@@ -19,22 +19,9 @@ import { getWallets } from "../../../../../server/coinImports";
 // ]
 
 const WalletFeed = (props) => {
-  const [wallets, setWallets] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    if (props.userId) {
-      getWallets().then((walletsObj) => {
-        console.log("Wallets: " + JSON.stringify(walletsObj))
-        if (walletsObj.length === 0) {
-          return
-        }
-        setWallets(walletsObj)
-      });
-    }
-  }, [props.userId]);
-
-  const hasWallets = wallets.length !== 0;
+  const hasWallets = props.wallets.length !== 0;
 
   if (!props.userId) {
     return (<div>Log in!</div>);
@@ -50,7 +37,7 @@ const WalletFeed = (props) => {
       <AddWalletPopup />
     </div>
     <div className={"walletfeed-container"}>
-      {wallets.filter((walletObj) => {
+      {props.wallets.filter((walletObj) => {
         if (searchTerm === "") { 
           return walletObj 
         } else if (walletObj.name.toLowerCase().includes(searchTerm.toLowerCase())) {

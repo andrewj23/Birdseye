@@ -15,7 +15,7 @@ import { get, post } from "../utilities";
 import SideBar from "./modules/SideBar";
 import TopTab from "./modules/TopTab";
 import AddWalletPopup from "./modules/AddWalletPopup"
-import { getTotalDeposited } from "../../../server/coinImports";
+import { getCoins, getWallets, getTotalDeposited } from "../../../server/coinImports";
 
 /**
  * Define the "App" component
@@ -23,6 +23,9 @@ import { getTotalDeposited } from "../../../server/coinImports";
 const App = () => {
   const [userId, setUserId] = useState(undefined);
   const [principal, setPrincipal] = useState("$0.00");
+  const [priceData, setPriceData] = useState({})
+  const [coins, setCoins] = useState([]);
+  const [wallets, setWallets] = useState([]);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -42,7 +45,29 @@ const App = () => {
     }
   },[userId])
 
-  const [priceData, setPriceData] = useState({})
+  useEffect(() => {
+    if (userId) {
+      getCoins().then((coinsObj)=>{
+        if (coinsObj.length === 0) {
+          return
+        }
+        const cleanedCoinObj = coinsObj.map((coinObj)=>(coinObj.response.data))
+        setCoins(cleanedCoinObj[0])
+      });
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (userId) {
+      getWallets().then((walletsObj) => {
+        console.log("Wallets: " + JSON.stringify(walletsObj))
+        if (walletsObj.length === 0) {
+          return
+        }
+        setWallets(walletsObj)
+      });
+    }
+  }, [userId]);
 
   useEffect(()=>{
     getAllPrices().then((prices)=>{
@@ -72,9 +97,9 @@ const App = () => {
       handleLogin={handleLogin}
       handleLogout={handleLogout}/>
       <Router>
-        <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal}
+        <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal} coins={coins}
               priceData={priceData}/>
-        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} wallets={wallets} />
         <Messages path="/messages/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <NotFound default />
       </Router>
