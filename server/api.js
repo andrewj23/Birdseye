@@ -12,8 +12,7 @@ const express = require("express");
 const User = require("./models/user");
 const Coin = require("./models/coin");
 const Wallet = require("./models/wallet");
-const MessageGroup = require("./models/messagegroup");
-const Message = require("./models/message");
+const ForumPost = require("./models/forumpost");
 const Summary = require("./models/summary");
 const Visuals = require("./models/visuals");
 const Transactions = require("./models/transactions");
@@ -180,6 +179,28 @@ router.get("/allWallets", (req,res) =>{
     console.log("ERROR: api/allWallets: Failed to pull wallet list from Mongo. See Error: ",e)
     res.send({})
   }
+})
+
+router.get("/allForumPosts", (req,res) =>{
+  try {
+    ForumPost.find({}).then((posts) => {
+      console.log("api/allForumPosts: pulled all forum posts from Mongo.")
+      res.send(posts)
+    });
+  }
+  catch(e) {
+    console.log("ERROR: api/allForumPosts: Failed to pull forum posts from Mongo. See Error: ", e)
+    res.send({})
+  }
+})
+
+router.post("/forumPost", (req, res) => {
+  const newForumPost = new ForumPost({
+    author: req.user.name,
+    subject: req.body.subject,
+    content: req.body.content
+  });
+  newForumPost.save().then((post) => res.send(post));
 })
 
 router.post("/coinbaseAccount", async (req, res) => {

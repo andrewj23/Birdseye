@@ -25,6 +25,8 @@ const ForumFeed = (props) => {
               return postObj
             } else if (postObj.content.toLowerCase().includes(searchTerm.toLowerCase())) {
               return postObj
+            } else if (postObj.author.toLowerCase().includes(searchTerm.toLowerCase())) {
+              return postObj
             }
           }).map((postObj) => (
             <ForumCard subject={postObj.subject} content={postObj.content} author={postObj.author} />
