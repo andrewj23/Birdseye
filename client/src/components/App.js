@@ -80,10 +80,18 @@ const App = () => {
 
   useEffect(()=>{
     if (principal!=="Loading...") {
-      setNetChange(totalVal-principal)
-      setPercentChange(netChange/principal)
+      let princNumber = parseFloat(principal.slice(1))
+      setNetChange(totalVal-princNumber)
+      setPercentChange(netChange/princNumber)
     }
   }, [principal])
+
+  useEffect(()=>{
+    if (principal!=="Loading...") {
+      let princNumber = parseFloat(principal.slice(1))
+      setPercentChange((100*netChange/princNumber).toFixed(2))
+    }
+  }, [netChange])
 
   const handleLogin = (res) => {
     console.log(`Logged in as ${res.profileObj.name}`);
