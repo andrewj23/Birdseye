@@ -41,7 +41,7 @@ const App = () => {
       })
     }
     console.log("App/useEffect: Coinbase Verification status: "+ValidCoinbaseWallet);
-  },[userId]);
+  }); // Constantly checking if coinbase wallet is connected/valid
 
   useEffect(()=>{
     if (userId && ValidCoinbaseWallet){
