@@ -58,9 +58,9 @@ router.post("/initsocket", (req, res) => {
 const CLIENT_ID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678";
 const CLIENT_SECRET = "4514e203850ae432ce980d16ba56b7c06b2c5726ac7bb7c28a50bc8aaea721d0";
 //USE FOR LOCALHOST///////////////////////////
-// const REDIRECT_URI = "http://localhost:3000/api/callback/"
+const REDIRECT_URI = "http://localhost:3000/api/callback/"
 //USE FOR HEROKU DEPLOYMENT///////////////////////////
-const REDIRECT_URI = "https://birdseye-crypto.herokuapp.com/api/callback/"
+// const REDIRECT_URI = "https://birdseye-crypto.herokuapp.com/api/callback/"
 const SECRET = "134ef5504a94"
 
 // User gets redirected to this endpoint on successful login
@@ -94,8 +94,8 @@ router.get("/callback", async (req, res) => {
         refreshToken: response.data.refresh_token,
       });
       newWallet.save();
-      // res.redirect('http://localhost:5000/');
-      res.redirect('https://birdseye-crypto.herokuapp.com/');
+      res.redirect('http://localhost:5000/');
+      // res.redirect('https://birdseye-crypto.herokuapp.com/');
       // res.send({ response: response?.data });
     } catch (e) {
       console.log("Could not trade code for tokens", e)
@@ -119,35 +119,44 @@ router.get("/newCoinbaseToken", async (req, res) => {
       data
     };
     try {
+      // console.log(JSON.stringify(config))
       const response = await axios(config);
       // saving tokens for other requests
       // accessToken = response.data.access_token;
       // refreshToken = response.data.refresh_token;
-      console.log('LOOK HERE'+JSON.stringify(response))
+      // console.log('LOOK HERE'+JSON.stringify(response))
       // res.send(response);
-      // res.send({ response: response?.data });
+      res.send({ response: response?.data });
     } catch (e) {
       console.log("Could not trade refresh token for new token",e)
     }
 });
 
 //PROBABLY DONT NEED////////
-// router.get("/addWallet",(req,res) => {
-//   if (!req.user) {
-//     // not logged in
-//     console.log("User not logged in. Cannot add wallet.")
-//     return res.send({});
-//   }
-//     const newWallet = new Wallet({
-//       parent: req.user._id,
-//     // accessToken: req.query.accessToken,
-//     // refreshToken: req.query.refreshToken,
-//       accessToken: accessToken,
-//       refreshToken: refreshToken,
-//   });
-//   newWallet.save().then((wallet) => res.send(wallet));
-//   console.log("Added wallet")
-// });
+router.get("/updateWallet",(req,res) => {
+    console.log("started")
+    Wallet.findOneAndUpdate({ _id: req.query._id }, {
+      accessToken: req.query.accessToken,
+      refreshToken: req.query.refreshToken,
+    },{useFindAndModify: false},
+      function(err, result) {
+        if (err) {
+          console.log("Failed to add Wallet");
+          res.send("Failed to add Wallet"+err);
+        } else {
+          console.log("Success: added Wallet");
+          res.send(result);
+        }
+      });
+  //   const newWallet = new Wallet({
+  //     parent: req.user._id,
+  //   // accessToken: req.query.accessToken,
+  //   // refreshToken: req.query.refreshToken,
+  //     accessToken: accessToken,
+  //     refreshToken: refreshToken,
+  // });
+  // newWallet.save().then((wallet) => res.send(wallet));
+});
 ////////////////////////////
 router.get("/deleteWallet", (req,res) => {
   Wallet.findOneAndDelete({accessToken: req.query.accessToken}).then(()=>{
@@ -162,14 +171,14 @@ router.get("/coinbaseUser", async (req, res) => {
       method: 'get',
       url: 'https://api.coinbase.com/v2/user',
       headers: {
-        'Authorization': `Bearer ${accessToken}`
+        'Authorization': `Bearer ${req.query.accessToken}`
       }
     };
     const response = await axios(config);
-    res.send({ response: response?.data })
+    res.send({ response: response?.data, expired: false })
   } catch (e) {
-    console.log("No coinbase user")
-    return res.send({})
+    console.log("Invalid or expired token")
+    return res.send({expired: true})
   }
 });
 
@@ -181,7 +190,7 @@ router.get("/allWallets", (req,res) =>{
   }
   catch(e) {
     console.log("Could not pull wallets.: "+e)
-    res.send("Could not pull wallets.: "+e)
+    res.send({})
   }
 })
 
@@ -199,7 +208,7 @@ router.post("/coinbaseAccount", async (req, res) => {
     res.send({ response: response?.data, expired: false })
   } catch (e) {
     console.log("Could not get accounts")
-    res.send({expired:true})
+    res.send({response:"Could not get accounts", expired:true})
   }
 })
 

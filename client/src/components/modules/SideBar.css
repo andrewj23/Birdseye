@@ -9,6 +9,11 @@
 /*    background-color: #312F62FF;*/
 /*}*/
 
+/*@keyframes test{*/
+/*    0% {background-position-y: 0px}*/
+/*    100% {background-position-y: 100px}*/
+/*}*/
+
 .sideBar-graphic {
     grid-area: sideBar;
     grid-column-start: 1;
@@ -23,6 +28,9 @@
     height: 100vh;
     background-image: url("../../../dist/Frame.svg");
     background-size: 175px;
+    /*animation: test;*/
+    /*animation-duration: 3s;*/
+    /*animation-iteration-count: infinite;*/
 }
 
 .sideBar-container{
