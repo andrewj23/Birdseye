@@ -39,6 +39,8 @@ const CoinFeed = (props) => {
           return CoinObj 
         } else if (CoinObj.currency.code.toLowerCase().includes(searchTerm.toLowerCase())) {
           return CoinObj
+        } else if (CoinObj.currency.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+          return CoinObj
         }
       }).map((CoinObj) => (
         <CoinCard
