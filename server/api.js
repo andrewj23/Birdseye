@@ -17,6 +17,7 @@ const Summary = require("./models/summary");
 const Visuals = require("./models/visuals");
 const Transactions = require("./models/transactions");
 const coinbaseUser = require("./models/coinbaseUser");
+const PostSchema = require("./models/forumpost");
 
 // import authentication library
 const auth = require("./auth");
@@ -195,7 +196,7 @@ router.get("/allForumPosts", (req,res) =>{
   }
 })
 
-router.post("/forumPost", (req, res) => {
+router.post("/newForumPost", (req, res) => {
   const newForumPost = new ForumPost({
     author: req.user.name,
     subject: req.body.subject,

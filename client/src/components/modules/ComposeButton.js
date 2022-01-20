@@ -1,9 +1,10 @@
 import React, { useState, Component } from "react";
 import "./ComposeButton.css"
 import AriaModal from "react-aria-modal";
+import { get, post } from "../../utilities";
 
 
-const ComposeButton = () => {
+const ComposeButton = (props) => {
     const [ComposePopup, setComposePopup] = useState(false);
     const [Subject, setSubject] = useState("");
     const [Content, setContent] = useState("");
@@ -15,7 +16,17 @@ const ComposeButton = () => {
             setComposePopup(true);
         }
     }
-    
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        props.onSubmit && props.onSubmit({
+            content: Content,
+            subject: Subject
+        });
+        setSubject("");
+        setContent("");
+        togglePopup()
+    };
+
     const Popup = ComposePopup ?
         <AriaModal titleId="ComposePost Popup" verticallyCenter={true}>
             <div className="modal">
@@ -24,12 +35,14 @@ const ComposeButton = () => {
                 </header>
                 <div className={"input-container"}>
                     <input type="text" placeholder="Subject" className="subject-container" 
-                        onChange onChange={(event) => { setSubject(event.target.value); }} />
+                        onChange onChange={(event) => { setSubject(event.target.value); }}
+                    value={Subject}/>
                     <textarea type="text" placeholder="Content" className="content-container" 
-                        onChange onChange={(event) => { setContent(event.target.value); }} />
+                        onChange onChange={(event) => { setContent(event.target.value); }}
+                    value={Content}/>
                 </div>
                 <footer className="modal-footer">
-                    <button onClick={/* Submission protocol and */togglePopup}>Submit</button>
+                    <button onClick={handleSubmit}>Submit</button>
                 </footer>
             </div>
         </AriaModal>
@@ -43,5 +56,20 @@ const ComposeButton = () => {
     );
 };
 
+const NewPost = (props) => {
+    const addPost = (value) => {
+        const body = {
+            content: value.content,
+            subject: value.subject
+        };
+        post("/api/newForumPost", body).then((post) => {
+            // display this story on the screen
+            props.addNewPost(post);
+        });
+    };
 
-export default ComposeButton;
+    return <ComposeButton onSubmit={addPost} />;
+};
+
+
+export { NewPost};
