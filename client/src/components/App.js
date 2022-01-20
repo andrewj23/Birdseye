@@ -133,7 +133,7 @@ const App = () => {
               coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
               percentChange={percentChange}/>
         <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} wallets={wallets} />
-        <Forum path="/forum/" userId={userId} />
+        <Forum path="/forum/" userId={userId} userName={userName} />
         <NotFound default />
       </Router>
     </div>
