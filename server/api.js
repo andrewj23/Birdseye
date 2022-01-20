@@ -94,9 +94,10 @@ router.get("/callback", async (req, res) => {
       });
       newWallet.save();
       console.log("api/callback: Coinbase auth callback succeeded. Redirecting back...")
+      //USE FOR LOCALHOST///////////////////////////
       res.redirect('http://localhost:5000/');
+      //USE FOR HEROKU DEPLOYMENT///////////////////////////
       // res.redirect('https://birdseye-crypto.herokuapp.com/');
-      // res.send({ response: response?.data });
     } catch (e) {
       console.log("ERROR: api/callback: Could not trade code for access token with Coinbase. See error: ", e)
     }
@@ -218,7 +219,7 @@ router.post("/coinbaseAccount", async (req, res) => {
     res.send({ response: response?.data, expired: false })
   } catch (e) {
     console.log("ERROR: api/coinbaseAccount: could not get accounts from Coinbase. See error: ",e)
-    res.send({response:"ERROR: api/coinbaseAccount: could not get accounts from Coinbase. See error: "+e, expired:true})
+    res.send({response:"ERROR: api/coinbaseAccount: could not get accounts from Coinbase. See error: ",e, expired:true})
   }
 })
 

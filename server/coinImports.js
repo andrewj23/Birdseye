@@ -25,10 +25,12 @@ async function verifyCoinbaseWallet() {
 }
 
 async function refreshAccessToken(walletObj) {
+  // helper for verifyCoinbaseWallet
   return await get("/api/newCoinbaseToken",{refreshToken: walletObj.refreshToken});
 }
 
 async function verifyToken(walletObj) {
+  // helper for verifyCoinbaseWallet
   const response = await get("/api/coinbaseUser",{accessToken: walletObj.accessToken});
   if (response.expired) {
     console.log("verifyToken: token has expired. Trying to refresh...")
@@ -46,49 +48,42 @@ async function verifyToken(walletObj) {
   console.log("verifyToken: access token is not expired.")
 }
 
+async function getTransactions() {
+  // fetches all transactions (unordered) from Coinbase account
+  const wallets = await get("/api/allWallets");
+  if (!wallets) {
+    console.log("ERROR: getTransactions: wallet list in Mongo is empty.")
+    return {}
+  }
+  return await getTransactionsHelper(wallets[0]);
+}
+
 async function getTransactionsHelper(walletObj) {
-  const transactionsById = {};
+  // helper to getTransactions
   let allTransactions = [];
-  console.log('started')
   const accountIDs = await post("/api/coinbaseAccount", {accessToken: walletObj.accessToken});
+  if (accountIDs.expired) {
+    console.log("ERROR: getTransactionsHelper: Coinbase access token expired or invalid.")
+    return
+  }
   for (const accountID of accountIDs.response.data) {
-    // console.log(accountID)
     const body = {
       accessToken: walletObj.accessToken,
       accountID: accountID.id,
     }
     await get("/api/coinbaseTransactions", body).then((trans)=>{
-        transactionsById[accountID.id] = trans.response.data;
+      // transactionsById[accountID.id] = trans.response.data; IF WE WANT TRANSACTIONS BY TOKEN
       if (trans.response.data.length !== 0) {
         allTransactions = allTransactions.concat(trans.response.data);
       }
     });
   }
-  return [transactionsById, allTransactions]
-}
-
-async function getTransactions() {
-  let walletTransactions = {};
-  const tokens = await getWalletsHelper();
-  // console.log("wallets: " + JSON.stringify(tokens));
-  if (!tokens) {
-    return walletTransactions
-  }
-
-  // const helper = async(tokens,walletTransactions)=>{
-  //   for (const token of tokens) {
-  //     const [transactionsById, allTransactions] = await getTransactionsHelper(token);
-  //     walletTransactions[token.googleName] = allTransactions;
-  //   }}
-
-  // await helper(tokens,walletTransactions)
-  // console.log(walletTransactions)
-  const [transactionsById, allTransactions] = await getTransactionsHelper(tokens[0]);
-  return [transactionsById, allTransactions];
+  return allTransactions
 }
 
 async function getTotalDeposited() {
-  const [transactionsById, allTransactions] = await getTransactions();
+  // returns total USD deposited to Coinbase
+  const allTransactions = await getTransactions();
   let deposited = 0.0;
   for (const transaction of allTransactions){
     if (transaction.type === "buy"){
@@ -98,59 +93,37 @@ async function getTotalDeposited() {
   return deposited
 }
 
-async function getWalletsHelper() {
-  return await get("/api/allWallets");
-  }
-
-  //TODO fix refresh token exchange
-async function getCoinsHelper(walletObj) {
-    const response = await post("/api/coinbaseAccount", {accessToken: walletObj.accessToken});
-    if(response.expired) {
-      return
-    }
-    return response
-  }
-
 async function getCoins() {
-    let coins = [];
-    const tokens = await getWalletsHelper();
-  // console.log("wallets: " + JSON.stringify(tokens));
-    if (!tokens) {
-      return coins
-    }
-
-    const helper = async(tokens,coins)=>{
-    for (const token of tokens) {
-      const coinObj = await getCoinsHelper(token);
-      await coins.push(coinObj);
-    }}
-
-    await helper(tokens,coins)
-    return coins
+  // returns list of all coin accounts on Coinbase
+  const wallets = await get("/api/allWallets");
+  if (!wallets) {
+    return []
+  }
+      return await getCoinsHelper(wallets[0]);
 }
 
 async function getWallets() {
-  let structWallets = [];
-  const wallets = await getWalletsHelper();
-  if (!wallets) { return structWallets }
-  
-  const helper = async (wallets, structWallets) => {
-    for (const wallet of wallets) {
-      let name = "Coinbase";  // set to Coinbase because currently only supported wallet type
-      let tokens = [];
-      const tokensObj = await getCoinsHelper(wallet);
-      const cleanedTokensObj = tokensObj.response.data
-      const filteredTokens = cleanedTokensObj.filter((tokenObj) => (parseFloat(tokenObj.balance.amount) !== 0))
-      tokens = filteredTokens.map((TokenObj) => (
-        { token: TokenObj.currency.code, balance: TokenObj.balance.amount }
-      ));
-      let structWallet = { name: name, tokens: tokens }
-      await structWallets.push(structWallet);
-    }
-  }
+  // returns list of wallets: {Wallet name: Token list}
+  const wallets = await get("/api/allWallets");
+  if (!wallets) { return [] }
+  let name = "Coinbase";  // set to Coinbase because currently only supported wallet type
+  let tokens = [];
+  const tokensObj = await getCoinsHelper(wallets[0]);
+  const cleanedTokensObj = tokensObj.response.data
+  const filteredTokens = cleanedTokensObj.filter((tokenObj) => (parseFloat(tokenObj.balance.amount) !== 0))
+  tokens = filteredTokens.map((TokenObj) => (
+    { token: TokenObj.currency.code, balance: TokenObj.balance.amount }
+  ));
+  return { name: name, tokens: tokens }
+}
 
-  await helper (wallets, structWallets)
-  return structWallets
+async function getCoinsHelper(walletObj) {
+  // helper for getCoins and getWallets
+  const response = await post("/api/coinbaseAccount", {accessToken: walletObj.accessToken});
+  if(response.expired) {
+    return
+  }
+  return response
 }
 
 export { getCoins,

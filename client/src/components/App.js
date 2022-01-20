@@ -41,7 +41,7 @@ const App = () => {
       })
     }
     console.log("App/useEffect: Coinbase Verification status: "+ValidCoinbaseWallet);
-  },[userId]);
+  }); // Constantly checking if coinbase wallet is connected/valid
 
   useEffect(()=>{
     if (userId && ValidCoinbaseWallet){
@@ -58,8 +58,8 @@ const App = () => {
         if (coinsObj.length === 0) {
           return
         }
-        const cleanedCoinObj = coinsObj.map((coinObj)=>(coinObj.response.data))
-        setCoins(cleanedCoinObj[0])
+        // const cleanedCoinObj = coinsObj.map((coinObj)=>(coinObj.response.data))
+        setCoins(coinsObj.response.data)
       });
     }
   }, [userId, ValidCoinbaseWallet]);
@@ -69,11 +69,10 @@ const App = () => {
   useEffect(() => {
     if (userId && ValidCoinbaseWallet) {
       getWallets().then((walletsObj) => {
-        console.log("Wallets: " + JSON.stringify(walletsObj))
         if (walletsObj.length === 0) {
           return
         }
-        setWallets(walletsObj)
+        setWallets([walletsObj])
       });
     }
   }, [userId, ValidCoinbaseWallet]);
