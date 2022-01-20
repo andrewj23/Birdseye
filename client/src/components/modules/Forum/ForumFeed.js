@@ -15,7 +15,7 @@ const ForumFeed = (props) => {
           <input type="text" placeholder="Search" className="forum-input" 
             onChange={(event) => { setSearchTerm(event.target.value); }} />
         </div>
-        <ComposeButton />
+        <ComposeButton addNewPost={props.addNewPost} />
       </div>
       <div className={"forum-feedcontainer"}>
           {props.posts.filter((postObj) => {

@@ -15,7 +15,14 @@ const ComposeButton = () => {
             setComposePopup(true);
         }
     }
-    
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        props.onSubmit && props.onSubmit(value);
+        setSubject("");
+        setContent("");
+        togglePopup()
+    };
+
     const Popup = ComposePopup ?
         <AriaModal titleId="ComposePost Popup" verticallyCenter={true}>
             <div className="modal">
@@ -29,7 +36,7 @@ const ComposeButton = () => {
                         onChange onChange={(event) => { setContent(event.target.value); }} />
                 </div>
                 <footer className="modal-footer">
-                    <button onClick={/* Submission protocol and */togglePopup}>Submit</button>
+                    <button onClick={handleSubmit}>Submit</button>
                 </footer>
             </div>
         </AriaModal>
@@ -43,5 +50,20 @@ const ComposeButton = () => {
     );
 };
 
+const NewPost = (props) => {
+    const addPost = (value) => {
+        const body = {
+            content: value.content,
+            subject: value.subject
+        };
+        post("/api/newForumPost", body).then((post) => {
+            // display this story on the screen
+            props.addNewPost(post);
+        });
+    };
 
-export default ComposeButton;
+    return <ComposeButton onSubmit={addPost} />;
+};
+
+
+export { ComposeButton, NewPost};
