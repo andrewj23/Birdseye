@@ -21,11 +21,11 @@ const ForumFeed = (props) => {
           {props.posts.filter((postObj) => {
             if (searchTerm === "") { 
               return postObj 
-            } else if (postObj.subject.toLowerCase().includes(searchTerm.toLowerCase())) {
+            } else if (postObj.Subject.toLowerCase().includes(searchTerm.toLowerCase())) {
               return postObj
-            } else if (postObj.content.toLowerCase().includes(searchTerm.toLowerCase())) {
+            } else if (postObj.Content.toLowerCase().includes(searchTerm.toLowerCase())) {
               return postObj
-            } else if (postObj.author.toLowerCase().includes(searchTerm.toLowerCase())) {
+            } else if (postObj.AuthorName.toLowerCase().includes(searchTerm.toLowerCase())) {
               return postObj
             }
           }).map((postObj) => (

@@ -18,13 +18,12 @@ const Forum = (props) => {
     const addNewPost = (postObj) => {
         setPosts([postObj].concat(posts));
     };
-    // let posts = [
-    //     {subject: "Subject", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", author: "Nicholas Gustafson"}
-    // ]
-    return (
+    return props.userId ? (
         <div className={"forum-container"}>
             <ForumFeed posts={posts} addNewPost={addNewPost}/>
         </div>
+    ) : (
+      <div className={"forum-container"}>Log in to Google to view Forum!</div>
     );
 };
 
