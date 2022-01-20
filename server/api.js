@@ -12,12 +12,12 @@ const express = require("express");
 const User = require("./models/user");
 const Coin = require("./models/coin");
 const Wallet = require("./models/wallet");
-const MessageGroup = require("./models/messagegroup");
-const Message = require("./models/message");
+const ForumPost = require("./models/forumpost");
 const Summary = require("./models/summary");
 const Visuals = require("./models/visuals");
 const Transactions = require("./models/transactions");
 const coinbaseUser = require("./models/coinbaseUser");
+const PostSchema = require("./models/forumpost");
 
 // import authentication library
 const auth = require("./auth");
@@ -94,11 +94,13 @@ router.get("/callback", async (req, res) => {
         refreshToken: response.data.refresh_token,
       });
       newWallet.save();
+      console.log("api/callback: Coinbase auth callback succeeded. Redirecting back...")
+      //USE FOR LOCALHOST///////////////////////////
       res.redirect('http://localhost:5000/');
+      //USE FOR HEROKU DEPLOYMENT///////////////////////////
       // res.redirect('https://birdseye-crypto.herokuapp.com/');
-      // res.send({ response: response?.data });
     } catch (e) {
-      console.log("Could not trade code for tokens", e)
+      console.log("ERROR: api/callback: Could not trade code for access token with Coinbase. See error: ", e)
     }
   }
 });
@@ -119,45 +121,30 @@ router.get("/newCoinbaseToken", async (req, res) => {
       data
     };
     try {
-      // console.log(JSON.stringify(config))
       const response = await axios(config);
-      // saving tokens for other requests
-      // accessToken = response.data.access_token;
-      // refreshToken = response.data.refresh_token;
-      // console.log('LOOK HERE'+JSON.stringify(response))
-      // res.send(response);
+      console.log("api/newCoinbaseToken: Coinbase auth callback succeeded. Redirecting back...")
       res.send({ response: response?.data });
     } catch (e) {
-      console.log("Could not trade refresh token for new token",e)
+      console.log("ERROR: api/newCoinbaseToken: refresh token exchanged failed. See error: ", e)
     }
 });
 
-//PROBABLY DONT NEED////////
 router.get("/updateWallet",(req,res) => {
-    console.log("started")
     Wallet.findOneAndUpdate({ _id: req.query._id }, {
       accessToken: req.query.accessToken,
       refreshToken: req.query.refreshToken,
     },{useFindAndModify: false},
       function(err, result) {
         if (err) {
-          console.log("Failed to add Wallet");
-          res.send("Failed to add Wallet"+err);
+          console.log("ERROR: /updateWallet: failed to add wallet to Mongo. See error: ",err);
+          res.send("ERROR: /updateWallet: failed to add wallet to Mongo. See error: "+err);
         } else {
-          console.log("Success: added Wallet");
+          console.log("/updateWallet: wallet updated in Mongo.");
           res.send(result);
         }
       });
-  //   const newWallet = new Wallet({
-  //     parent: req.user._id,
-  //   // accessToken: req.query.accessToken,
-  //   // refreshToken: req.query.refreshToken,
-  //     accessToken: accessToken,
-  //     refreshToken: refreshToken,
-  // });
-  // newWallet.save().then((wallet) => res.send(wallet));
 });
-////////////////////////////
+//PROBABLY DONT NEED////////
 router.get("/deleteWallet", (req,res) => {
   Wallet.findOneAndDelete({accessToken: req.query.accessToken}).then(()=>{
     console.log("wallet deleted");
@@ -175,9 +162,10 @@ router.get("/coinbaseUser", async (req, res) => {
       }
     };
     const response = await axios(config);
+    console.log("api/coinbaseUser: valid Coinbase use found.")
     res.send({ response: response?.data, expired: false })
   } catch (e) {
-    console.log("Invalid or expired token")
+    console.log("ERROR: api/coinbaseUser: Invalid or expired token.")
     return res.send({expired: true})
   }
 });
@@ -185,13 +173,36 @@ router.get("/coinbaseUser", async (req, res) => {
 router.get("/allWallets", (req,res) =>{
   try {
     Wallet.find({ parent: req.user._id }).then((coinbaseUsers) => {
+      console.log("api/allWallets: pulled wallet list from Mongo.")
       res.send(coinbaseUsers)
     });
   }
   catch(e) {
-    console.log("Could not pull wallets.: "+e)
+    console.log("ERROR: api/allWallets: Failed to pull wallet list from Mongo. See Error: ",e)
     res.send({})
   }
+})
+
+router.get("/allForumPosts", (req,res) =>{
+  try {
+    ForumPost.find({}).then((posts) => {
+      console.log("api/allForumPosts: pulled all forum posts from Mongo.")
+      res.send(posts)
+    });
+  }
+  catch(e) {
+    console.log("ERROR: api/allForumPosts: Failed to pull forum posts from Mongo. See Error: ", e)
+    res.send({})
+  }
+})
+
+router.post("/newForumPost", (req, res) => {
+  const newForumPost = new ForumPost({
+    author: req.user.name,
+    subject: req.body.subject,
+    content: req.body.content
+  });
+  newForumPost.save().then((post) => res.send(post));
 })
 
 router.post("/coinbaseAccount", async (req, res) => {
@@ -205,10 +216,11 @@ router.post("/coinbaseAccount", async (req, res) => {
 
   try {
     const response = await axios(config);
+    console.log("api/coinbaseAccount: pulled accounts from Coinbase.")
     res.send({ response: response?.data, expired: false })
   } catch (e) {
-    console.log("Could not get accounts")
-    res.send({response:"Could not get accounts", expired:true})
+    console.log("ERROR: api/coinbaseAccount: could not get accounts from Coinbase. See error: ",e)
+    res.send({response:"ERROR: api/coinbaseAccount: could not get accounts from Coinbase. See error: ",e, expired:true})
   }
 })
 
@@ -222,22 +234,22 @@ router.get("/coinbaseTransactions",async (req,res) => {
   };
   try {
     const response = await axios(config);
+    console.log("api/coinbaseTransactions: pulled transactions from Coinbase.")
     res.send({ response: response?.data })
   } catch (e) {
-    console.log("Could not get transactions")
-    res.send("Could not get transactions")
+    console.log("ERROR: api/coinbaseTransactions: could not get transactions from Coinbase. See error: ",e)
+    res.send("ERROR: api/coinbaseTransactions: could not get transactions from Coinbase. See error: "+e)
   }
 })
 
-
 ///////// METAMASK
-router.get("/ethTransactions", (req,res) =>{
-
-})
-// anything else falls to this "not found" case
-router.all("*", (req, res) => {
-  console.log(`API route not found: ${req.method} ${req.url}`);
-  res.status(404).send({ msg: "API route not found" });
-});
+// router.get("/ethTransactions", (req,res) =>{
+//
+// })
+// // anything else falls to this "not found" case
+// router.all("*", (req, res) => {
+//   console.log(`API route not found: ${req.method} ${req.url}`);
+//   res.status(404).send({ msg: "API route not found" });
+// });
 
 module.exports = router;

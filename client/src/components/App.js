@@ -10,11 +10,13 @@ import { socket } from "../client-socket.js";
 import { get, post } from "../utilities";
 import SideBar from "./modules/SideBar";
 import TopTab from "./modules/TopTab";
-import { getCoins, getWallets, getTotalDeposited } from "../../../server/coinImports";
+import { getCoins, getWallets, getTotalDeposited, verifyCoinbaseWallet} from "../../../server/coinImports";
 
 
 const App = () => {
+  const [ValidCoinbaseWallet, setValidCoinbaseWallet] = useState(false)
   const [userId, setUserId] = useState(undefined);
+  const [userName, setUserName] = useState(undefined);
   const [principal, setPrincipal] = useState("$0.00");
   const [priceData, setPriceData] = useState({})
   const [coins, setCoins] = useState([]);
@@ -27,44 +29,53 @@ const App = () => {
       if (user._id) {
         // they are registered in the database, and currently logged in.
         setUserId(user._id);
+        setUserName(user.name)
       }
     });
   }, []);
 
+  useEffect(() => {
+    if (userId) {
+      verifyCoinbaseWallet().then((walletStatus) => {
+        setValidCoinbaseWallet(walletStatus);
+      })
+    }
+    console.log("App/useEffect: Coinbase Verification status: "+ValidCoinbaseWallet);
+  }); // Constantly checking if coinbase wallet is connected/valid
+
   useEffect(()=>{
-    if (userId){
+    if (userId && ValidCoinbaseWallet){
       setPrincipal("Loading...")
       getTotalDeposited().then((response) => {
         setPrincipal("$" + String((Math.round(response * 100) / 100).toFixed(2)))
       })
     }
-  },[userId])
+  },[userId, ValidCoinbaseWallet])
 
   useEffect(() => {
-    if (userId) {
+    if (userId && ValidCoinbaseWallet) {
       getCoins().then((coinsObj)=>{
         if (coinsObj.length === 0) {
           return
         }
-        const cleanedCoinObj = coinsObj.map((coinObj)=>(coinObj.response.data))
-        setCoins(cleanedCoinObj[0])
+        // const cleanedCoinObj = coinsObj.map((coinObj)=>(coinObj.response.data))
+        setCoins(coinsObj.response.data)
       });
     }
-  }, [userId]);
+  }, [userId, ValidCoinbaseWallet]);
 
   const filteredCoins = coins.filter((CoinObj)=>(parseFloat(CoinObj.balance.amount)!==0))
 
   useEffect(() => {
-    if (userId) {
+    if (userId && ValidCoinbaseWallet) {
       getWallets().then((walletsObj) => {
-        console.log("Wallets: " + JSON.stringify(walletsObj))
         if (walletsObj.length === 0) {
           return
         }
-        setWallets(walletsObj)
+        setWallets([walletsObj])
       });
     }
-  }, [userId]);
+  }, [userId, ValidCoinbaseWallet]);
 
   useEffect(()=>{
     getAllPrices().then((prices)=>{
@@ -98,12 +109,14 @@ const App = () => {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
+      setUserName(user.name);
       post("/api/initsocket", { socketid: socket.id });
     });
   };
 
   const handleLogout = () => {
     setUserId(undefined);
+    setUserName(undefined);
     post("/api/logout");
   };
 
@@ -112,6 +125,7 @@ const App = () => {
       <SideBar/>
       <TopTab
       userId={userId}
+      userName = {userName}
       handleLogin={handleLogin}
       handleLogout={handleLogout}/>
       <Router>

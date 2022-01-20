@@ -8,17 +8,12 @@ import { get } from "../../utilities";
 // const GOOGLE_CLIENT_ID = process.env.GOOGLE_ID;
 const GOOGLE_CLIENT_ID = "950199412699-d6sfpl52prce9n34uu94qgh1f0ubd5gn.apps.googleusercontent.com";
 
-const TopTab = ({ userId, handleLogin, handleLogout }) => {
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    get('/api/whoami').then((userObj) => setUser(userObj));
-  },[]);
+const TopTab = ({ userId, userName, handleLogin, handleLogout }) => {
 
   return (
     <div className='topTab-container'>
       {userId ? (
-        <span className='Home-greeting'>Welcome, {user?.name}!</span>
+        <span className='Home-greeting'>Welcome, {userName}!</span>
       ) : (
         <span className='Home-greeting'>Welcome to Birdseye!</span>
       )}
