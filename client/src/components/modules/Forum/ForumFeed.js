@@ -1,6 +1,7 @@
 import React, { useState, Component } from "react";
 import "./ForumFeed.css";
 import ForumCard from "./ForumCard";
+import ComposeButton from "../ComposeButton";
 
 
 const ForumFeed = (props) => {
@@ -8,12 +9,15 @@ const ForumFeed = (props) => {
     const hasPosts = props.posts.length !== 0;
 
     return hasPosts ? (
+      <>
       <div className='forum-topContainer'>
         <div className="forum-search">
           <input type="text" placeholder="Search" className="forum-input" 
             onChange={(event) => { setSearchTerm(event.target.value); }} />
         </div>
-        <div className={"forumfeed-container"}>
+        <ComposeButton />
+      </div>
+      <div className={"forum-feedcontainer"}>
           {props.posts.filter((postObj) => {
             if (searchTerm === "") { 
               return postObj 
@@ -25,8 +29,8 @@ const ForumFeed = (props) => {
           }).map((postObj) => (
             <ForumCard summary={postObj.summary} content={postObj.content} />
           ))}
-        </div>
       </div>
+      </>
     ) : (
       <div className='forum-topContainer'>
         <div className="forum-search">

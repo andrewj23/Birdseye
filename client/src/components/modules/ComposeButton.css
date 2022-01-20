@@ -1,0 +1,16 @@
+.composebutton-container {
+    outline: 2px dashed var(--primary);
+    width: auto;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.composebutton-container:hover{
+    background-color: var(--primary);
+    color: var(--white);
+    outline: 2px solid var(--white);
+}
