@@ -1,6 +1,8 @@
 .card-container {
   display: grid;
-  grid-template-areas: "icon ticker balance data";
+  grid-template-areas: "coin data";
+  grid-template-columns: 30% 70%;
+  grid-template-rows: 200px;
   height: 200px;
   width: 375px;
   background: var(--primary);
@@ -12,99 +14,51 @@
   box-shadow: 5px 5px 5px grey;
 }
 
-.card-icon {
-  grid-area: icon;
+.card-coin {
+  grid-area: coin;
   grid-row: 1;
   grid-column: 1;
-  display: flex;
+  display: inline;
   justify-content: center;
-  align-items: center;
+}
+
+.card-icon {
+  padding-top: 30px;
 }
 
 .card-img {
   height: 50px;
   width: 50px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .card-ticker {
-  grid-area: ticker;
-  grid-row: 2;
-  grid-column: 1;
-  justify-content: center;
-  align-items: center;
   text-align: center;
   font-weight: 600;
-  font-size: 30px;
+  font-size: 25px;
   color: white;
 }
 
 .card-balance {
-  grid-area: balance;
-  grid-row: 1;
-  grid-column: 2;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
+  text-align: left;
   font-weight: 500;
   font-size: 40px;
   color: white;
+  padding-top: 10px;
+  margin-bottom: 0px;
 }
 
 .card-data {
   grid-area: data;
-  grid-row: 2;
+  grid-row: 1;
   grid-column: 2;
-  text-align: center;
+  text-align: left;
   color: white;
+  padding-left: 15px;
 }
 
-/* .Card-container {
-  height: 200px;
-  width: 375px;
-  background: var(--primary);
-  border-radius: 9.1px;
-  margin-top: 0px; 
-  margin-left: 0px; 
-  margin-bottom: var(--m);
-  margin-right: 0px;
-  box-shadow: 5px 5px 5px grey;
+.card-changeinval {
+  padding-left: 10px;
 }
-
-.coin-name {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 27px;
-  color: #FFFFFF;
-  padding-left: var(--l);
-  padding-top: var(--l);
-}
-
-.coin-change {
-  color: red;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 27px;
-}
-
-.coin-holding {
-  color: var(--white);
-  font-weight: 500;
-  font-size: 60px;
-  line-height: 75px;
-  padding: 0px 0px 0px var(--l);
-}
-.coin-info {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 27px;
-  color: #FFFFFF;
-  padding-left: var(--l);
-  top: 285px;
-}
-
-
- */
