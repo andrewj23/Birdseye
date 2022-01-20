@@ -7,46 +7,43 @@ const SECRET = "134ef5504a94"
 const authURL = "https://www.coinbase.com/oauth/authorize?response_type=code&client_id="+clientID+"&redirect_uri="+redirectURL+"&state=134ef5504a94&scope=wallet:accounts:read&account=all";
 
 async function verifyCoinbaseWallet() {
-  const response = await get("/api/allWallets")
-  console.log("allWallets response: "+JSON.stringify(response))
-  if (response) {
-    const refresh = await verifyToken(response[0])
-    console.log(JSON.stringify(refresh))
-    // if (response.accessToken === refresh.accessToken){
-    //     return true
-    // }
-    // else {
-    //   Wallet.findByIdAndUpdate(response._id,{
-    //     accessToken: refresh.accessToken,
-    //     refreshToken: refresh.refreshToken,
-    //   }).then(()=>{})
-    // }
+  // checks if wallet list is empty. Returns false if empty. If not, checks if access token is expired. If expired,
+  // exchanges refresh token for new access token and updates wallet.
+  const wallets = await get("/api/allWallets");
+  if (wallets) {
+    try {
+      await verifyToken(wallets[0]);
+      return true
+    }
+    catch (e) {
+      console.log("verifyCoinbaseWallet: verification failed. See error: "+e)
+      return false
+    }
   }
+  console.log("verifyCoinbaseWallet: wallet list empty. Re-authorize Coinbase.")
+  return false
 }
 
-async function refreshAccessToken(tokenObj) {
-  return await get("/api/newCoinbaseToken",{refreshToken: tokenObj.refreshToken});
+async function refreshAccessToken(walletObj) {
+  return await get("/api/newCoinbaseToken",{refreshToken: walletObj.refreshToken});
 }
 
-async function verifyToken(tokenObj) {
-  console.log("token: "+JSON.stringify(tokenObj.accessToken))
-  const response = await get("/api/coinbaseUser",{accessToken: tokenObj.accessToken});
-  console.log("coinbaseUser response: "+JSON.stringify(response))
+async function verifyToken(walletObj) {
+  const response = await get("/api/coinbaseUser",{accessToken: walletObj.accessToken});
   if (response.expired) {
-    console.log("TOKEN EXPIRED")
-   const refreshResponse = await refreshAccessToken(tokenObj)
-    console.log("refresh response: "+JSON.stringify(refreshResponse));
+    console.log("verifyToken: token has expired. Trying to refresh...")
+   const refreshResponse = await refreshAccessToken(walletObj)
+    console.log("refreshResponse: "+JSON.stringify(refreshResponse))
     let body = {
-      _id: tokenObj._id,
+      _id: walletObj._id,
       accessToken: refreshResponse.response.access_token,
       refreshToken: refreshResponse.response.refresh_token,
     }
-    console.log("body: "+JSON.stringify(body));
-    const updateWallet = await get("/api/updateWallet",body);
-    console.log("updateWallet response: "+ updateWallet);
-    return refreshResponse
+    await get("/api/updateWallet",body);
+    console.log("verifyToken: used refresh token and added new wallet.");
+    return
   }
-  return tokenObj
+  console.log("verifyToken: access token is not expired.")
 }
 
 async function getTransactionsHelper(walletObj) {
@@ -108,22 +105,8 @@ async function getWalletsHelper() {
   //TODO fix refresh token exchange
 async function getCoinsHelper(walletObj) {
     const response = await post("/api/coinbaseAccount", {accessToken: walletObj.accessToken});
-    console.log("get accounts response: "+JSON.stringify(response))
     if(response.expired) {
-      console.log("token expired... authorize coinbase again"+JSON.stringify(walletObj))
-      // console.log("response.expired: "+response.expired);
-      // await get("/api/deleteWallet",{accessToken: walletObj.accessToken})
-      // const refreshResponse = await refreshAccessToken(walletObj);
-      // console.log("refresh response: "+JSON.stringify(refreshResponse));
       return
-      // const body = {
-      //   accessToken: refreshResponse.data.access_token,
-      //   refreshToken: refreshResponse.data.refresh_token,
-      // }
-      // await get("/api/addWallet",body)
-      // console.log("COMPLETED");
-      // return
-      // return getCoinsHelper(body)
     }
     return response
   }
