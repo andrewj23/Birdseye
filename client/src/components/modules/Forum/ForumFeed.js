@@ -21,7 +21,7 @@ const ForumFeed = (props) => {
           {props.posts.filter((postObj) => {
             if (searchTerm === "") { 
               return postObj 
-            } else if (postObj.summary.toLowerCase().includes(searchTerm.toLowerCase())) {
+            } else if (postObj.subject.toLowerCase().includes(searchTerm.toLowerCase())) {
               return postObj
             } else if (postObj.content.toLowerCase().includes(searchTerm.toLowerCase())) {
               return postObj
