@@ -16,7 +16,6 @@ const Summary = (props) => {
     <div className="Summary-container">
       <span className="Summary-PV">${props.totalVal.toFixed(2)}</span>
       <span className="Summary-percentage">{props.percentChange}%</span>
-      <p>insert chart here</p>
       <div className="Summary-principal">Principal: {props.principal}</div>
       <div className="Summary-change">Net Change: {props.netChange}</div>
     </div>
