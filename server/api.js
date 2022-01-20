@@ -197,7 +197,7 @@ router.post("/coinbaseAccount", async (req, res) => {
     res.send({ response: response?.data, expired: false })
   } catch (e) {
     console.log("ERROR: api/coinbaseAccount: could not get accounts from Coinbase. See error: ",e)
-    res.send({response:"ERROR: api/coinbaseAccount: could not get accounts from Coinbase. See error: "+e, expired:true})
+    res.send({response:"ERROR: api/coinbaseAccount: could not get accounts from Coinbase. See error: ",e, expired:true})
   }
 })
 
