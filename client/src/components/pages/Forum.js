@@ -23,7 +23,7 @@ const Forum = (props) => {
     // ]
     return (
         <div className={"forum-container"}>
-            <ForumFeed posts={/* props.posts */posts} addNewPost={addNewPost}/>
+            <ForumFeed posts={posts} addNewPost={addNewPost}/>
         </div>
     );
 };
