@@ -1,9 +1,12 @@
 import React, { useState, Component } from "react";
 import "./ComposeButton.css"
+import AriaModal from "react-aria-modal";
 
 
 const ComposeButton = () => {
     const [ComposePopup, setComposePopup] = useState(false);
+    const [Subject, setSubject] = useState("");
+    const [Content, setContent] = useState("");
 
     const togglePopup = () => {
         if (ComposePopup) {
@@ -14,7 +17,22 @@ const ComposeButton = () => {
     }
     
     const Popup = ComposePopup ?
-        <></>
+        <AriaModal titleId="ComposePost Popup" verticallyCenter={true}>
+            <div className="modal">
+                <header className="modal-header">
+                    <h2 className="modal-title">Compose New Forum Post</h2>
+                </header>
+                <div className={"input-container"}>
+                    <input type="text" placeholder="Subject" className="subject-container" 
+                        onChange onChange={(event) => { setSubject(event.target.value); }} />
+                    <textarea type="text" placeholder="Content" className="content-container" 
+                        onChange onChange={(event) => { setContent(event.target.value); }} />
+                </div>
+                <footer className="modal-footer">
+                    <button onClick={/* Submission protocol and */togglePopup}>Submit</button>
+                </footer>
+            </div>
+        </AriaModal>
     : false;
 
     return (
