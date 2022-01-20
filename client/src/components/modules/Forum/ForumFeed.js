@@ -1,7 +1,7 @@
 import React, { useState, Component } from "react";
 import "./ForumFeed.css";
 import ForumCard from "./ForumCard";
-import ComposeButton from "../ComposeButton";
+import {NewPost} from "../ComposeButton";
 
 
 const ForumFeed = (props) => {
@@ -15,7 +15,7 @@ const ForumFeed = (props) => {
           <input type="text" placeholder="Search" className="forum-input" 
             onChange={(event) => { setSearchTerm(event.target.value); }} />
         </div>
-        <ComposeButton addNewPost={props.addNewPost} />
+        <NewPost addNewPost={props.addNewPost} />
       </div>
       <div className={"forum-feedcontainer"}>
           {props.posts.filter((postObj) => {
@@ -39,6 +39,7 @@ const ForumFeed = (props) => {
           <input type="text" placeholder="Search" className="forum-input" 
             onChange={(event) => { setSearchTerm(event.target.value); }} />
         </div>
+        <NewPost addNewPost={props.addNewPost} />
         <div>No Posts!</div>
       </div>
     );

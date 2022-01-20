@@ -1,9 +1,10 @@
 import React, { useState, Component } from "react";
 import "./ComposeButton.css"
 import AriaModal from "react-aria-modal";
+import { get, post } from "../../utilities";
 
 
-const ComposeButton = () => {
+const ComposeButton = (props) => {
     const [ComposePopup, setComposePopup] = useState(false);
     const [Subject, setSubject] = useState("");
     const [Content, setContent] = useState("");
@@ -17,7 +18,10 @@ const ComposeButton = () => {
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.onSubmit && props.onSubmit(value);
+        props.onSubmit && props.onSubmit({
+            content: Content,
+            subject: Subject
+        });
         setSubject("");
         setContent("");
         togglePopup()
@@ -31,9 +35,11 @@ const ComposeButton = () => {
                 </header>
                 <div className={"input-container"}>
                     <input type="text" placeholder="Subject" className="subject-container" 
-                        onChange onChange={(event) => { setSubject(event.target.value); }} />
+                        onChange onChange={(event) => { setSubject(event.target.value); }}
+                    value={Subject}/>
                     <textarea type="text" placeholder="Content" className="content-container" 
-                        onChange onChange={(event) => { setContent(event.target.value); }} />
+                        onChange onChange={(event) => { setContent(event.target.value); }}
+                    value={Content}/>
                 </div>
                 <footer className="modal-footer">
                     <button onClick={handleSubmit}>Submit</button>
@@ -66,4 +72,4 @@ const NewPost = (props) => {
 };
 
 
-export { ComposeButton, NewPost};
+export { NewPost};

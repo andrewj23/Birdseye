@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect} from "react";
 import "../../utilities.css";
 import "./Forum.css";
 import ForumFeed from "../modules/Forum/ForumFeed";
+import {get} from "../../utilities";
 
 
 const Forum = (props) => {
