@@ -4,10 +4,10 @@ import "./Wallets.css";
 import WalletFeed from "../modules/Wallets/WalletFeed";
 
 
-const Wallets = ({ userId, handleLogin, handleLogout }) => {
+const Wallets = (props) => {
     return (
         <div className={"wallets-container"}>
-            <WalletFeed userId={userId} />
+            <WalletFeed userId={props.userId} wallets={props.wallets}/>
         </div>
     );
 };

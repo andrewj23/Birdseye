@@ -15,30 +15,15 @@ import './CoinFeed.css'
 
 
 const CoinFeed = (props) => {
-  const [coins, setCoins] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // called when the "Feed" component "mounts", i.e.
-  // when it shows up on screen
-  useEffect(() => {
-    if (props.userId) {
-      getCoins().then((coinsObj)=>{
-        if (coinsObj.length === 0) {
-          return
-        }
-        const cleanedCoinObj = coinsObj.map((coinObj)=>(coinObj.response.data))
-          setCoins(cleanedCoinObj[0])
-      });
-    }
-  }, [props.userId]);
-
-  const hasCoins = coins.length !== 0;
+  const hasCoins = props.coins.length !== 0;
 
   if (!props.userId) {
     return (<div>Log in with Google!</div>);
   }
   
-  const filteredCoins = coins.filter((CoinObj)=>(parseFloat(CoinObj.balance.amount)!==0))
+
   return hasCoins ? (
     <>
     <div className='coinfeed-topContainer'>
@@ -49,7 +34,7 @@ const CoinFeed = (props) => {
       <AddWalletPopup />
     </div>
     <div className="coinfeed-coins">
-      {filteredCoins.filter((CoinObj) => {
+      {props.coins.filter((CoinObj) => {
         if (searchTerm === "") { 
           return CoinObj 
         } else if (CoinObj.currency.code.toLowerCase().includes(searchTerm.toLowerCase())) {

@@ -8,9 +8,10 @@ import CoinFeed from "../modules/Home/CoinFeed";
 const Home = (props) => {
   return (
     <div className={"home-container"}>
-      <Summary userId ={props.userId} principal={props.principal}/>
+      <Summary userId ={props.userId} principal={props.principal} totalVal={props.totalVal}
+               netChange={props.netChange} percentChange={props.percentChange}/>
       <div className="home-coinFeed">
-        <CoinFeed userId={props.userId} priceData={props.priceData}/>
+        <CoinFeed userId={props.userId} coins={props.coins} priceData={props.priceData}/>
       </div>
     </div>
   );

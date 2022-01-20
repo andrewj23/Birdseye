@@ -15,7 +15,7 @@ import { get, post } from "../utilities";
 import SideBar from "./modules/SideBar";
 import TopTab from "./modules/TopTab";
 import AddWalletPopup from "./modules/AddWalletPopup"
-import { getTotalDeposited } from "../../../server/coinImports";
+import { getCoins, getWallets, getTotalDeposited } from "../../../server/coinImports";
 
 /**
  * Define the "App" component
@@ -23,6 +23,11 @@ import { getTotalDeposited } from "../../../server/coinImports";
 const App = () => {
   const [userId, setUserId] = useState(undefined);
   const [principal, setPrincipal] = useState("$0.00");
+  const [priceData, setPriceData] = useState({})
+  const [coins, setCoins] = useState([]);
+  const [wallets, setWallets] = useState([]);
+  const [netChange, setNetChange] = useState(0)
+  const [percentChange, setPercentChange] = useState(0)
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -42,13 +47,50 @@ const App = () => {
     }
   },[userId])
 
-  const [priceData, setPriceData] = useState({})
+  useEffect(() => {
+    if (userId) {
+      getCoins().then((coinsObj)=>{
+        if (coinsObj.length === 0) {
+          return
+        }
+        const cleanedCoinObj = coinsObj.map((coinObj)=>(coinObj.response.data))
+        setCoins(cleanedCoinObj[0])
+      });
+    }
+  }, [userId]);
+
+  const filteredCoins = coins.filter((CoinObj)=>(parseFloat(CoinObj.balance.amount)!==0))
+
+  useEffect(() => {
+    if (userId) {
+      getWallets().then((walletsObj) => {
+        console.log("Wallets: " + JSON.stringify(walletsObj))
+        if (walletsObj.length === 0) {
+          return
+        }
+        setWallets(walletsObj)
+      });
+    }
+  }, [userId]);
 
   useEffect(()=>{
     getAllPrices().then((prices)=>{
       setPriceData(prices)
     })
   }, [])
+
+  let totalVal = 0
+  for (const coin of filteredCoins){
+    totalVal+=priceData[coin.currency.code]*coin.balance.amount;
+    console.log('Portfolio Value: '+ JSON.stringify(totalVal))
+  };
+
+  useEffect(()=>{
+    if (principal!=="Loading...") {
+      setNetChange(totalVal-principal)
+      setPercentChange(netChange/principal)
+    }
+  }, [principal])
 
   const handleLogin = (res) => {
     console.log(`Logged in as ${res.profileObj.name}`);
@@ -73,8 +115,9 @@ const App = () => {
       handleLogout={handleLogout}/>
       <Router>
         <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal}
-              priceData={priceData}/>
-        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+              coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
+              percentChange={percentChange}/>
+        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} wallets={wallets} />
         <Messages path="/messages/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <NotFound default />
       </Router>
