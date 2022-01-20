@@ -7,14 +7,7 @@ import ForumFeed from "../modules/Forum/ForumFeed";
 const Forum = (props) => {
     //tests
     let posts = [
-        {summary: "1", content: "test1"},
-        {summary: "2", content: "test2"},
-        {summary: "1", content: "test1"},
-        {summary: "1", content: "test1"},
-        {summary: "1", content: "test1"},
-        {summary: "1", content: "test1"},
-        {summary: "1", content: "test1"},
-        {summary: "1", content: "test1"}
+        {subject: "Subject", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", author: "Nicholas Gustafson"}
     ]
     return (
         <div className={"forum-container"}>
