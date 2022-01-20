@@ -10,7 +10,7 @@ import { socket } from "../client-socket.js";
 import { get, post } from "../utilities";
 import SideBar from "./modules/SideBar";
 import TopTab from "./modules/TopTab";
-import { getCoins, getWallets, getTotalDeposited } from "../../../server/coinImports";
+import { getCoins, getWallets, getTotalDeposited, verifyCoinbaseWallet} from "../../../server/coinImports";
 
 
 const App = () => {
