@@ -1,0 +1,22 @@
+.forumcard-container {
+    background-color: var(--primary);
+    border-radius: 9.1px;
+    height: 150px;
+    width: 1150px;
+    box-shadow: 5px 5px 5px grey;
+}
+
+.forumcard-summary {
+    color: white;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 75px;
+}
+
+.forumcard-content {
+    color: white;
+    font-family: Poppins;
+    font-style: normal;
+}

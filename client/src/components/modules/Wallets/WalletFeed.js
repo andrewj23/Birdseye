@@ -1,8 +1,7 @@
-import React, { useState,useEffect,Component } from "react";
+import React, { useState } from "react";
 import WalletCard from "./WalletCard";
 import AddWalletPopup from "../AddWalletPopup";
 import "./WalletFeed.css"
-import { getWallets } from "../../../../../server/coinImports";
 
 
 // const wallets = [
