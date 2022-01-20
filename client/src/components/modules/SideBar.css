@@ -60,8 +60,11 @@
     background-image: url("../../../dist/logo.svg");
     background-repeat: no-repeat;
     background-size: contain;
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
+    margin-top: 5px;
+    margin-left: 5px;
+    align-self: flex-start;
 }
 
 .SideBar-name {

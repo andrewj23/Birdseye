@@ -11,15 +11,14 @@ const Summary = (props) => {
 //     setPrincipal(response)
 //   })}
 // },[props.userId])
-
   return (
 
     <div className="Summary-container">
-      <span className="Summary-PV">$420,069</span>
-      <span className="Summary-percentage">-1.83%</span>
+      <span className="Summary-PV">${props.totalVal.toFixed(2)}</span>
+      <span className="Summary-percentage">{props.percentChange}%</span>
       <p>insert chart here</p>
       <div className="Summary-principal">Principal: {props.principal}</div>
-      <div className="Summary-change">Net Change: -$79,931</div>
+      <div className="Summary-change">Net Change: {props.netChange}</div>
     </div>
   
     );

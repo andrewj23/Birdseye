@@ -23,7 +23,7 @@ const CoinFeed = (props) => {
     return (<div>Log in with Google!</div>);
   }
   
-  const filteredCoins = props.coins.filter((CoinObj)=>(parseFloat(CoinObj.balance.amount)!==0))
+
   return hasCoins ? (
     <>
     <div className='coinfeed-topContainer'>
@@ -34,7 +34,7 @@ const CoinFeed = (props) => {
       <AddWalletPopup />
     </div>
     <div className="coinfeed-coins">
-      {filteredCoins.filter((CoinObj) => {
+      {props.coins.filter((CoinObj) => {
         if (searchTerm === "") { 
           return CoinObj 
         } else if (CoinObj.currency.code.toLowerCase().includes(searchTerm.toLowerCase())) {

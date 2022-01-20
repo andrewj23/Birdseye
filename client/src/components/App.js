@@ -26,6 +26,8 @@ const App = () => {
   const [priceData, setPriceData] = useState({})
   const [coins, setCoins] = useState([]);
   const [wallets, setWallets] = useState([]);
+  const [netChange, setNetChange] = useState(0)
+  const [percentChange, setPercentChange] = useState(0)
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -57,6 +59,8 @@ const App = () => {
     }
   }, [userId]);
 
+  const filteredCoins = coins.filter((CoinObj)=>(parseFloat(CoinObj.balance.amount)!==0))
+
   useEffect(() => {
     if (userId) {
       getWallets().then((walletsObj) => {
@@ -74,6 +78,19 @@ const App = () => {
       setPriceData(prices)
     })
   }, [])
+
+  let totalVal = 0
+  for (const coin of filteredCoins){
+    totalVal+=priceData[coin.currency.code]*coin.balance.amount;
+    console.log('Portfolio Value: '+ JSON.stringify(totalVal))
+  };
+
+  useEffect(()=>{
+    if (principal!=="Loading...") {
+      setNetChange(totalVal-principal)
+      setPercentChange(netChange/principal)
+    }
+  }, [principal])
 
   const handleLogin = (res) => {
     console.log(`Logged in as ${res.profileObj.name}`);
@@ -97,8 +114,9 @@ const App = () => {
       handleLogin={handleLogin}
       handleLogout={handleLogout}/>
       <Router>
-        <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal} coins={coins}
-              priceData={priceData}/>
+        <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal}
+              coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
+              percentChange={percentChange}/>
         <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} wallets={wallets} />
         <Messages path="/messages/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <NotFound default />
