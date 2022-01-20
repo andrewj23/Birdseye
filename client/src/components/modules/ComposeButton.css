@@ -1,0 +1,62 @@
+.composebutton-container {
+    outline: 2px dashed var(--primary);
+    width: auto;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.composebutton-container:hover{
+    background-color: var(--primary);
+    color: var(--white);
+    outline: 2px solid var(--white);
+}
+
+.input-container {
+    display: grid;
+    grid-template-areas: "subject content";
+    grid-template-rows: auto auto;
+    grid-template-columns: 100%;
+    grid-row-gap: 8px;
+    padding-left: 6px;
+    padding-top: 5px;
+}
+
+.subject-container {
+    grid-area: subject;
+    grid-row: 1;
+    grid-column: 1;
+    width: 355px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: Poppins;
+    color: var(--primary);
+    outline: 2px solid var(--primary);
+    border-radius: 5px;
+    border: none;
+}
+
+.content-container {
+    grid-area: content;
+    grid-row: 2;
+    grid-column: 1;
+    width: 355px;
+    height: 84px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: Poppins;
+    color: var(--primary);
+    resize: none;
+    outline: 2px solid var(--primary);
+    border-radius: 5px;
+    border: none;
+}
+
+.content-container::-webkit-scrollbar-thumb {
+    background-color: #848484;
+    border-radius: 9.10004px;
+    opacity: 1;
+}

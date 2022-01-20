@@ -3,23 +3,16 @@ import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Home from "./pages/Home.js";
 import Wallets from "./pages/Wallets";
-import Messages from "./pages/Messages";
+import Forum from "./pages/Forum";
 import { getAllPrices } from "../../../server/nomics";
-//hello friend
-
 import "../utilities.css";
-
 import { socket } from "../client-socket.js";
-
 import { get, post } from "../utilities";
 import SideBar from "./modules/SideBar";
 import TopTab from "./modules/TopTab";
-import AddWalletPopup from "./modules/AddWalletPopup"
-import { getCoins, getWallets, getTotalDeposited, verifyCoinbaseWallet } from "../../../server/coinImports";
+import { getCoins, getWallets, getTotalDeposited } from "../../../server/coinImports";
 
-/**
- * Define the "App" component
- */
+
 const App = () => {
   const [ValidCoinbaseWallet, setValidCoinbaseWallet] = useState(false)
   const [userId, setUserId] = useState(undefined);
@@ -133,11 +126,12 @@ const App = () => {
               coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
               percentChange={percentChange}/>
         <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} wallets={wallets} />
-        <Messages path="/messages/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+        <Forum path="/forum/" />
         <NotFound default />
       </Router>
     </div>
   );
 };
+
 
 export default App;

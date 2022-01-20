@@ -3,11 +3,12 @@
     grid-template-areas:
     "title tokens transactions";
     grid-template-columns: 383.33px 383.33px 383.33px;
-    grid-column-gap: 5px;
+    grid-column-gap: 0px;
     background-color: var(--primary);
     border-radius: 9.1px;
     height: 150px;
     box-shadow: 5px 5px 5px grey;
+    width: 1150px;
 }
 
 .walletCard-type {

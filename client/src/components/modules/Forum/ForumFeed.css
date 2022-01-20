@@ -1,4 +1,4 @@
-.coinfeed-topContainer {
+.forum-topContainer {
     grid-area: searchBar;
     padding-left: 2px;
     grid-column: 1;
@@ -10,7 +10,7 @@
     border-radius: 5px;
 }
 
-.coinfeed-search {
+.forum-search {
     height: 25px;
     width: 325px;
     border-radius: 20px;
@@ -22,7 +22,7 @@
     
 }
 
-.coinfeed-input {
+.forum-input {
     font-size: 13px;
     color: white;
     font-weight: 500;
@@ -33,26 +33,24 @@
     outline: none;
 }
 
-.coinfeed-input::placeholder {
+.forum-input::placeholder {
     color: white;
 }
 
-.coinfeed-coins {
-    grid-area: coins;
+.forum-feedcontainer{
+    grid-area: forumFeed;
     grid-column: 1;
     grid-row: 2;
-    border-radius: 9.10004px;
-    height: 639px;
-    width: 395px;
+    height: 700px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
-.coinfeed-coins::-webkit-scrollbar {
+.forum-feedcontainer::-webkit-scrollbar {
     width: 8px;
 }
 
-.coinfeed-coins::-webkit-scrollbar-thumb {
+.forum-feedcontainer::-webkit-scrollbar-thumb {
     background-color: #848484;
     border-radius: 9.10004px;
     opacity: 1;
