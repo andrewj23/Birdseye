@@ -83,7 +83,8 @@ const App = () => {
 
   useEffect(()=>{
     getAllPrices().then((prices)=>{
-      setPriceData(prices)
+      prices["WLUNA"] = prices["LUNA"];
+      setPriceData(prices);
     })
   }, [])
 
