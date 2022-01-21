@@ -10,7 +10,7 @@ import { socket } from "../client-socket.js";
 import { get, post } from "../utilities";
 import SideBar from "./modules/SideBar";
 import TopTab from "./modules/TopTab";
-import { getCoins, getWallets, getTotalDeposited, verifyCoinbaseWallet} from "../../../server/coinImports";
+import { getCoins, getWallets, getTotalDeposited, verifyCoinbaseWallet, getTransactions} from "../../../server/coinImports";
 
 
 const App = () => {
@@ -21,8 +21,10 @@ const App = () => {
   const [priceData, setPriceData] = useState({})
   const [coins, setCoins] = useState([]);
   const [wallets, setWallets] = useState([]);
-  const [netChange, setNetChange] = useState(0)
-  const [percentChange, setPercentChange] = useState(0)
+  const [netChange, setNetChange] = useState(0);
+  const [percentChange, setPercentChange] = useState(0);
+  const [transactionsByID, setTransactionsByID] = useState({});
+  const [allTransactions, setAllTransactions] = useState([]);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -47,7 +49,9 @@ const App = () => {
     if (userId && ValidCoinbaseWallet){
       setPrincipal("Loading...")
       getTotalDeposited().then((response) => {
-        setPrincipal("$" + String((Math.round(response * 100) / 100).toFixed(2)))
+        setPrincipal("$" + String((Math.round(response[0] * 100) / 100).toFixed(2)));
+        setTransactionsByID(response[1]);
+        setAllTransactions(response[2])
       })
     }
   },[userId, ValidCoinbaseWallet])
@@ -132,7 +136,7 @@ const App = () => {
         <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal}
               coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
               percentChange={percentChange}/>
-        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} wallets={wallets} />
+        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} wallets={wallets} allTransactions={allTransactions} />
         <Forum path="/forum/" userId={userId}/>
         <NotFound default />
       </Router>
