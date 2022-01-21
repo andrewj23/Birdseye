@@ -45,7 +45,9 @@ async function verifyToken(walletObj) {
     console.log("verifyToken: used refresh token and added new wallet.");
     return
   }
-  console.log("verifyToken: access token is not expired.")
+  console.log("verifyToken: access token is not expired. User: ",
+    JSON.stringify(response.response.data.id),
+    JSON.stringify(response.response.data.name))
 }
 
 async function getTransactions() {
@@ -61,6 +63,7 @@ async function getTransactions() {
 async function getTransactionsHelper(walletObj) {
   // helper to getTransactions
   let allTransactions = [];
+  let transactionsByID = {};
   const accountIDs = await post("/api/coinbaseAccount", {accessToken: walletObj.accessToken});
   if (accountIDs.expired) {
     console.log("ERROR: getTransactionsHelper: Coinbase access token expired or invalid.")
@@ -72,25 +75,25 @@ async function getTransactionsHelper(walletObj) {
       accountID: accountID.id,
     }
     await get("/api/coinbaseTransactions", body).then((trans)=>{
-      // transactionsById[accountID.id] = trans.response.data; IF WE WANT TRANSACTIONS BY TOKEN
+      transactionsByID[accountID.id] = trans.response.data;
       if (trans.response.data.length !== 0) {
         allTransactions = allTransactions.concat(trans.response.data);
       }
     });
   }
-  return allTransactions
+  return [allTransactions, transactionsByID]
 }
 
 async function getTotalDeposited() {
   // returns total USD deposited to Coinbase
-  const allTransactions = await getTransactions();
+  const [allTransactions, transactionsByID] = await getTransactions();
   let deposited = 0.0;
   for (const transaction of allTransactions){
     if (transaction.type === "buy"){
       deposited = deposited + parseFloat(transaction.native_amount.amount);
     };
   };
-  return deposited
+  return [deposited, transactionsByID, allTransactions]
 }
 
 async function getCoins() {

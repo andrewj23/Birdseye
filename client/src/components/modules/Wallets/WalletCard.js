@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./WalletCard.css"
+import TransactionFeed from "./TransactionFeed";
 
 const WalletCard = (props) => {
   let coinsList = null;
@@ -20,6 +21,7 @@ const WalletCard = (props) => {
     </div>
     <div className="walletCard-transactions">
       Transaction History:
+      <TransactionFeed allTransactions={props.allTransactions}/>
     </div>
   </div>
   );

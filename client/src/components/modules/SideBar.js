@@ -4,6 +4,7 @@ import { Link } from "@reach/router";
 
 const SideBar = (props) => {
   return (
+    <div className='sideBar-backdrop'>
     <div className='sideBar-graphic'>
     <nav className='sideBar-container'>
       <div className="SideBar-flex">
@@ -14,6 +15,7 @@ const SideBar = (props) => {
           <div className='SideBar-name' />
       </div>
     </nav>
+    </div>
     </div>
   );
 };

@@ -13,9 +13,28 @@
 /*    0% {background-position-y: 0px}*/
 /*    100% {background-position-y: 100px}*/
 /*}*/
-@keyframes move {
+@keyframes moveBack {
+    from{
+        background-position: 0% 600.5px;
+    }
+}
+
+.sideBar-backdrop {
+    grid-area: sideBar;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-template-columns: 2fr 1fr;
+    grid-column-gap: 0px;
+    background: url("../../../dist/bgBack.svg") 0% 0%;
+    background-size: 175px;
+    animation: moveBack 30s infinite linear;
+}
+
+@keyframes moveFront {
     to{
-        background-position: 0% 701px;
+        background-position: 0% 638px;
     }
 }
 
@@ -25,14 +44,10 @@
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 3;
-    display: grid;
-    grid-template-areas:
-    "color waves";
-    grid-template-columns: 2fr 1fr;
     grid-column-gap: 0px;
-    background: url("../../../dist/Frame.svg") 0% 0%;
-    background-size: auto;
-    animation: move 60s infinite linear;
+    background: url("../../../dist/bgFront.svg") 0% 0%;
+    background-size: 175px;
+    animation: moveFront 90s infinite linear;
 }
 
 .sideBar-container{

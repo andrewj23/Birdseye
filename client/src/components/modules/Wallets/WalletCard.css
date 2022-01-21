@@ -2,7 +2,9 @@
     display: grid;
     grid-template-areas:
     "title tokens transactions";
-    grid-template-columns: 383.33px 383.33px 383.33px;
+    /*grid-template-columns: 383.33px 383.33px 383.33px;*/
+    grid-template-columns: 1fr 1fr 2fr;
+    justify-items: center;
     grid-column-gap: 0px;
     background-color: var(--primary);
     border-radius: 9.1px;
@@ -43,4 +45,5 @@
     font-family: Poppins;
     font-style: normal;
     padding-top: 5px;
+    overflow: scroll;
 }
