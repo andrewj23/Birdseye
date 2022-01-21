@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./AddWalletPopup.css"
 import AriaModal from "react-aria-modal";
 import coinbaseLogo from "../../../dist/coinbase.svg";
-import { verifyCoinbaseWallet } from "../../../../server/coinImports";
 import MetamaskConnect from "./MetamaskConnect";
 const clientID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678";
 //USE FOR LOCALHOST///////////////////////////
@@ -33,7 +32,6 @@ const AddWalletPopup = (props) => {
         </header>
         <div className={"icons-container"}>
         <a href={authURL}><img className={"imgAddWallet"} src={coinbaseLogo}/></a>
-          <div onClick={verifyCoinbaseWallet}>verify</div>
         {/*<MetamaskConnect/>*/}
         </div>
         <footer className="modal-footer">

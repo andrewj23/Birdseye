@@ -91,7 +91,6 @@ const App = () => {
   let totalVal = 0
   for (const coin of filteredCoins){
     totalVal+=priceData[coin.currency.code]*coin.balance.amount;
-    console.log('Portfolio Value: '+ JSON.stringify(totalVal))
   };
 
   useEffect(()=>{
