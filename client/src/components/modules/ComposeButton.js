@@ -58,6 +58,9 @@ const ComposeButton = (props) => {
 
 const NewPost = (props) => {
     const addPost = (value) => {
+        if (value.subject === "" || value.content === "") {
+            return
+        }
         const body = {
             content: value.content,
             subject: value.subject
