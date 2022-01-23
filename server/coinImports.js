@@ -115,7 +115,7 @@ async function getWallets() {
   const cleanedTokensObj = tokensObj.response.data
   const filteredTokens = cleanedTokensObj.filter((tokenObj) => (parseFloat(tokenObj.balance.amount) !== 0))
   tokens = filteredTokens.map((TokenObj) => (
-    { token: TokenObj.currency.code, balance: TokenObj.balance.amount }
+    { token: TokenObj.currency.code, balance: TokenObj.balance.amount, slug: TokenObj.currency.slug }
   ));
   return { name: name, tokens: tokens }
 }

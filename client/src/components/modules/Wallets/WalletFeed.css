@@ -42,7 +42,6 @@
     grid-row: 2;
     height: 700px;
     overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 .walletfeed-container::-webkit-scrollbar {

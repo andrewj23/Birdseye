@@ -7,7 +7,7 @@ import WalletFeed from "../modules/Wallets/WalletFeed";
 const Wallets = (props) => {
     return (
         <div className={"wallets-container"}>
-            <WalletFeed userId={props.userId} wallets={props.wallets} allTransactions={props.allTransactions}/>
+            <WalletFeed userId={props.userId} wallets={props.wallets} allTransactions={props.allTransactions} coins={props.coins}/>
         </div>
     );
 };
