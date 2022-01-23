@@ -6,30 +6,3 @@
     box-shadow: 5px 5px 5px grey;
     margin-bottom: var(--m);
 }
-
-.forumcard-subject {
-    color: white;
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    padding-left: 15px;
-    padding-top: 10px;
-
-}
-
-.forumcard-content {
-    color: white;
-    font-family: Poppins;
-    font-style: normal;
-    padding-left: 15px;
-    padding-top: 10px;
-}
-
-.forumcard-author {
-    color: white;
-    font-family: Poppins;
-    font-style: normal;
-    padding-left: 15px;
-    padding-top: 10px;
-}

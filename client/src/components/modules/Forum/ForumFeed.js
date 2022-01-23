@@ -29,7 +29,7 @@ const ForumFeed = (props) => {
               return postObj
             }
           }).map((postObj) => (
-            <ForumCard subject={postObj.Subject} content={postObj.Content} author={postObj.AuthorName} />
+            <ForumCard subject={postObj.Subject} content={postObj.Content} author={postObj.AuthorName} id={postObj._id} />
           ))}
       </div>
       </>

@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import "./ForumCard.css"
+import "./ForumCard.css";
+import Post from "./Post";
+import CommentsBlock from "./CommentsBlock";
 
 
 const ForumCard = (props) => {
   return (
     <div className={"forumcard-container"}>
-      <div className="forumcard-subject">{ props.subject }</div>
-      <div className="forumcard-content">{ props.content }</div> 
-      <div className="forumcard-author">{ props.author }</div> 
+      <Post subject={props.subject} content={props.content} author={props.author} />
+      <CommentsBlock id={props.id} />
     </div>
   );
 };

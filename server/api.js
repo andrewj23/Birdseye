@@ -13,6 +13,7 @@ const User = require("./models/user");
 const Coin = require("./models/coin");
 const Wallet = require("./models/wallet");
 const ForumPost = require("./models/forumpost");
+const ForumComment = require("./models/forumcomment");
 const Summary = require("./models/summary");
 const Visuals = require("./models/visuals");
 const Transactions = require("./models/transactions");
@@ -180,7 +181,7 @@ router.get("/allWallets", (req,res) =>{
     console.log("ERROR: api/allWallets: Failed to pull wallet list from Mongo. See Error: ",e)
     res.send({})
   }
-})
+});
 
 router.get("/allForumPosts", (req,res) =>{
   try {
@@ -193,7 +194,7 @@ router.get("/allForumPosts", (req,res) =>{
     console.log("ERROR: api/allForumPosts: Failed to pull forum posts from Mongo. See Error: ", e)
     res.send({})
   }
-})
+});
 
 router.post("/newForumPost", (req, res) => {
   const newForumPost = new ForumPost({
@@ -203,7 +204,23 @@ router.post("/newForumPost", (req, res) => {
     Content: req.body.content
   });
   newForumPost.save().then((post) => res.send(post));
-})
+});
+
+router.get("/getPostComments", (req, res) => {
+  ForumComment.find({ Parent: req.query.parent }).then((comments) => {
+    res.send(comments);
+  });
+});
+
+router.post("/newComment", (req, res) => {
+  const newForumComment = new ForumComment({
+    AuthorID: req.user._id,
+    AuthorName: req.user.name,
+    Parent: req.body.parent,
+    Content: req.body.content
+  });
+  newForumComment.save().then((comment) => res.send(comment));
+});
 
 router.post("/coinbaseAccount", async (req, res) => {
   const config = {
