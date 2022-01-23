@@ -76,6 +76,7 @@ const App = () => {
         if (walletsObj.length === 0) {
           return
         }
+        console.log(JSON.stringify(walletsObj))
         setWallets([walletsObj])
       });
     }
@@ -83,14 +84,14 @@ const App = () => {
 
   useEffect(()=>{
     getAllPrices().then((prices)=>{
-      setPriceData(prices)
+      prices["WLUNA"] = prices["LUNA"];
+      setPriceData(prices);
     })
   }, [])
 
   let totalVal = 0
   for (const coin of filteredCoins){
     totalVal+=priceData[coin.currency.code]*coin.balance.amount;
-    console.log('Portfolio Value: '+ JSON.stringify(totalVal))
   };
 
   useEffect(()=>{
@@ -136,7 +137,7 @@ const App = () => {
         <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal}
               coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
               percentChange={percentChange}/>
-        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} wallets={wallets} allTransactions={allTransactions} />
+        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} coins={filteredCoins} userId={userId} wallets={wallets} allTransactions={allTransactions} />
         <Forum path="/forum/" userId={userId}/>
         <NotFound default />
       </Router>

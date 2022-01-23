@@ -150,7 +150,7 @@ router.get("/deleteWallet", (req,res) => {
   });
 })
 
-// Gets the user details TODO: ADD BODY WITH TOKEN
+// Gets the user details
 router.get("/coinbaseUser", async (req, res) => {
   try {
     const config = {

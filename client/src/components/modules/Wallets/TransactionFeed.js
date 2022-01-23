@@ -7,8 +7,9 @@ const Transaction = (props) => {
   // token={transactionObj.amount.currency}
   // value={transactionObj.native_amount.amount}
   // title={transactionObj.details.title}
+  const timestamp = new Date(props.time).toString()
   return (
-    <div>{props.title} {props.time}: {props.amount} of {props.token} worth ${props.value}</div>
+    <div>{props.title} {timestamp}: {props.amount} of {props.token} worth ${props.value}</div>
   )
 }
 
