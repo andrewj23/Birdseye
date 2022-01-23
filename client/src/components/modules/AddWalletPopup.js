@@ -23,6 +23,7 @@ const AddWalletPopup = (props) => {
     <AriaModal
       titleId="AddWallet Popup"
       verticallyCenter={true}
+      onExit={togglePopup}
     >
       <div className="modal">
         <header className="modal-header">
@@ -34,11 +35,11 @@ const AddWalletPopup = (props) => {
         <a href={authURL}><img className={"imgAddWallet"} src={coinbaseLogo}/></a>
         {/*<MetamaskConnect/>*/}
         </div>
-        <footer className="modal-footer">
+        {/* <footer className="modal-footer">
           <button onClick={togglePopup}>
             Close
           </button>
-        </footer>
+        </footer> */}
       </div>
     </AriaModal> : false;
     return (

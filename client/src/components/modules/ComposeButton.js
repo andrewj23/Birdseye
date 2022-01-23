@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, Component } from "react";
+import React, { useState, Component } from "react";
 import "./ComposeButton.css"
 import AriaModal from "react-aria-modal";
 import { get, post } from "../../utilities";
@@ -6,12 +6,13 @@ import { get, post } from "../../utilities";
 
 const ComposeButton = (props) => {
     const [ComposePopup, setComposePopup] = useState(false);
-    const ref = useRef();
     const [Subject, setSubject] = useState("");
     const [Content, setContent] = useState("");
 
     const togglePopup = () => {
         if (ComposePopup) {
+            setSubject("");
+            setContent("");
             setComposePopup(false);
         } else {
             setComposePopup(true);
@@ -28,23 +29,9 @@ const ComposeButton = (props) => {
         togglePopup()
     };
 
-    useEffect(() => {
-        const checkIfClickedOutside = (event) => {
-            if (ComposePopup && ref.current && !ref.current.contains(event.target)) {
-                setSubject("");
-                setContent("");
-                setComposePopup(false);
-            }
-        };
-        document.addEventListener("click", checkIfClickedOutside);
-        return () => {
-            document.removeEventListener("click", checkIfClickedOutside);
-        };
-    }, [ComposePopup]);
-
     const Popup = ComposePopup ?
-        <AriaModal titleId="ComposePost Popup" verticallyCenter={true}>
-            <div className="modal" ref={ref}>
+        <AriaModal titleId="ComposePost Popup" verticallyCenter={true} onExit={togglePopup}>
+            <div className="modal">
                 <header className="modal-header">
                     <h2 className="modal-title">Compose New Forum Post</h2>
                 </header>
