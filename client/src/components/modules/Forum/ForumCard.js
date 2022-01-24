@@ -8,7 +8,7 @@ const ForumCard = (props) => {
   return (
     <div className={"forumcard-container"}>
       <Post subject={props.subject} content={props.content} author={props.author} />
-      <CommentsBlock id={props.id} />
+      <div className="commentsblock"><CommentsBlock id={props.id} /></div>
     </div>
   );
 };

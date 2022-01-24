@@ -1,5 +1,6 @@
 .comment-container {
-
+    padding-left: 15px;
+    color: var(--primary);
 }
 
 .comment-author {
@@ -7,5 +8,5 @@
 }
 
 .comment-content {
-    
+
 }

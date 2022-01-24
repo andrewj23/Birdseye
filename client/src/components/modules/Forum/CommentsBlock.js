@@ -15,7 +15,7 @@ const CommentsBlock = (props) => {
     }, []);
 
     let StructuredComments = comments.map((commentObj) => (
-        <div className="comment-container">{commentObj.AuthorName} | {commentObj.Content}</div>
+        <div className="comment-container">{commentObj.AuthorName}:   {commentObj.Content}</div>
     ));
 
     return (

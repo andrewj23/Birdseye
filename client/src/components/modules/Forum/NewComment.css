@@ -1,7 +1,25 @@
 .input {
-
+    margin-left: 15px;
+    font-size: 13px;
+    color: var(--primary);
+    font-weight: 500;
+    font-family: Poppins;
+    outline: none;
+    border: 0px;
+    width: 35%;
+    height: 25px;
 }
 
-.button {
-    
+.button1 {
+    text-align: center;
+    height: 27px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: Poppins;
+    border-radius: 0px;
+}
+
+.span {
+    display: flex;
+
 }

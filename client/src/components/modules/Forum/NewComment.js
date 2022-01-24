@@ -20,9 +20,9 @@ const NewComment = (props) => {
 
     return (
         <>
-        <span>
-            <input type="text" className="input" onChange={(event) => { setContent(event.target.value); }}></input>
-            <button className="button" onClick={addNewComment}></button>
+        <span className="span">
+            <input type="text" className="input" placeholder="New Comment" onChange={(event) => { setContent(event.target.value); }}></input>
+            <button className="button1" onClick={addNewComment}>Submit</button>
         </span>
         </>
     );
