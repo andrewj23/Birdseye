@@ -44,7 +44,18 @@
     font-style: normal;
     font-size: 25px;
     flex: 1;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.walletCard-holdings::-webkit-scrollbar {
+    width: 8px;
+}
+
+.walletCard-holdings::-webkit-scrollbar-thumb {
+    background-color: #848484;
+    border-radius: 9.10004px;
+    opacity: 1;
 }
 
 .walletCard-transactions {
@@ -53,8 +64,19 @@
     font-family: Poppins;
     flex: 1;
     font-style: normal;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     padding-left: 50px;
+}
+
+.walletCard-transactions::-webkit-scrollbar {
+    width: 8px;
+}
+
+.walletCard-transactions::-webkit-scrollbar-thumb {
+    background-color: #848484;
+    border-radius: 9.10004px;
+    opacity: 1;
 }
 
 button {
