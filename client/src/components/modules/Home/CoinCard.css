@@ -6,7 +6,7 @@
   width: 375px;
   background: var(--primary);
   border-radius: 9.1px;
-  box-shadow: 5px 5px 5px grey;
+  box-shadow: 5px 5px 5px var(--shadow);
 }
 
 .card-coin {
@@ -30,14 +30,14 @@
   text-align: center;
   font-weight: 600;
   font-size: 25px;
-  color: white;
+  color: var(--white);
 }
 
 .card-balance {
   text-align: left;
   font-weight: 500;
   font-size: 40px;
-  color: white;
+  color: var(--white);
 }
 
 .card-data {
@@ -46,7 +46,7 @@
   align-items: flex-end;
   justify-content: center;
   text-align: left;
-  color: white;
+  color: var(--white);
   padding-left: 15px;
 }
 

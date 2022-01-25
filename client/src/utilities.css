@@ -14,7 +14,6 @@
 * much after initial creation.
 */
 
-/* TODO: REPLACE WITH YOUR OWN FONT! */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;800&display=swap');
 
 :root {
@@ -23,7 +22,8 @@
   --purple: #B306F1;
   --pink: #EB15CB;
   --black: #000000;
-  --white: #fff;
+  --white: white;
+  --shadow: grey;
 
   --xs: 4px;
   --s: 8px;
@@ -33,6 +33,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
+  background-color: var(--white);
   font-weight: 300;
   margin: 0;
 }

@@ -6,13 +6,13 @@
     width: 60%;
     min-width: 400px;
     max-width: 700px;
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 5px 5px 5px var(--shadow);
     margin-right: var(--m);
     padding-top: 10px;
 }
 
 .Summary-PV {
-    color: white;
+    color: var(--white);
     font-family: Poppins;
     font-style: normal;
     font-weight: 500;
@@ -35,7 +35,7 @@
     font-weight: normal;
     font-size: 24px;
     line-height: 27px;
-    color: #FFFFFF;
+    color: var(--white);
     padding-left: var(--l);
     top: 285px;
 
@@ -47,7 +47,7 @@
     font-weight: normal;
     font-size: 24px;
     line-height: 27px;
-    color: #FFFFFF;
+    color: var(--white);
     padding-left: var(--l);
     top: 310px;
 }

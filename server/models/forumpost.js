@@ -5,7 +5,6 @@ const PostSchema = new mongoose.Schema({
   AuthorName: String,
   Subject: String,
   Content: String,
-
 });
 
 // compile model from schema

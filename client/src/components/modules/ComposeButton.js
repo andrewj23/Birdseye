@@ -1,7 +1,7 @@
 import React, { useState, Component } from "react";
 import "./ComposeButton.css"
 import AriaModal from "react-aria-modal";
-import { get, post } from "../../utilities";
+import { post } from "../../utilities";
 
 
 const ComposeButton = (props) => {
@@ -11,6 +11,8 @@ const ComposeButton = (props) => {
 
     const togglePopup = () => {
         if (ComposePopup) {
+            setSubject("");
+            setContent("");
             setComposePopup(false);
         } else {
             setComposePopup(true);
@@ -28,7 +30,7 @@ const ComposeButton = (props) => {
     };
 
     const Popup = ComposePopup ?
-        <AriaModal titleId="ComposePost Popup" verticallyCenter={true}>
+        <AriaModal titleId="ComposePost Popup" verticallyCenter={true} onExit={togglePopup}>
             <div className="modal">
                 <header className="modal-header">
                     <h2 className="modal-title">Compose New Forum Post</h2>
@@ -58,6 +60,9 @@ const ComposeButton = (props) => {
 
 const NewPost = (props) => {
     const addPost = (value) => {
+        if (value.subject === "" || value.content === "") {
+            return
+        }
         const body = {
             content: value.content,
             subject: value.subject
