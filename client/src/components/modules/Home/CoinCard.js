@@ -4,6 +4,7 @@ import "./CoinCard.css";
 
 const CoinCard = (props) => {
   let imgFile = "./icons/" + props.slug + ".png";
+  let percentage = ((props.curval / props.totalVal) * 100).toFixed(2);
 
   return (
     <div className="card-container">
@@ -14,8 +15,8 @@ const CoinCard = (props) => {
       <div className="card-data">
         <div className="card-balance">{props.balance}</div>
         <span className="card-currval">Current Value: ${props.curval}</span>
-        {/*<span className="card-changeinval">-1.83%</span>
-        <div className="card-percentage">23% of Portfolio Value</div>*/}
+        {/*<span className="card-changeinval">-1.83%</span>*/}
+        <div className="card-percentage">{percentage}% of Portfolio Value</div>
       </div>
     </div>
   );
