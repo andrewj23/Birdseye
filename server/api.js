@@ -14,6 +14,7 @@ const Coin = require("./models/coin");
 const Wallet = require("./models/wallet");
 const ForumPost = require("./models/forumpost");
 const ForumComment = require("./models/forumcomment");
+const ForumLike = require("./models/forumlike");
 const Summary = require("./models/summary");
 const Visuals = require("./models/visuals");
 const Transactions = require("./models/transactions");
@@ -220,6 +221,21 @@ router.post("/newComment", (req, res) => {
     Content: req.body.content
   });
   newForumComment.save().then((comment) => res.send(comment));
+});
+
+router.get("/getPostLikes", (req, res) => {
+  ForumLike.find({ Parent: req.query.parent }).then((likes) => {
+    res.send(likes);
+  });
+});
+
+router.post("/newLike", (req, res) => {
+  const newForumLike = new ForumLike({
+    AuthorID: req.user._id,
+    AuthorName: req.user.name,
+    Parent: req.body.parent
+  });
+  newForumLike.save().then((like) => res.send(like));
 });
 
 router.post("/coinbaseAccount", async (req, res) => {

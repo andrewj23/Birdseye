@@ -4,8 +4,7 @@ const CommentSchema = new mongoose.Schema({
   AuthorID: String,
   AuthorName: String,
   Parent: String,
-  Content: String,
-
+  Content: String
 });
 
 // compile model from schema

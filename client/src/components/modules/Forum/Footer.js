@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./NewComment.css";
+import "./Footer.css";
 import { post } from "../../../utilities";
 
 
-const NewComment = (props) => {
+const Footer = (props) => {
     const [content, setContent] = useState("");
 
     const addComment = () => {
@@ -21,9 +21,29 @@ const NewComment = (props) => {
         });
     };
 
+    const addLike = () => {
+        if (props.hasLiked) {
+            return
+        }
+        const body = {
+            parent: props.id,
+        };
+        post("/api/newLike", body).then((like) => {
+            props.addNewLike(like);
+        })
+    };
+
+    if (props.hasLiked) {
+        document.getElementById("likeButton").style.color = "#E55451";
+    }
+
     return (
         <>
-        <span className="newcomment-container">
+        <span className="footer-likeContainer">
+            <div id="likeButton" className="footer-likeButton" onClick={addLike}>&hearts;</div>
+            <div className="footer-likes">{props.numLikes}</div>
+        </span>
+        <span className="footer-inputContainer">
             <input id="buttonId" type="text" className="comment-input" placeholder="New Comment" onChange={(event) => { setContent(event.target.value); }}></input>
             <button className="comment-submit" onClick={addComment}>Submit</button>
         </span>
@@ -32,4 +52,4 @@ const NewComment = (props) => {
 };
 
 
-export default NewComment;
+export default Footer;

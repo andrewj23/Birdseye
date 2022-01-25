@@ -1,6 +1,6 @@
 import React from "react";
 import "./CommentsBlock.css";
-import NewComment from "./NewComment";
+import Footer from "./Footer";
 
 
 const CommentsBlock = (props) => {
@@ -9,7 +9,7 @@ const CommentsBlock = (props) => {
         {props.comments.map((commentObj) => (
             <div className="comment-container">{commentObj.AuthorName}: {commentObj.Content}</div>
         ))}
-        <NewComment id={props.id} addNewComment={props.addNewComment} />
+        <Footer id={props.id} addNewComment={props.addNewComment} numLikes={props.numLikes} hasLiked={props.hasLiked} addNewLike={props.addNewLike} />
         </>
     );
 };

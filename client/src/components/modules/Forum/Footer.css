@@ -1,3 +1,29 @@
+.footer-likeContainer {
+    
+}
+
+.footer-likes {
+    float: right;
+    margin-right: 5px;
+    color: var(--primary);
+    font-weight: 500;
+    font-family: Poppins;
+    padding-top: 4px;
+}
+
+.footer-likeButton {
+    float: right;
+    margin-right: 10px;
+    color: var(--primary);
+    font-weight: 500;
+    font-size: 22px;
+    padding-bottom: 5px;
+}
+
+.footer-inputContainer {
+    display: flex;
+}
+
 .comment-input {
     margin-left: 15px;
     font-size: 13px;
@@ -19,9 +45,4 @@
     font-family: Poppins;
     border-radius: 0px;
     padding-top: 5px;
-}
-
-.newcomment-container {
-    display: flex;
-
 }
