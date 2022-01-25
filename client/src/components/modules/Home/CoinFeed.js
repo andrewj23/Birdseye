@@ -25,7 +25,7 @@ const CoinFeed = (props) => {
   
 
   return hasCoins ? (
-    <>
+    <div className='coinfeed-total'>
     <div className='coinfeed-topContainer'>
       <div className="coinfeed-search">
         <input type="text" placeholder="Search" className="coinfeed-input" 
@@ -52,7 +52,7 @@ const CoinFeed = (props) => {
         )
       )}
     </div>
-    </>
+    </div>
   ) : (
     <>
     <div className='coinfeed-topContainer'>

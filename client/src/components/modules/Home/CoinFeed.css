@@ -1,13 +1,30 @@
+@media screen and (max-width: 1688px){
+    .coinfeed-total{
+        width: 390px;
+        margin-right: var(--m);
+    }
+}
+
+@media screen and (min-width: 1688px) and (max-width: 2080px){
+    .coinfeed-total{
+        width: 783px;
+        margin-right: var(--m);
+    }
+}
+@media screen and (min-width: 2080px){
+    .coinfeed-total{
+        width: 1173px;
+        margin-right: var(--m);
+    }
+}
+
 .coinfeed-topContainer {
-    grid-area: searchBar;
-    padding-left: 2px;
-    grid-column: 1;
-    grid-row: 1 ;
     display: inline-flex;
     justify-content: left;
     height: 25px;
     width: 400px;
     border-radius: 5px;
+    margin-bottom: 15px;
 }
 
 .coinfeed-search {
@@ -38,15 +55,19 @@
 }
 
 .coinfeed-coins {
-    grid-area: coins;
-    grid-column: 1;
-    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat( auto-fill, 375px);
+    grid-template-rows: repeat(auto-fill, 200px);
+    grid-row-gap: var(--m);
+    grid-column-gap: var(--m);
     border-radius: 9.10004px;
     height: 639px;
-    width: 395px;
+    width: 100%;
+    padding-bottom: 8px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
 
 .coinfeed-coins::-webkit-scrollbar {
     width: 8px;

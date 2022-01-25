@@ -92,8 +92,7 @@ const App = () => {
   useEffect(()=>{
     if (principal!=="Loading...") {
       let princNumber = parseFloat(principal.slice(1))
-      setNetChange(totalVal-princNumber)
-      setPercentChange(netChange/princNumber)
+      setNetChange((totalVal-princNumber).toFixed(2))
     }
   }, [principal])
 
@@ -121,7 +120,8 @@ const App = () => {
   };
 
   return (
-    <div className={"wrapper"}>
+    <div className='wrapper'>
+      <div className='SideBar-name'/>
       <SideBar/>
       <TopTab
       userId={userId}
@@ -131,7 +131,7 @@ const App = () => {
       <Router>
         <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal}
               coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
-              percentChange={percentChange}/>
+              percentChange={percentChange} classname='content'/>
         <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} wallets={wallets} />
         <Forum path="/forum/" userId={userId}/>
         <NotFound default />

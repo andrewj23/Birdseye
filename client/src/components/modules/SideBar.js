@@ -12,7 +12,6 @@ const SideBar = (props) => {
           <Link to='/' className='SideBar-link'>Home</Link>
           <Link to='/wallets/' className='SideBar-link'>Wallets</Link>
           <Link to='/forum/' className='SideBar-link'>Forum</Link>
-          <div className='SideBar-name' />
       </div>
     </nav>
     </div>

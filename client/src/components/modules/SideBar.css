@@ -24,17 +24,18 @@
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 1;
-    grid-row-end: 3;
-    grid-template-columns: 2fr 1fr;
+    grid-row-end: 3;   grid-template-columns: 2fr 1fr;
     grid-column-gap: 0px;
     background: url("../../../dist/bgBack.svg") 0% 0%;
     background-size: 175px;
-    animation: moveBack 30s infinite linear;
+    animation: moveBack 50s infinite linear;
+    /*delete below for grid wrapper*/
+    background-repeat: repeat-y;
 }
 
 @keyframes moveFront {
     to{
-        background-position: 0% 638px;
+        background-position: 0% 637px;
     }
 }
 
@@ -48,6 +49,8 @@
     background: url("../../../dist/bgFront.svg") 0% 0%;
     background-size: 175px;
     animation: moveFront 90s infinite linear;
+    /*delete below for grid wrapper*/
+    background-repeat: repeat-y;
 }
 
 .sideBar-container{
@@ -59,11 +62,29 @@
     height: 100%;
 }
 
-.SideBar-flex {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
+/*.SideBar-flex {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    height: 1484px;*/
+/*}*/
+
+@media screen and (max-width: 1025px){
+    .SideBar-flex {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 1484px;
+    }
+}
+
+@media screen and (min-width: 1025px){
+    .SideBar-flex {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+    }
 }
 
 .SideBar-link {
@@ -89,13 +110,4 @@
     margin-top: 5px;
     margin-left: 5px;
     align-self: flex-start;
-}
-
-.SideBar-name {
-    margin-top: auto;
-    align-self: center;
-    background-image: url("../../../dist/sb-name.svg");
-    height: 20px;
-    width: 100px;
-    background-repeat: no-repeat;
 }

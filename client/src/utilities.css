@@ -41,14 +41,29 @@ body {
   display: grid;
   grid-template-areas:
     "sidedBar topBar"
-    "sideBar mainPage"
     "sideBar mainPage";
   grid-template-rows: 80px 1fr;
   grid-template-columns: 175px 1fr;
   grid-row-gap: 0px;
   grid-column-gap: 0px;
-  height: 100vh;
-  overflow: hidden;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.SideBar-name {
+  margin-left: var(--xs);
+  background-image: url("../dist/sb-name.svg");
+  position: fixed;
+  bottom: 0px;
+  height: 20px;
+  width: 100px;
+  background-repeat: no-repeat;
+}
+
+.content{
+  margin-top: 100px;
+  margin-right: 100px;
 }
 
 form {
