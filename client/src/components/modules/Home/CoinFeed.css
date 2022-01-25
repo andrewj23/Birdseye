@@ -78,3 +78,7 @@
     border-radius: 9.10004px;
     opacity: 1;
 }
+
+.notConnected{
+    margin-right: var(--m);
+}

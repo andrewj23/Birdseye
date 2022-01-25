@@ -54,7 +54,7 @@ const CoinFeed = (props) => {
     </div>
     </div>
   ) : (
-    <>
+    <div>
     <div className='coinfeed-topContainer'>
       <div className="coinfeed-search">
         <input type="text" placeholder="Search" className="coinfeed-input" 
@@ -62,8 +62,8 @@ const CoinFeed = (props) => {
       </div>
       <AddWalletPopup />
     </div>
-    <div>No coins or no wallet connected!</div>
-    </>
+    <div className='notConnected'>No coins or no wallet connected!</div>
+    </div>
   );
 };
 
