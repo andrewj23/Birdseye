@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const WalletSchema = new mongoose.Schema({
+const CoinbaseWalletSchema = new mongoose.Schema({
   parent: String,
   googleName: String,
   accessToken: String,
@@ -8,4 +8,4 @@ const WalletSchema = new mongoose.Schema({
 });
 
 // compile model from schema
-module.exports = mongoose.model("wallet", WalletSchema);
+module.exports = mongoose.model("coinbaseWallet", CoinbaseWalletSchema);

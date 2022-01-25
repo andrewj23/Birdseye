@@ -9,7 +9,7 @@ const authURL = "https://www.coinbase.com/oauth/authorize?response_type=code&cli
 async function verifyCoinbaseWallet() {
   // checks if wallet list is empty. Returns false if empty. If not, checks if access token is expired. If expired,
   // exchanges refresh token for new access token and updates wallet.
-  const wallets = await get("/api/allWallets");
+  const wallets = await get("/api/allCoinbaseWallets");
   if (wallets) {
     try {
       await verifyToken(wallets[0]);
@@ -41,7 +41,7 @@ async function verifyToken(walletObj) {
       accessToken: refreshResponse.response.access_token,
       refreshToken: refreshResponse.response.refresh_token,
     }
-    await get("/api/updateWallet",body);
+    await get("/api/updateCoinbaseWallet",body);
     console.log("verifyToken: used refresh token and added new wallet.");
     return
   }
@@ -52,7 +52,7 @@ async function verifyToken(walletObj) {
 
 async function getTransactions() {
   // fetches all transactions (unordered) from Coinbase account
-  const wallets = await get("/api/allWallets");
+  const wallets = await get("/api/allCoinbaseWallets");
   if (!wallets) {
     console.log("ERROR: getTransactions: wallet list in Mongo is empty.")
     return {}
@@ -98,7 +98,7 @@ async function getTotalDeposited() {
 
 async function getCoins() {
   // returns list of all coin accounts on Coinbase
-  const wallets = await get("/api/allWallets");
+  const wallets = await get("/api/allCoinbaseWallets");
   if (!wallets) {
     return []
   }
@@ -107,7 +107,7 @@ async function getCoins() {
 
 async function getWallets() {
   // returns list of wallets: {Wallet name: Token list}
-  const wallets = await get("/api/allWallets");
+  const wallets = await get("/api/allCoinbaseWallets");
   if (!wallets) { return [] }
   let name = "Coinbase";  // set to Coinbase because currently only supported wallet type
   let tokens = [];

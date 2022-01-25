@@ -39,9 +39,19 @@ async function getMetaMaskAccounts(MetaMaskAccounts, setMetaMaskAccounts) {
     })
   }
 
-  async function MetaMaskEthBalances(MetaMaskInstalled) {
+  async function MetaMaskEthBalances(MetaMaskInstalled, MetaMaskAccounts) {
     if (MetaMaskInstalled) {
-
+      const web3 = new Web3(window.ethereum)
+      const balance = await web3.eth.getBalance(MetaMaskAccounts[0])
+      const etherBalance = parseFloat(balance)*Math.pow(10,-18)
+      for (const token of erc20Addresses) {
+        const tokenInst = new web3.eth.Contract(tokenABI, token.contract_address);
+        const erc20balance = await tokenInst.methods.balanceOf(accounts[0]).call()
+        console.log(token.code+' balance: '+parseFloat(erc20balance)*Math.pow(10,-9))
+      }
+      // console.log(await web3.eth.getTransactionCount(accounts[0]))
+      console.log(etherBalance)
+      console.log(erc20balance)
     }
   }
   // const chainId = await ethereum.request({ method: 'eth_chainId' });

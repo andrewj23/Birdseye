@@ -11,7 +11,7 @@ const express = require("express");
 // import models so we can interact with the database
 const User = require("./models/user");
 const Coin = require("./models/coin");
-const Wallet = require("./models/wallet");
+const coinbaseWallet = require("./models/coinbaseWallet");
 const ForumPost = require("./models/forumpost");
 const ForumComment = require("./models/forumcomment");
 const ForumLike = require("./models/forumlike");
@@ -88,7 +88,7 @@ router.get("/callback", async (req, res) => {
       // saving tokens for other requests
       accessToken = response.data.access_token;
       refreshToken = response.data.refresh_token;
-      const newWallet = new Wallet({
+      const newWallet = new coinbaseWallet({
         parent: req.user._id,
         googleName: req.user.name,
         accessToken: response.data.access_token,
@@ -130,8 +130,8 @@ router.get("/newCoinbaseToken", async (req, res) => {
     }
 });
 
-router.get("/updateWallet",(req,res) => {
-    Wallet.findOneAndUpdate({ _id: req.query._id }, {
+router.get("/updateCoinbaseWallet",(req,res) => {
+  coinbaseWallet.findOneAndUpdate({ _id: req.query._id }, {
       accessToken: req.query.accessToken,
       refreshToken: req.query.refreshToken,
     },{useFindAndModify: false},
@@ -146,8 +146,8 @@ router.get("/updateWallet",(req,res) => {
       });
 });
 //PROBABLY DONT NEED////////
-router.get("/deleteWallet", (req,res) => {
-  Wallet.findOneAndDelete({accessToken: req.query.accessToken}).then(()=>{
+router.get("/deleteCoinbaseWallet", (req,res) => {
+  coinbaseWallet.findOneAndDelete({accessToken: req.query.accessToken}).then(()=>{
     console.log("wallet deleted");
   });
 })
@@ -171,9 +171,9 @@ router.get("/coinbaseUser", async (req, res) => {
   }
 });
 
-router.get("/allWallets", (req,res) =>{
+router.get("/allCoinbaseWallets", (req,res) =>{
   try {
-    Wallet.find({ parent: req.user._id }).then((coinbaseUsers) => {
+    coinbaseWallet.find({ parent: req.user._id }).then((coinbaseUsers) => {
       console.log("api/allWallets: pulled wallet list from Mongo.")
       res.send(coinbaseUsers)
     });
