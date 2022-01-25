@@ -11,7 +11,7 @@
   margin-left: 0px; 
   margin-bottom: var(--m);
   margin-right: 0px;
-  box-shadow: 5px 5px 5px grey;
+  box-shadow: 5px 5px 5px var(--shadow);
 }
 
 .card-coin {
@@ -38,14 +38,14 @@
   text-align: center;
   font-weight: 600;
   font-size: 25px;
-  color: white;
+  color: var(--white);
 }
 
 .card-balance {
   text-align: left;
   font-weight: 500;
   font-size: 40px;
-  color: white;
+  color: var(--white);
   padding-top: 10px;
   margin-bottom: 0px;
 }
@@ -55,7 +55,7 @@
   grid-row: 1;
   grid-column: 2;
   text-align: left;
-  color: white;
+  color: var(--white);
   padding-left: 15px;
 }
 

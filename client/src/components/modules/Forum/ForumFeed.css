@@ -18,13 +18,13 @@
     margin-right: 5px;
     justify-content: center;
     background-color: var(--primary);
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 5px 5px 5px var(--shadow);
     
 }
 
 .forum-input {
     font-size: 13px;
-    color: white;
+    color: var(--white);
     font-weight: 500;
     font-family: Poppins;
     width: 90%;
@@ -34,7 +34,7 @@
 }
 
 .forum-input::placeholder {
-    color: white;
+    color: var(--white);
 }
 
 .forum-feedcontainer{

@@ -17,13 +17,13 @@
     display: inline-flex;
     justify-content: center;
     background-color: var(--primary);
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 5px 5px 5px var(--shadow);
     margin-right: 5px;
 }
 
 .walletfeed-input {
     font-size: 13px;
-    color: white;
+    color: var(--white);
     font-weight: 500;
     font-family: Poppins;
     width: 90%;
@@ -33,7 +33,7 @@
 }
 
 .walletfeed-input::placeholder {
-    color: white;
+    color: var(--white);
 }
 
 .walletfeed-container{

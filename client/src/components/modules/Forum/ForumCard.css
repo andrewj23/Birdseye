@@ -3,12 +3,12 @@
     border-radius: 9.1px;
     height: 150px;
     width: 1150px;
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 5px 5px 5px var(--shadow);
     margin-bottom: var(--m);
 }
 
 .forumcard-subject {
-    color: white;
+    color: var(--white);
     font-family: Poppins;
     font-style: normal;
     font-weight: 500;
@@ -19,7 +19,7 @@
 }
 
 .forumcard-content {
-    color: white;
+    color: var(--white);
     font-family: Poppins;
     font-style: normal;
     padding-left: 15px;
@@ -27,7 +27,7 @@
 }
 
 .forumcard-author {
-    color: white;
+    color: var(--white);
     font-family: Poppins;
     font-style: normal;
     padding-left: 15px;
