@@ -43,7 +43,8 @@ const WalletFeed = (props) => {
           return walletObj
         }
       }).map((walletObj) => (
-        <WalletCard name={walletObj.name} tokens={walletObj.tokens} allTransactions={props.allTransactions} coins={props.coins} />
+        <WalletCard name={walletObj.name} tokens={walletObj.tokens} allTransactions={props.allTransactions} 
+          coins={props.coins} priceData={props.priceData} totalVal={props.totalVal} />
       ))}
     </div>
     </>
