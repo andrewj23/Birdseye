@@ -1,0 +1,25 @@
+.post-subject {
+    color: var(--primary);
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    padding-left: 15px;
+    padding-top: 10px;
+}
+
+.post-content {
+    color: var(--primary);
+    font-family: Poppins;
+    font-style: normal;
+    padding-left: 15px;
+}
+
+.post-author {
+    color: var(--primary);
+    font-family: Poppins;
+    font-style: normal;
+    padding-right: 15px;
+    padding-top: 10px;
+    float: right;
+}
