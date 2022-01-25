@@ -1,7 +1,7 @@
 import React, { useState, Component } from "react";
 import "./ComposeButton.css"
 import AriaModal from "react-aria-modal";
-import { get, post } from "../../utilities";
+import { post } from "../../utilities";
 
 
 const ComposeButton = (props) => {

@@ -1,27 +1,15 @@
-import { get } from "../../../utilities";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./CommentsBlock.css";
 import NewComment from "./NewComment";
 
 
 const CommentsBlock = (props) => {
-    const [comments, setComments] = useState([]);
-
-    useEffect(() => {
-        get("/api/getPostComments", { parent : props.id }).then((comments) => {
-            console.log(comments);
-            setComments(comments);
-        })
-    }, []);
-
-    let StructuredComments = comments.map((commentObj) => (
-        <div className="comment-container">{commentObj.AuthorName}:   {commentObj.Content}</div>
-    ));
-
     return (
         <>
-        {StructuredComments}
-        <NewComment id={props.id} />
+        {props.comments.map((commentObj) => (
+            <div className="comment-container">{commentObj.AuthorName}: {commentObj.Content}</div>
+        ))}
+        <NewComment id={props.id} addNewComment={props.addNewComment} />
         </>
     );
 };

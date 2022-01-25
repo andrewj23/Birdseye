@@ -1,7 +1,7 @@
-import React, { useState, Component } from "react";
+import React, { useState } from "react";
 import "./ForumFeed.css";
 import ForumCard from "./ForumCard";
-import {NewPost} from "../ComposeButton";
+import { NewPost } from "../ComposeButton";
 
 
 const ForumFeed = (props) => {
@@ -29,7 +29,7 @@ const ForumFeed = (props) => {
               return postObj
             }
           }).map((postObj) => (
-            <ForumCard subject={postObj.Subject} content={postObj.Content} author={postObj.AuthorName} id={postObj._id} />
+            <ForumCard userName={props.userName} subject={postObj.Subject} content={postObj.Content} author={postObj.AuthorName} id={postObj._id} />
           ))}
       </div>
       </>

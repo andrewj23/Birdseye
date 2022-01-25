@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect} from "react";
+import React, { useState, useEffect} from "react";
 import "../../utilities.css";
 import "./Forum.css";
 import ForumFeed from "../modules/Forum/ForumFeed";
@@ -20,7 +20,7 @@ const Forum = (props) => {
     };
     return props.userId ? (
         <div className={"forum-container"}>
-            <ForumFeed posts={posts} addNewPost={addNewPost}/>
+            <ForumFeed posts={posts} addNewPost={addNewPost} userName={props.userName} />
         </div>
     ) : (
       <div className={"forum-container"}>Log in to Google to view Forum!</div>
