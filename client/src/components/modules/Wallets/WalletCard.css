@@ -39,22 +39,61 @@
 }
 
 .walletCard-holdings {
+    display: flex;
+    flex-direction: column;
+}
+
+.holdings-title {
     color: var(--white);
     font-family: Poppins;
     font-style: normal;
     font-size: 25px;
     flex: 1;
-    overflow: scroll;
+}
+
+.walletCard-balance {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.walletCard-balance::-webkit-scrollbar {
+    width: 8px;
+}
+
+.walletCard-balance::-webkit-scrollbar-thumb {
+    background-color: #848484;
+    border-radius: 9.10004px;
+    opacity: 1;
 }
 
 .walletCard-transactions {
-    justify-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+}
+
+.transactions-title {
     color: var(--white);
     font-family: Poppins;
-    flex: 1;
     font-style: normal;
-    overflow: scroll;
-    padding-left: 50px;
+    font-size: 25px;
+    flex: 1;
+}
+
+.transactions-feed {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    color: white;
+}
+
+.transactions-feed::-webkit-scrollbar {
+    width: 8px;
+}
+
+.transactions-feed::-webkit-scrollbar-thumb {
+    background-color: #848484;
+    border-radius: 9.10004px;
+    opacity: 1;
 }
 
 button {
@@ -90,6 +129,7 @@ button {
     flex-direction: column;
     align-self: center;
     justify-items: flex-start;
+    color: white;
 }
 
 .holdingAmount {
