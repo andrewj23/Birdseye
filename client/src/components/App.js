@@ -108,6 +108,8 @@ const App = () => {
         for (const coin of response.data){
           prices[coin.symbol]=coin.price
         }
+      }).then(()=>{
+        prices["WLUNA"]=prices["LUNA"];
       });
     setPriceData(prices)
   }, [])
@@ -131,7 +133,7 @@ const App = () => {
         if (tokens === []) {
           return
         }
-        console.log("METAMASK TOKENS: "+JSON.stringify(tokens))
+        // console.log("METAMASK TOKENS: "+JSON.stringify(tokens))
         setAllCoins([...allCoins, ...tokens])
       });
     }
