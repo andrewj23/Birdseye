@@ -4,7 +4,6 @@ import NotFound from "./pages/NotFound.js";
 import Home from "./pages/Home.js";
 import Wallets from "./pages/Wallets";
 import Forum from "./pages/Forum";
-import { getAllPrices } from "../nomics.js";
 import "../utilities.css";
 import { socket } from "../client-socket.js";
 import { get, post } from "../utilities";
@@ -12,6 +11,7 @@ import SideBar from "./modules/SideBar";
 import TopTab from "./modules/TopTab";
 import { getCoins, getWallets, getTotalDeposited, verifyCoinbaseWallet, getTransactions} from "../../../server/coinImports";
 import {checkMetaMaskProvider , MetaMaskEthBalances} from "./modules/MetamaskConnect";
+const axios = require('axios')
 
 
 const App = () => {
@@ -102,10 +102,14 @@ const App = () => {
   }, [userId, ValidCoinbaseWallet]);
 
   useEffect(()=>{
-    getAllPrices().then((prices)=>{
-      prices["WLUNA"] = prices["LUNA"];
-      setPriceData(prices);
-    })
+    let prices={}
+    axios.get(`https://api.nomics.com/v1/currencies/ticker?key=m_be3c899ce66f1684d94cb70100d9d58bdce71222&convert=USD`)
+      .then((response)=>{
+        for (const coin of response.data){
+          prices[coin.symbol]=coin.price
+        }
+      });
+    setPriceData(prices)
   }, [])
 
   let totalVal = 0
