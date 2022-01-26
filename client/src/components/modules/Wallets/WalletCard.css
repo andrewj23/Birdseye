@@ -39,41 +39,58 @@
 }
 
 .walletCard-holdings {
+    display: flex;
+    flex-direction: column;
+}
+
+.holdings-title {
     color: var(--white);
     font-family: Poppins;
     font-style: normal;
     font-size: 25px;
     flex: 1;
+}
+
+.walletCard-balance {
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
-.walletCard-holdings::-webkit-scrollbar {
+.walletCard-balance::-webkit-scrollbar {
     width: 8px;
 }
 
-.walletCard-holdings::-webkit-scrollbar-thumb {
+.walletCard-balance::-webkit-scrollbar-thumb {
     background-color: #848484;
     border-radius: 9.10004px;
     opacity: 1;
 }
 
 .walletCard-transactions {
-    justify-self: flex-end;
-    color: var(--white);
-    font-family: Poppins;
-    flex: 1;
-    font-style: normal;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
     padding-left: 50px;
 }
 
-.walletCard-transactions::-webkit-scrollbar {
+.transactions-title {
+    color: var(--white);
+    font-family: Poppins;
+    font-style: normal;
+    font-size: 25px;
+    flex: 1;
+}
+
+.transactions-feed {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    color: white;
+}
+
+.transactions-feed::-webkit-scrollbar {
     width: 8px;
 }
 
-.walletCard-transactions::-webkit-scrollbar-thumb {
+.transactions-feed::-webkit-scrollbar-thumb {
     background-color: #848484;
     border-radius: 9.10004px;
     opacity: 1;
@@ -112,6 +129,7 @@ button {
     flex-direction: column;
     align-self: center;
     justify-items: flex-start;
+    color: white;
 }
 
 .holdingAmount {
