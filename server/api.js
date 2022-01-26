@@ -12,6 +12,7 @@ const express = require("express");
 const User = require("./models/user");
 const Coin = require("./models/coin");
 const coinbaseWallet = require("./models/coinbaseWallet");
+const metamaskWallet = require("./models/metamaskWallet")
 const ForumPost = require("./models/forumpost");
 const ForumComment = require("./models/forumcomment");
 const ForumLike = require("./models/forumlike");
@@ -59,9 +60,9 @@ router.post("/initsocket", (req, res) => {
 const CLIENT_ID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678";
 const CLIENT_SECRET = "4514e203850ae432ce980d16ba56b7c06b2c5726ac7bb7c28a50bc8aaea721d0";
 //USE FOR LOCALHOST///////////////////////////
-const REDIRECT_URI = "http://localhost:3000/api/callback/"
+// const REDIRECT_URI = "http://localhost:3000/api/callback/"
 //USE FOR HEROKU DEPLOYMENT///////////////////////////
-// const REDIRECT_URI = "https://birdseye-crypto.herokuapp.com/api/callback/"
+const REDIRECT_URI = "https://birdseye-crypto.herokuapp.com/api/callback/"
 const SECRET = "134ef5504a94"
 
 // User gets redirected to this endpoint on successful login
@@ -97,9 +98,9 @@ router.get("/callback", async (req, res) => {
       newWallet.save();
       console.log("api/callback: Coinbase auth callback succeeded. Redirecting back...")
       //USE FOR LOCALHOST///////////////////////////
-      res.redirect('http://localhost:5000/');
+      // res.redirect('http://localhost:5000/');
       //USE FOR HEROKU DEPLOYMENT///////////////////////////
-      // res.redirect('https://birdseye-crypto.herokuapp.com/');
+      res.redirect('https://birdseye-crypto.herokuapp.com/');
     } catch (e) {
       console.log("ERROR: api/callback: Could not trade code for access token with Coinbase. See error: ", e)
     }
@@ -267,7 +268,7 @@ router.get("/coinbaseTransactions",async (req,res) => {
   };
   try {
     const response = await axios(config);
-    console.log("api/coinbaseTransactions: pulled transactions from Coinbase.")
+    // console.log("api/coinbaseTransactions: pulled transactions from Coinbase.")
     res.send({ response: response?.data })
   } catch (e) {
     console.log("ERROR: api/coinbaseTransactions: could not get transactions from Coinbase. See error: ",e)
@@ -276,13 +277,27 @@ router.get("/coinbaseTransactions",async (req,res) => {
 })
 
 ///////// METAMASK
-// router.get("/ethTransactions", (req,res) =>{
-//
-// })
-// // anything else falls to this "not found" case
-// router.all("*", (req, res) => {
-//   console.log(`API route not found: ${req.method} ${req.url}`);
-//   res.status(404).send({ msg: "API route not found" });
-// });
+router.post("/addMetaMaskWallet", (req,res) => {
+  const newWallet = new metamaskWallet({
+    parent: req.user._id,
+    googleName: req.user.name,
+    address: req.body.address,
+  });
+  newWallet.save();
+})
+
+router.get("/allMetaMaskWallets", (req,res) =>{
+  try {
+    metamaskWallet.find({ parent: req.user._id }).then((metamaskUsers) => {
+      console.log("api/allMetaMaskWallets: pulled wallet list from Mongo.")
+      //  may need to send [] if empty
+      res.send(metamaskUsers)
+    });
+  }
+  catch(e) {
+    console.log("ERROR: api/allMetaMaskWallets: Failed to pull wallet list from Mongo. See Error: ",e)
+    res.send([])
+  }
+});
 
 module.exports = router;
