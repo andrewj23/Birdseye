@@ -4,7 +4,7 @@ import NotFound from "./pages/NotFound.js";
 import Home from "./pages/Home.js";
 import Wallets from "./pages/Wallets";
 import Forum from "./pages/Forum";
-import { getAllPrices } from "../../nomics.js";
+import { getAllPrices } from "../nomics.js";
 import "../utilities.css";
 import { socket } from "../client-socket.js";
 import { get, post } from "../utilities";
