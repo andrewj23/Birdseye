@@ -24,7 +24,8 @@
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 1;
-    grid-row-end: 3;   grid-template-columns: 2fr 1fr;
+    grid-row-end: 3;
+    grid-template-columns: 2fr 1fr;
     grid-column-gap: 0px;
     background: url("../../../dist/bgBack.svg") 0% 0%;
     background-size: 175px;
