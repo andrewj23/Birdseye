@@ -56,7 +56,7 @@ const WalletCard = (props) => {
       <HoldingCard tokenObj={tokenObj} totalWalletVal={totalWalletVal} priceData={props.priceData} />
     ));
   } else {
-    coinsList = <div>No coins in wallet!</div>;
+    coinsList = <div className="walletCard-noCoins">No coins in wallet!</div>;
   }
   let imgFile = "../" + props.name.toLowerCase() + ".svg";
 
