@@ -11,7 +11,6 @@ const PieRechartComponent = (props)=> {
     let name = coin.currency.code;
     let value = parseFloat((100*props.priceData[name]*coin.balance.amount/props.totalVal).toFixed(2));
     pieData.push({'name':name, 'value':value})
-    console.log(pieData)
   }
 
   const CustomTooltip = ({ active, payload, label }) => {
@@ -27,8 +26,8 @@ const PieRechartComponent = (props)=> {
   };
 
     return (
-      <PieChart width={300} height={315}>
-        <Pie data={pieData} color="#000000" dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={120} fill="#8884d8" >
+      <PieChart width={props.width} height={props.height}>
+        <Pie data={pieData} color="#000000" dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={props.outerRadius} fill="#8884d8" >
           {
             pieData.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
           }
