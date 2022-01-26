@@ -18,9 +18,11 @@
 
 :root {
   --primary: #312F62;
+  --primarylight: #5845c6;
   --primary--dim: #6987db;
   --purple: #B306F1;
   --pink: #EB15CB;
+  --brightpink: #FE33D1;
   --black: #000000;
   --white: white;
   --shadow: grey;

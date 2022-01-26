@@ -149,6 +149,7 @@ const App = () => {
     post("/api/logout");
   };
 
+
   return (
     <div className='wrapper'>
       <div className='SideBar-name'/>
@@ -160,9 +161,10 @@ const App = () => {
       handleLogout={handleLogout}/>
       <Router>
         <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal}
-              coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
-              percentChange={percentChange} classname='content'/>
-        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} coins={filteredCoins} userId={userId} wallets={wallets} allTransactions={allTransactions} />
+          coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
+          percentChange={percentChange} classname='content'/>
+        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} coins={filteredCoins} userId={userId} 
+          priceData={priceData} wallets={wallets} allTransactions={allTransactions} totalVal={totalVal} />
         <Forum path="/forum/" userId={userId} userName = {userName} />
         <NotFound default />
       </Router>

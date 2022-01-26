@@ -28,7 +28,7 @@
 .Home-greeting {
     position: absolute;
     width: fit-content;
-    height: 48px;
+    height: 64px;
     left: 201px;
     top: 12px;
 
@@ -39,6 +39,7 @@
     line-height: 72px;
 
     color: var(--primary);
+    overflow: hidden;
 }
 
 .login {

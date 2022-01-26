@@ -61,7 +61,7 @@ const TransactionFeed = (props) => {
   allSortedTransactions.sort((trans1, trans2) => (dateComparison(trans1.updated_at, trans2.updated_at)) ? -1 : 1 ).reverse()
 
   return hasTransactions ? (
-    <div className={"transFeed-container"}>
+    <div className="transFeed-container">
   {allSortedTransactions.map((transactionObj) => (
     <Transaction
       time={transactionObj.updated_at}
