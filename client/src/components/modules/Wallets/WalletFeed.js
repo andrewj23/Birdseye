@@ -29,7 +29,7 @@ const WalletFeed = (props) => {
           return walletObj
         }
       }).map((walletObj) => (
-        <WalletCard name={walletObj.name} tokens={walletObj.tokens} allTransactions={props.allTransactions}
+        <WalletCard name={walletObj.name} tokens={walletObj.tokens} allTransactions={(walletObj.name === "Coinbase") ? props.allTransactions : "null"}
                     priceData={props.priceData} totalVal={props.totalVal} coins={props.coins} />
       ))}
     </div>

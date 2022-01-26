@@ -60,6 +60,13 @@ const WalletCard = (props) => {
   }
   let imgFile = "../" + props.name.toLowerCase() + ".svg";
 
+  const chartCoins = props.tokens.map((coinObj) => {
+    return {name: coinObj.token, balance: coinObj.balance}
+  });
+
+  const structuredTransactions = (props.allTransactions === "null") ? "MetaMask transactions coming soon!" 
+    : <TransactionFeed allTransactions={props.allTransactions} />;
+
   return (
   <div id={`${props.name}-walletCard`} className={"walletCard-container"}>
     <div className="walletCard-description">
@@ -72,7 +79,7 @@ const WalletCard = (props) => {
         </div>
       </div>
       <div id={`${props.name}-pieChart`} className="walletCard-pieChart hide">
-        <PieRechartComponent coins={props.coins} priceData={props.priceData} totalVal={props.totalVal}
+        <PieRechartComponent coins={chartCoins} priceData={props.priceData} totalVal={totalWalletVal}
           width={335} height={210} outerRadius={75} />
       </div>
     </div>
@@ -82,7 +89,7 @@ const WalletCard = (props) => {
     </div>
     <div id={`${props.name}-transactions`} className="walletCard-transactionsContainer hide">
       <div className="walletCard-transactionsTitle">Transaction History:</div>
-      <div className="walletCard-transactionsFeed"><TransactionFeed allTransactions={props.allTransactions} /></div>
+      <div className="walletCard-transactionsFeed">{structuredTransactions}</div>
     </div>
     <button id={`${props.name}-dropdown`} onClick={clickToExpandCards} className="walletCard-button">▼</button>
   </div>
