@@ -12,6 +12,7 @@ const express = require("express");
 const User = require("./models/user");
 const Coin = require("./models/coin");
 const coinbaseWallet = require("./models/coinbaseWallet");
+const metamaskWallet = require("./models/metamaskWallet")
 const ForumPost = require("./models/forumpost");
 const ForumComment = require("./models/forumcomment");
 const ForumLike = require("./models/forumlike");
@@ -267,7 +268,7 @@ router.get("/coinbaseTransactions",async (req,res) => {
   };
   try {
     const response = await axios(config);
-    console.log("api/coinbaseTransactions: pulled transactions from Coinbase.")
+    // console.log("api/coinbaseTransactions: pulled transactions from Coinbase.")
     res.send({ response: response?.data })
   } catch (e) {
     console.log("ERROR: api/coinbaseTransactions: could not get transactions from Coinbase. See error: ",e)
@@ -276,13 +277,27 @@ router.get("/coinbaseTransactions",async (req,res) => {
 })
 
 ///////// METAMASK
-// router.get("/ethTransactions", (req,res) =>{
-//
-// })
-// // anything else falls to this "not found" case
-// router.all("*", (req, res) => {
-//   console.log(`API route not found: ${req.method} ${req.url}`);
-//   res.status(404).send({ msg: "API route not found" });
-// });
+router.post("/addMetaMaskWallet", (req,res) => {
+  const newWallet = new metamaskWallet({
+    parent: req.user._id,
+    googleName: req.user.name,
+    address: req.body.address,
+  });
+  newWallet.save();
+})
+
+router.get("/allMetaMaskWallets", (req,res) =>{
+  try {
+    metamaskWallet.find({ parent: req.user._id }).then((metamaskUsers) => {
+      console.log("api/allMetaMaskWallets: pulled wallet list from Mongo.")
+      //  may need to send [] if empty
+      res.send(metamaskUsers)
+    });
+  }
+  catch(e) {
+    console.log("ERROR: api/allMetaMaskWallets: Failed to pull wallet list from Mongo. See Error: ",e)
+    res.send([])
+  }
+});
 
 module.exports = router;

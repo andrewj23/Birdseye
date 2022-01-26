@@ -20,7 +20,7 @@ const Summary = (props) => {
       <div className="Summary-principal">Principal: {props.principal}</div>
       <div className="Summary-change">Net Change: ${props.netChange}</div>
       <PieRechartComponent coins={props.coins} priceData={props.priceData} totalVal={props.totalVal}
-        width={730} height={300} outerRadius={120} />
+        width={300} height={315} outerRadius={120} />
     </div>
   
     );
