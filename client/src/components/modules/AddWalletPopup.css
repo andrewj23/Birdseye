@@ -18,11 +18,14 @@
 .icons-container {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     /*justify-items: right;*/
 }
 
 .imgAddWallet{
     padding: 20px;
+    width: 75px;
+    height: 75px;
 }
 
 .imgAddWallet:hover {

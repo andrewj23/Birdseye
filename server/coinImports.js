@@ -117,7 +117,7 @@ async function getWallets() {
   tokens = filteredTokens.map((TokenObj) => (
     { token: TokenObj.currency.code, balance: TokenObj.balance.amount, slug: TokenObj.currency.slug }
   ));
-  return { name: name, tokens: tokens }
+  return { "name": name, "tokens": tokens }
 }
 
 async function getCoinsHelper(walletObj) {

@@ -2,24 +2,20 @@ import React from "react";
 import Web3 from "web3/dist/web3.min";
 import {erc20Addresses, tokenABI} from "./erc20Addresses";
 import detectEthereumProvider from '@metamask/detect-provider';
+import { get, post } from "../../utilities";
 
-async function checkMetaMaskProvider(setMetaMaskInstalled) {
+async function checkMetaMaskProvider() {
   if (typeof window.ethereum !== 'undefined') {
-    setMetaMaskInstalled(true)
+    return true
   } else {
-    setMetaMaskInstalled(false)
+    return false
   }
 }
 
-async function getMetaMaskAccounts(MetaMaskAccounts, setMetaMaskAccounts) {
-  await ethereum.request({ method: 'eth_requestAccounts' }).then((accountsRes)=>{
-    if (MetaMaskAccounts.includes(accountsRes[0])) {
-      console.log("MetaMask account already associated with user...");
-    }
-    else {
-      setMetaMaskAccounts(MetaMaskAccounts.push(accountsRes[0]));
-    }
-  })
+async function getMetaMaskAccounts() {
+  const MetaMaskAccounts = await get("/api/allMetaMaskWallets");
+  console.log("getWallets: "+MetaMaskAccounts)
+  const accountsRes = await ethereum.request({ method: 'eth_requestAccounts' })
     .catch((err) => {
       if (err.code === 4001) {
         // EIP-1193 userRejectedRequest error
@@ -29,6 +25,13 @@ async function getMetaMaskAccounts(MetaMaskAccounts, setMetaMaskAccounts) {
         console.error(err);
       }
     });
+  if (MetaMaskAccounts.includes(accountsRes[0])) {
+    console.log("MetaMask account already associated with user...");
+  }
+  else {
+    await post("/api/addMetaMaskWallet", { address: accountsRes[0] });
+  }
+}
   /**********************************************************/
   /* Handle chain (network) and chainChanged (per EIP-1193) */
   /**********************************************************/
@@ -39,20 +42,27 @@ async function getMetaMaskAccounts(MetaMaskAccounts, setMetaMaskAccounts) {
     })
   }
 
-  async function MetaMaskEthBalances(MetaMaskInstalled, MetaMaskAccounts) {
-    if (MetaMaskInstalled) {
+  async function MetaMaskEthBalances() {
+    const tokens = [];
+      const MetaMaskAccounts = await get("api/allMetaMaskWallets");
+      if (MetaMaskAccounts === []) {
+        console.log("EMPTY METAMASK WALLETS");
+        return
+      }
       const web3 = new Web3(window.ethereum)
       const balance = await web3.eth.getBalance(MetaMaskAccounts[0])
       const etherBalance = parseFloat(balance)*Math.pow(10,-18)
+    if (etherBalance !== 0) {
+      tokens.push({ "token": "ETH", "balance": etherBalance });
+    }
       for (const token of erc20Addresses) {
         const tokenInst = new web3.eth.Contract(tokenABI, token.contract_address);
         const erc20balance = await tokenInst.methods.balanceOf(accounts[0]).call()
-        console.log(token.code+' balance: '+parseFloat(erc20balance)*Math.pow(10,-9))
+        if (erc20balance !== 0) {
+          tokens.push({ "token": token.code, "balance": erc20balance });
+        }
       }
-      // console.log(await web3.eth.getTransactionCount(accounts[0]))
-      console.log(etherBalance)
-      console.log(erc20balance)
-    }
+      return {"name": "MetaMask", "tokens": tokens}
   }
   // const chainId = await ethereum.request({ method: 'eth_chainId' });
   // console.log(chainId)
@@ -65,7 +75,7 @@ async function getMetaMaskAccounts(MetaMaskAccounts, setMetaMaskAccounts) {
   //   console.log(chainId)
   //   // window.location.reload();
   // }
-}
+// }
 
 const MetamaskConnect = (props) => {
   /*****************************************/
@@ -257,4 +267,4 @@ const MetamaskConnect = (props) => {
   );
 };
 
-export default MetamaskConnect;
+export {MetamaskConnect, checkMetaMaskProvider, MetaMaskEthBalances, getMetaMaskAccounts};

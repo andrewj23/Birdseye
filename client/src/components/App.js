@@ -11,6 +11,7 @@ import { get, post } from "../utilities";
 import SideBar from "./modules/SideBar";
 import TopTab from "./modules/TopTab";
 import { getCoins, getWallets, getTotalDeposited, verifyCoinbaseWallet, getTransactions} from "../../../server/coinImports";
+import {checkMetaMaskProvider , MetaMaskEthBalances} from "./modules/MetamaskConnect";
 
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
   const [percentChange, setPercentChange] = useState(0);
   const [transactionsByID, setTransactionsByID] = useState({});
   const [allTransactions, setAllTransactions] = useState([]);
+  const [MetaMaskInstalled, setMetaMaskInstalled] = useState(false)
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -44,6 +46,15 @@ const App = () => {
     }
     console.log("App/useEffect: Coinbase Verification status: "+ValidCoinbaseWallet);
   }); // Constantly checking if coinbase wallet is connected/valid
+
+  useEffect(() => {
+    if (userId) {
+      checkMetaMaskProvider().then((metamaskStatus) => {
+        setMetaMaskInstalled(metamaskStatus)
+      })
+    }
+    console.log("App/useEffect: MetaMask Installed status: "+MetaMaskInstalled);
+  }); // Constantly checking if metamask is connected
 
   useEffect(()=>{
     if (userId && ValidCoinbaseWallet){
@@ -76,8 +87,8 @@ const App = () => {
         if (walletsObj.length === 0) {
           return
         }
-        console.log(JSON.stringify(walletsObj))
-        setWallets([walletsObj])
+        // wallets.push(walletsObj)
+        setWallets([...wallets, walletsObj])
       });
     }
   }, [userId, ValidCoinbaseWallet]);
@@ -94,6 +105,19 @@ const App = () => {
     totalVal+=priceData[coin.currency.code]*coin.balance.amount;
     console.log('Portfolio Value: '+ JSON.stringify(totalVal))
   };
+
+  // useEffect(() => {
+  //   if (userId && MetaMaskInstalled) {
+  //     MetaMaskEthBalances().then((walletObj) => {
+  //       if (walletObj.length === 0) {
+  //         return
+  //       }
+  //       console.log(JSON.stringify("walletobj: "+walletObj))
+  //       wallets.push(walletObj)
+  //       // setWallets(wallets)
+  //     });
+  //   }
+  // }, [userId, MetaMaskInstalled]);
 
   useEffect(()=>{
     if (principal!=="Loading...") {
