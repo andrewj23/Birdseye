@@ -23,7 +23,6 @@ const coinbaseUser = require("./models/coinbaseUser");
 
 // import authentication library
 const auth = require("./auth");
-const coinbaseAuth = require("./coinbaseAuth")
 
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
@@ -57,12 +56,15 @@ router.post("/initsocket", (req, res) => {
 
 
 //coinbase
-const CLIENT_ID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678";
-const CLIENT_SECRET = "4514e203850ae432ce980d16ba56b7c06b2c5726ac7bb7c28a50bc8aaea721d0";
+// const CLIENT_ID = process.env.COINBASE_CLIENT_ID;
+// const CLIENT_SECRET = process.env.COINBASE_SECRET_ID;
+// const SECRET = process.env.COINBASE_SECRET_STRING
 //USE FOR LOCALHOST///////////////////////////
-// const REDIRECT_URI = "http://localhost:3000/api/callback/"
+const REDIRECT_URI = "http://localhost:3000/api/callback/"
 //USE FOR HEROKU DEPLOYMENT///////////////////////////
-const REDIRECT_URI = "https://birdseye-crypto.herokuapp.com/api/callback/"
+// const REDIRECT_URI = "https://birdseye-crypto.herokuapp.com/api/callback/"
+const CLIENT_ID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678"
+const CLIENT_SECRET = "4514e203850ae432ce980d16ba56b7c06b2c5726ac7bb7c28a50bc8aaea721d0"
 const SECRET = "134ef5504a94"
 
 // User gets redirected to this endpoint on successful login
@@ -98,9 +100,9 @@ router.get("/callback", async (req, res) => {
       newWallet.save();
       // console.log("api/callback: Coinbase auth callback succeeded. Redirecting back...")
       //USE FOR LOCALHOST///////////////////////////
-      // res.redirect('http://localhost:5000/');
+      res.redirect('http://localhost:5000/');
       //USE FOR HEROKU DEPLOYMENT///////////////////////////
-      res.redirect('https://birdseye-crypto.herokuapp.com/');
+      // res.redirect('https://birdseye-crypto.herokuapp.com/');
     } catch (e) {
       // console.log("ERROR: api/callback: Could not trade code for access token with Coinbase. See error: ", e)
     }

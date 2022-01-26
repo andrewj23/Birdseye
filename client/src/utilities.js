@@ -61,3 +61,20 @@ export function post(endpoint, params = {}) {
       throw `POST request to ${endpoint} failed with error:\n${error}`;
     });
 }
+
+export function mergeTokenLists (token1, token2) {
+  var holder = {};
+  token1.forEach(function(d) {
+    if (holder.hasOwnProperty(d.name)) {
+      holder[d.name] = holder[d.name] + d.value;
+    } else {
+      holder[d.name] = d.value;
+    }
+  });
+
+  var obj2 = [];
+
+  for (var prop in holder) {
+    obj2.push({ name: prop, value: holder[prop] });
+  }
+}
