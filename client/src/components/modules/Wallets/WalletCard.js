@@ -68,7 +68,7 @@ const WalletCard = (props) => {
           <div className={"walletCard-totalPercent"}>{((totalWalletVal / props.totalVal) * 100).toFixed(2)}% of Portfolio Value</div>
         </div>
       </div>
-      <div id= "walletCard-pieChart" className="walletCard-pieChart hide">
+      <div id="walletCard-pieChart" className="walletCard-pieChart hide">
         <PieRechartComponent coins={props.coins} priceData={props.priceData} totalVal={props.totalVal}
           width={335} height={210} outerRadius={75} />
       </div>

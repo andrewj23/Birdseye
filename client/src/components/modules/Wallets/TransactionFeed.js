@@ -2,20 +2,23 @@ import React from "react";
 
 
 const Transaction = (props) => {
-  // time={transactionObj.updated_at}
-  // type={transactionObj.type}
-  // amount={transactionObj.amount.amount}
-  // token={transactionObj.amount.currency}
-  // value={transactionObj.native_amount.amount}
-  // title={transactionObj.details.title}
   const timestamp = new Date(props.time).toString()
+  const date = new Date(props.time)
+  const month = date.getMonth();
+  const day = date.getDate();
+  const year = date.getFullYear();
+  const hour = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
   return (
-    <div>{props.title} {timestamp}: {props.amount} of {props.token} worth ${props.value}</div>
+    // <div>{props.title} {timestamp}: {props.amount} of {props.token} worth ${props.value}</div>
+    <div>{month}/{day}/{year} {hour}:{minutes}:{seconds} - {props.header}</div>
   )
 }
 
 
 const TransactionFeed = (props) => {
+  console.log(props.allTransactions);
   function getTimeAsNumberOfMinutes(time) {
     let timeParts = time.split(":");
     let timeInMinutes = (parseFloat(timeParts[0]) * 60) + parseFloat(timeParts[1])+parseFloat(timeParts[2])/60;
@@ -65,18 +68,19 @@ const TransactionFeed = (props) => {
     <div className="transFeed-container">
       {allSortedTransactions.map((transactionObj) => (
         <Transaction
+          header={transactionObj.details.header}
           time={transactionObj.updated_at}
-          type={transactionObj.type}
-          amount={transactionObj.amount.amount}
-          token={transactionObj.amount.currency}
-          value={transactionObj.native_amount.amount}
-          title={transactionObj.details.title}
+          // type={transactionObj.type}
+          // amount={transactionObj.amount.amount}
+          // token={transactionObj.amount.currency}
+          // value={transactionObj.native_amount.amount}
+          // title={transactionObj.details.title}
         />
       ))}
     </div>
   ) : (
     <div className="transFeed-container">
-      <div>No Transactions</div>
+      <div>Loading...</div>
     </div>
   )
 }

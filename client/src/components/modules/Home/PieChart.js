@@ -11,7 +11,6 @@ const PieRechartComponent = (props)=> {
     let name = coin.currency.code;
     let value = parseFloat((100*props.priceData[name]*coin.balance.amount/props.totalVal).toFixed(2));
     pieData.push({'name':name, 'value':value})
-    console.log(pieData)
   }
 
   const CustomTooltip = ({ active, payload, label }) => {
