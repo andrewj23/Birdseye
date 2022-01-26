@@ -44,8 +44,7 @@ async function getMetaMaskAccounts() {
   async function MetaMaskEthBalances() {
     const tokens = [];
     const MetaMaskAccounts = await get("/api/allMetaMaskWallets");
-    if (MetaMaskAccounts === []) {
-      console.log("EMPTY METAMASK WALLETS");
+    if (!MetaMaskAccounts) {
       return {}
     }
     const web3 = new Web3(window.ethereum)
@@ -58,7 +57,7 @@ async function getMetaMaskAccounts() {
       const tokenInst = new web3.eth.Contract(tokenABI, erc20token.contract_address);
       const erc20balance = await tokenInst.methods.balanceOf(MetaMaskAccounts[0].address).call()
       if (parseFloat(erc20balance) !== 0) {
-        tokens.push({ "name": erc20token.token, "token": erc20token.code, "balance": parseFloat(erc20balance) });
+        tokens.push({ "name": erc20token.token, "token": erc20token.code, "balance": parseFloat(erc20balance)* Math.pow(10, -9) });
       }
     }
     return { "name": "MetaMask", "tokens": tokens }

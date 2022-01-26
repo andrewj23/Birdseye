@@ -293,6 +293,9 @@ router.get("/allMetaMaskWallets", (req,res) =>{
     metamaskWallet.find({ parent: req.user._id }).then((metamaskUsers) => {
       // console.log("api/allMetaMaskWallets: pulled wallet list from Mongo.")
       //  may need to send [] if empty
+      if (!metamaskUsers){
+        res.send([])
+      }
       res.send(metamaskUsers)
     });
   }
@@ -301,5 +304,26 @@ router.get("/allMetaMaskWallets", (req,res) =>{
     res.send([])
   }
 });
+
+router.post("/demoLogin", (req,res) => {
+  const newMetaMaskWallet = new metamaskWallet({
+    parent: req.user._id,
+    googleName: req.user.name,
+    address: "0x81eb795906d1ec8ef6de3495492bea3c67c94826",
+  });
+  newMetaMaskWallet.save();
+  const newCoinbaseWallet = new coinbaseWallet({
+    parent: req.user._id,
+    googleName: req.user.name,
+    accessToken: "cd984e3ee28297d8466d879aaef96c8dbb02dfd9b69c03e596f86c1a5799bb8c",
+    refreshToken: "82882703ff7d8f3f9d2bf29ec19d30315e6c1b63e7605a2512b868d4d9af5709",
+  });
+  newCoinbaseWallet.save().then(()=>{res.send(["Delete demo"])});
+})
+router.post("/demoLogout", (req,res) => {
+  coinbaseWallet.findOneAndDelete({ parent: req.user._id }).then((response)=>{
+    metamaskWallet.findOneAndDelete({ parent: req.user._id })
+  })
+})
 
 module.exports = router;

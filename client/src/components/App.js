@@ -28,13 +28,14 @@ const App = () => {
   const [allTransactions, setAllTransactions] = useState([]);
   const [MetaMaskInstalled, setMetaMaskInstalled] = useState(false)
   const [allCoins, setAllCoins] = useState([])
+  const [demo, setDemo] = useState(false)
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
         // they are registered in the database, and currently logged in.
         setUserId(user._id);
-        setUserName(user.name)
+        setUserName(user.name);
       }
     });
   }, []);
@@ -74,7 +75,6 @@ const App = () => {
         if (coinsObj.length === 0) {
           return
         }
-        // const cleanedCoinObj = coinsObj.map((coinObj)=>(coinObj.response.data))
         setCoins(coinsObj.response.data)
       });
     }
@@ -127,7 +127,7 @@ const App = () => {
         if (tokens === []) {
           return
         }
-        // console.log("METAMASK TOKENS: "+JSON.stringify(tokens))
+        console.log("METAMASK TOKENS: "+JSON.stringify(tokens))
         setAllCoins([...allCoins, ...tokens])
       });
     }
@@ -148,7 +148,6 @@ const App = () => {
   }, [netChange])
 
   const handleLogin = (res) => {
-    // console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
@@ -163,6 +162,27 @@ const App = () => {
     post("/api/logout");
   };
 
+  const handleLoginDemo = (res) => {
+    const userToken = res.tokenObj.id_token;
+    post("/api/login", { token: userToken }).then((user) => {
+      setUserId(user._id);
+      setUserName(user.name);
+      setDemo(true)
+      post("/api/initsocket", { socketid: socket.id }).then(()=>{
+        post("/api/demoLogin")
+      });
+    });
+  };
+
+  const handleLogoutDemo = () => {
+    setDemo(false)
+    setUserId(undefined);
+    setUserName(undefined);
+    post("/api/demoLogout").then(()=>{
+    post("/api/logout");
+    })
+  };
+
 
   return (
     <div className='wrapper'>
@@ -172,11 +192,13 @@ const App = () => {
       userId={userId}
       userName = {userName}
       handleLogin={handleLogin}
-      handleLogout={handleLogout}/>
+      handleLogout={handleLogout}
+      handleLogoutDemo={handleLogoutDemo}
+      demo={demo}/>
       <Router>
-        <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal}
+        <Home path="/" userId={userId} principal={principal}
               allCoins={allCoins} coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
-          percentChange={percentChange} classname='content'/>
+          percentChange={percentChange} handleLoginDemo={handleLoginDemo} classname='content'/>
         <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId}
           priceData={priceData} wallets={wallets} allTransactions={allTransactions} totalVal={totalVal} coins={filteredCoins} />
         <Forum path="/forum/" userId={userId} userName = {userName} />
