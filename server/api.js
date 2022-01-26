@@ -96,13 +96,13 @@ router.get("/callback", async (req, res) => {
         refreshToken: response.data.refresh_token,
       });
       newWallet.save();
-      console.log("api/callback: Coinbase auth callback succeeded. Redirecting back...")
+      // console.log("api/callback: Coinbase auth callback succeeded. Redirecting back...")
       //USE FOR LOCALHOST///////////////////////////
       res.redirect('http://localhost:5000/');
       //USE FOR HEROKU DEPLOYMENT///////////////////////////
       // res.redirect('https://birdseye-crypto.herokuapp.com/');
     } catch (e) {
-      console.log("ERROR: api/callback: Could not trade code for access token with Coinbase. See error: ", e)
+      // console.log("ERROR: api/callback: Could not trade code for access token with Coinbase. See error: ", e)
     }
   }
 });
@@ -124,10 +124,10 @@ router.get("/newCoinbaseToken", async (req, res) => {
     };
     try {
       const response = await axios(config);
-      console.log("api/newCoinbaseToken: Coinbase auth callback succeeded. Redirecting back...")
+      // console.log("api/newCoinbaseToken: Coinbase auth callback succeeded. Redirecting back...")
       res.send({ response: response?.data });
     } catch (e) {
-      console.log("ERROR: api/newCoinbaseToken: refresh token exchanged failed. See error: ", e)
+      // console.log("ERROR: api/newCoinbaseToken: refresh token exchanged failed. See error: ", e)
     }
 });
 
@@ -138,10 +138,10 @@ router.get("/updateCoinbaseWallet",(req,res) => {
     },{useFindAndModify: false},
       function(err, result) {
         if (err) {
-          console.log("ERROR: /updateWallet: failed to add wallet to Mongo. See error: ",err);
+          // console.log("ERROR: /updateWallet: failed to add wallet to Mongo. See error: ",err);
           res.send("ERROR: /updateWallet: failed to add wallet to Mongo. See error: "+err);
         } else {
-          console.log("/updateWallet: wallet updated in Mongo.");
+          // console.log("/updateWallet: wallet updated in Mongo.");
           res.send(result);
         }
       });
@@ -149,7 +149,7 @@ router.get("/updateCoinbaseWallet",(req,res) => {
 //PROBABLY DONT NEED////////
 router.get("/deleteCoinbaseWallet", (req,res) => {
   coinbaseWallet.findOneAndDelete({accessToken: req.query.accessToken}).then(()=>{
-    console.log("wallet deleted");
+    // console.log("wallet deleted");
   });
 })
 
@@ -164,10 +164,10 @@ router.get("/coinbaseUser", async (req, res) => {
       }
     };
     const response = await axios(config);
-    console.log("api/coinbaseUser: valid Coinbase use found.")
+    // console.log("api/coinbaseUser: valid Coinbase use found.")
     res.send({ response: response?.data, expired: false })
   } catch (e) {
-    console.log("ERROR: api/coinbaseUser: Invalid or expired token.")
+    // console.log("ERROR: api/coinbaseUser: Invalid or expired token.")
     return res.send({expired: true})
   }
 });
@@ -175,12 +175,12 @@ router.get("/coinbaseUser", async (req, res) => {
 router.get("/allCoinbaseWallets", (req,res) =>{
   try {
     coinbaseWallet.find({ parent: req.user._id }).then((coinbaseUsers) => {
-      console.log("api/allWallets: pulled wallet list from Mongo.")
+      // console.log("api/allWallets: pulled wallet list from Mongo.")
       res.send(coinbaseUsers)
     });
   }
   catch(e) {
-    console.log("ERROR: api/allWallets: Failed to pull wallet list from Mongo. See Error: ",e)
+    // console.log("ERROR: api/allWallets: Failed to pull wallet list from Mongo. See Error: ",e)
     res.send({})
   }
 });
@@ -188,12 +188,12 @@ router.get("/allCoinbaseWallets", (req,res) =>{
 router.get("/allForumPosts", (req,res) =>{
   try {
     ForumPost.find({}).then((posts) => {
-      console.log("api/allForumPosts: pulled all forum posts from Mongo.")
+      // console.log("api/allForumPosts: pulled all forum posts from Mongo.")
       res.send(posts)
     });
   }
   catch(e) {
-    console.log("ERROR: api/allForumPosts: Failed to pull forum posts from Mongo. See Error: ", e)
+    // console.log("ERROR: api/allForumPosts: Failed to pull forum posts from Mongo. See Error: ", e)
     res.send({})
   }
 });
@@ -250,10 +250,10 @@ router.post("/coinbaseAccount", async (req, res) => {
 
   try {
     const response = await axios(config);
-    console.log("api/coinbaseAccount: pulled accounts from Coinbase.")
+    // console.log("api/coinbaseAccount: pulled accounts from Coinbase.")
     res.send({ response: response?.data, expired: false })
   } catch (e) {
-    console.log("ERROR: api/coinbaseAccount: could not get accounts from Coinbase. See error: ",e)
+    // console.log("ERROR: api/coinbaseAccount: could not get accounts from Coinbase. See error: ",e)
     res.send({response:"ERROR: api/coinbaseAccount: could not get accounts from Coinbase. See error: ",e, expired:true})
   }
 })
@@ -271,7 +271,7 @@ router.get("/coinbaseTransactions",async (req,res) => {
     // console.log("api/coinbaseTransactions: pulled transactions from Coinbase.")
     res.send({ response: response?.data })
   } catch (e) {
-    console.log("ERROR: api/coinbaseTransactions: could not get transactions from Coinbase. See error: ",e)
+    // console.log("ERROR: api/coinbaseTransactions: could not get transactions from Coinbase. See error: ",e)
     res.send("ERROR: api/coinbaseTransactions: could not get transactions from Coinbase. See error: "+e)
   }
 })
@@ -289,13 +289,13 @@ router.post("/addMetaMaskWallet", (req,res) => {
 router.get("/allMetaMaskWallets", (req,res) =>{
   try {
     metamaskWallet.find({ parent: req.user._id }).then((metamaskUsers) => {
-      console.log("api/allMetaMaskWallets: pulled wallet list from Mongo.")
+      // console.log("api/allMetaMaskWallets: pulled wallet list from Mongo.")
       //  may need to send [] if empty
       res.send(metamaskUsers)
     });
   }
   catch(e) {
-    console.log("ERROR: api/allMetaMaskWallets: Failed to pull wallet list from Mongo. See Error: ",e)
+    // console.log("ERROR: api/allMetaMaskWallets: Failed to pull wallet list from Mongo. See Error: ",e)
     res.send([])
   }
 });

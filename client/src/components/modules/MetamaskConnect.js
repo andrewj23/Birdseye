@@ -14,7 +14,7 @@ async function checkMetaMaskProvider() {
 
 async function getMetaMaskAccounts() {
   const MetaMaskAccounts = await get("/api/allMetaMaskWallets");
-  console.log("getWallets: "+MetaMaskAccounts)
+  console.log("getWallets: "+ MetaMaskAccounts)
   const accountsRes = await ethereum.request({ method: 'eth_requestAccounts' })
     .catch((err) => {
       if (err.code === 4001) {
@@ -44,22 +44,22 @@ async function getMetaMaskAccounts() {
 
   async function MetaMaskEthBalances() {
     const tokens = [];
-      const MetaMaskAccounts = await get("api/allMetaMaskWallets");
+      const MetaMaskAccounts = await get("/api/allMetaMaskWallets");
       if (MetaMaskAccounts === []) {
         console.log("EMPTY METAMASK WALLETS");
-        return
+        return {}
       }
       const web3 = new Web3(window.ethereum)
-      const balance = await web3.eth.getBalance(MetaMaskAccounts[0])
+      const balance = await web3.eth.getBalance(MetaMaskAccounts[0].address)
       const etherBalance = parseFloat(balance)*Math.pow(10,-18)
     if (etherBalance !== 0) {
-      tokens.push({ "token": "ETH", "balance": etherBalance });
+      tokens.push({ "name": "Ethereum", "token": "ETH", "balance": parseFloat(etherBalance) });
     }
-      for (const token of erc20Addresses) {
-        const tokenInst = new web3.eth.Contract(tokenABI, token.contract_address);
-        const erc20balance = await tokenInst.methods.balanceOf(accounts[0]).call()
-        if (erc20balance !== 0) {
-          tokens.push({ "token": token.code, "balance": erc20balance });
+      for (const erc20token of erc20Addresses) {
+        const tokenInst = new web3.eth.Contract(tokenABI, erc20token.contract_address);
+        const erc20balance = await tokenInst.methods.balanceOf(MetaMaskAccounts[0].address).call()
+        if (parseFloat(erc20balance) !== 0) {
+          tokens.push({ "name": erc20token.token, "token": erc20token.code, "balance": parseFloat(erc20balance) });
         }
       }
       return {"name": "MetaMask", "tokens": tokens}

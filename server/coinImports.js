@@ -16,11 +16,11 @@ async function verifyCoinbaseWallet() {
       return true
     }
     catch (e) {
-      console.log("verifyCoinbaseWallet: verification failed. See error: "+e)
+      // console.log("verifyCoinbaseWallet: verification failed. See error: "+e)
       return false
     }
   }
-  console.log("verifyCoinbaseWallet: wallet list empty. Re-authorize Coinbase.")
+  // console.log("verifyCoinbaseWallet: wallet list empty. Re-authorize Coinbase.")
   return false
 }
 
@@ -33,28 +33,28 @@ async function verifyToken(walletObj) {
   // helper for verifyCoinbaseWallet
   const response = await get("/api/coinbaseUser",{accessToken: walletObj.accessToken});
   if (response.expired) {
-    console.log("verifyToken: token has expired. Trying to refresh...")
+    // console.log("verifyToken: token has expired. Trying to refresh...")
    const refreshResponse = await refreshAccessToken(walletObj)
-    console.log("refreshResponse: "+JSON.stringify(refreshResponse))
+    // console.log("refreshResponse: "+JSON.stringify(refreshResponse))
     let body = {
       _id: walletObj._id,
       accessToken: refreshResponse.response.access_token,
       refreshToken: refreshResponse.response.refresh_token,
     }
     await get("/api/updateCoinbaseWallet",body);
-    console.log("verifyToken: used refresh token and added new wallet.");
+    // console.log("verifyToken: used refresh token and added new wallet.");
     return
   }
-  console.log("verifyToken: access token is not expired. User: ",
-    JSON.stringify(response.response.data.id),
-    JSON.stringify(response.response.data.name))
+  // console.log("verifyToken: access token is not expired. User: ",
+  //   JSON.stringify(response.response.data.id),
+  //   JSON.stringify(response.response.data.name))
 }
 
 async function getTransactions() {
   // fetches all transactions (unordered) from Coinbase account
   const wallets = await get("/api/allCoinbaseWallets");
   if (!wallets) {
-    console.log("ERROR: getTransactions: wallet list in Mongo is empty.")
+    // console.log("ERROR: getTransactions: wallet list in Mongo is empty.")
     return {}
   }
   return await getTransactionsHelper(wallets[0]);
@@ -66,7 +66,7 @@ async function getTransactionsHelper(walletObj) {
   let transactionsByID = {};
   const accountIDs = await post("/api/coinbaseAccount", {accessToken: walletObj.accessToken});
   if (accountIDs.expired) {
-    console.log("ERROR: getTransactionsHelper: Coinbase access token expired or invalid.")
+    // console.log("ERROR: getTransactionsHelper: Coinbase access token expired or invalid.")
     return
   }
   for (const accountID of accountIDs.response.data) {
@@ -115,7 +115,7 @@ async function getWallets() {
   const cleanedTokensObj = tokensObj.response.data
   const filteredTokens = cleanedTokensObj.filter((tokenObj) => (parseFloat(tokenObj.balance.amount) !== 0))
   tokens = filteredTokens.map((TokenObj) => (
-    { token: TokenObj.currency.code, balance: TokenObj.balance.amount, slug: TokenObj.currency.slug }
+    { name:TokenObj.currency.name, token: TokenObj.currency.code, balance: parseFloat(TokenObj.balance.amount) }
   ));
   return { "name": name, "tokens": tokens }
 }

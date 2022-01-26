@@ -1,14 +1,13 @@
 import React, { Component, useEffect, useState } from "react";
 import CoinCard from "./CoinCard";
 import AddWalletPopup from "../AddWalletPopup";
-import { getCoins } from "../../../../../server/coinImports";
 import './CoinFeed.css'
 
 
 const CoinFeed = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const hasCoins = props.coins.length !== 0;
+  const hasCoins = props.allCoins.length !== 0;
 
   if (!props.userId) {
     return (<div>Log in with Google!</div>);
@@ -25,22 +24,21 @@ const CoinFeed = (props) => {
       <AddWalletPopup />
     </div>
     <div className="coinfeed-coins">
-      {props.coins.filter((CoinObj) => {
-        if (searchTerm === "") { 
-          return CoinObj 
-        } else if (CoinObj.currency.code.toLowerCase().includes(searchTerm.toLowerCase())) {
+      {props.allCoins.filter((CoinObj) => {
+        if (searchTerm === "") {
           return CoinObj
-        } else if (CoinObj.currency.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+        } else if (CoinObj.token.toLowerCase().includes(searchTerm.toLowerCase())) {
+          return CoinObj
+        } else if (CoinObj.name.toLowerCase().includes(searchTerm.toLowerCase())) {
           return CoinObj
         }
       }).map((CoinObj) => (
-        <CoinCard
-        token={CoinObj.currency.code}
-        balance={CoinObj.balance.amount}
-        slug={CoinObj.currency.slug}
-        curval={(CoinObj.balance.amount*props.priceData[CoinObj.currency.code]).toFixed(2)}
-        totalVal={props.totalVal}
-        />
+          <CoinCard
+            token={CoinObj.token}
+            balance={CoinObj.balance.amount}
+            curval={(CoinObj.balance*props.priceData[CoinObj.token]).toFixed(2)}
+            totalVal={props.totalVal}
+          />
         )
       )}
     </div>

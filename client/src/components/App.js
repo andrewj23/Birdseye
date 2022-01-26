@@ -27,6 +27,7 @@ const App = () => {
   const [transactionsByID, setTransactionsByID] = useState({});
   const [allTransactions, setAllTransactions] = useState([]);
   const [MetaMaskInstalled, setMetaMaskInstalled] = useState(false)
+  const [allCoins, setAllCoins] = useState([])
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
@@ -44,7 +45,7 @@ const App = () => {
         setValidCoinbaseWallet(walletStatus);
       })
     }
-    console.log("App/useEffect: Coinbase Verification status: "+ValidCoinbaseWallet);
+    // console.log("App/useEffect: Coinbase Verification status: "+ValidCoinbaseWallet);
   }); // Constantly checking if coinbase wallet is connected/valid
 
   useEffect(() => {
@@ -53,7 +54,7 @@ const App = () => {
         setMetaMaskInstalled(metamaskStatus)
       })
     }
-    console.log("App/useEffect: MetaMask Installed status: "+MetaMaskInstalled);
+    // console.log("App/useEffect: MetaMask Installed status: "+MetaMaskInstalled);
   }); // Constantly checking if metamask is connected
 
   useEffect(()=>{
@@ -89,6 +90,13 @@ const App = () => {
         }
         // wallets.push(walletsObj)
         setWallets([...wallets, walletsObj])
+        return walletsObj.tokens
+      }).then((tokens)=>{
+        if (tokens === []) {
+          return
+        }
+        // console.log("COINBASE TOKENS: "+JSON.stringify(tokens))
+        setAllCoins([...allCoins, ...tokens])
       });
     }
   }, [userId, ValidCoinbaseWallet]);
@@ -103,21 +111,27 @@ const App = () => {
   let totalVal = 0
   for (const coin of filteredCoins){
     totalVal+=priceData[coin.currency.code]*coin.balance.amount;
-    console.log('Portfolio Value: '+ JSON.stringify(totalVal))
+    // console.log('Portfolio Value: '+ JSON.stringify(totalVal))
   };
 
-  // useEffect(() => {
-  //   if (userId && MetaMaskInstalled) {
-  //     MetaMaskEthBalances().then((walletObj) => {
-  //       if (walletObj.length === 0) {
-  //         return
-  //       }
-  //       console.log(JSON.stringify("walletobj: "+walletObj))
-  //       wallets.push(walletObj)
-  //       // setWallets(wallets)
-  //     });
-  //   }
-  // }, [userId, MetaMaskInstalled]);
+  useEffect(() => {
+    if (userId && MetaMaskInstalled) {
+      MetaMaskEthBalances().then((walletObj) => {
+        // console.log("walletobj: "+JSON.stringify(walletObj))
+        if (walletObj === {}) {
+          return
+        }
+        setWallets([...wallets, walletObj])
+        return walletObj.tokens;
+      }).then((tokens)=>{
+        if (tokens === []) {
+          return
+        }
+        // console.log("METAMASK TOKENS: "+JSON.stringify(tokens))
+        setAllCoins([...allCoins, ...tokens])
+      });
+    }
+  }, [userId, MetaMaskInstalled]);
 
   useEffect(()=>{
     if (principal!=="Loading...") {
@@ -134,7 +148,7 @@ const App = () => {
   }, [netChange])
 
   const handleLogin = (res) => {
-    console.log(`Logged in as ${res.profileObj.name}`);
+    // console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
@@ -161,9 +175,9 @@ const App = () => {
       handleLogout={handleLogout}/>
       <Router>
         <Home path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} principal={principal}
-          coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
+              allCoins={allCoins} coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
           percentChange={percentChange} classname='content'/>
-        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} coins={filteredCoins} userId={userId} 
+        <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId}
           priceData={priceData} wallets={wallets} allTransactions={allTransactions} totalVal={totalVal} />
         <Forum path="/forum/" userId={userId} userName = {userName} />
         <NotFound default />

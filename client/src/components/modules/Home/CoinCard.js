@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import "./CoinCard.css";
+import tokenSlugs from "../tokenSlugs";
 
 
 const CoinCard = (props) => {
-  let imgFile = "./icons/" + props.slug + ".png";
+  let imgFile = "../logo.svg";
+  if (tokenSlugs[props.token]){
+    imgFile = "../icons/" + tokenSlugs[props.token] + ".png";
+  }
   let percentage = ((props.curval / props.totalVal) * 100).toFixed(2);
 
   return (

@@ -1,9 +1,13 @@
 import React, { Component, useState } from "react";
 import "./WalletCard.css"
 import TransactionFeed from "./TransactionFeed";
+import tokenSlugs from "../tokenSlugs";
 
 const HoldingCard = (props) => {
-  let imgFile = "../icons/" + props.tokenObj.slug + ".png";
+  let imgFile = "../logo.svg";
+  if (tokenSlugs[props.tokenObj.token]){
+    imgFile = "../icons/" + tokenSlugs[props.tokenObj.token] + ".png";
+  }
   return (
     <div className={"holdingCard"}>
       <img src={imgFile} className={"coinHolding-img"}/>
@@ -19,10 +23,10 @@ const HoldingCard = (props) => {
 const WalletCard = (props) => {
 const [expanded, setExpanded] = useState(false)
   function clickToExpandCards(){
-      let holdings = document.getElementById("holdings");
-    let transactions = document.getElementById("transactions");
-    let walletCard = document.getElementById("walletCard");
-    let button = document.getElementById("dropdown");
+      let holdings = document.getElementById(`${props.name}-holdings`);
+    let transactions = document.getElementById(`${props.name}-transactions`);
+    let walletCard = document.getElementById(`${props.name}-walletCard`);
+    let button = document.getElementById(`${props.name}-dropdown`);
     holdings.classList.toggle("hide");
       transactions.classList.toggle("hide");
       if (expanded) {
@@ -51,22 +55,22 @@ const [expanded, setExpanded] = useState(false)
   }
   let imgFile = "../" + props.name.toLowerCase() + ".svg";
   return (
-  <div id="walletCard" className={"walletCard-container"}>
+  <div id={`${props.name}-walletCard`} className={"walletCard-container"}>
     <img src={imgFile} alt="icon" className="wallet-img" />
     <div className={"walletType"}>
       <div className="walletCard-type">{props.name}</div>
       <div className={"totalValue"}>Total: ${totalWalletVal.toFixed(2)}</div>
       <div className={"totalPerc"}>{((totalWalletVal / props.totalVal) * 100).toFixed(2)}% of Portfolio Value</div>
     </div>
-    <div id="holdings" className="walletCard-holdings hide">
+    <div id={`${props.name}-holdings`} className="walletCard-holdings hide">
       <div className="holdings-title">Holdings:</div>
       <div className="walletCard-balance">{coinsList}</div>
     </div>
-    <div id="transactions" className="walletCard-transactions hide">
+    <div id={`${props.name}-transactions`} className="walletCard-transactions hide">
       <div className="transactions-title">Transaction History:</div>
       <div className="transactions-feed"><TransactionFeed allTransactions={props.allTransactions} /></div>
     </div>
-    <button id="dropdown" onClick={clickToExpandCards} className={"expand"}>▼</button>
+    <button id={`${props.name}-dropdown`} onClick={clickToExpandCards} className={"expand"}>▼</button>
   </div>
   );
 };
