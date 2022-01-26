@@ -64,6 +64,9 @@ const WalletCard = (props) => {
     return {name: coinObj.token, balance: coinObj.balance}
   });
 
+  const structuredTransactions = (props.allTransactions === "null") ? "MetaMask transactions coming soon!" 
+    : <TransactionFeed allTransactions={props.allTransactions} />;
+
   return (
   <div id={`${props.name}-walletCard`} className={"walletCard-container"}>
     <div className="walletCard-description">
@@ -86,7 +89,7 @@ const WalletCard = (props) => {
     </div>
     <div id={`${props.name}-transactions`} className="walletCard-transactionsContainer hide">
       <div className="walletCard-transactionsTitle">Transaction History:</div>
-      <div className="walletCard-transactionsFeed"><TransactionFeed allTransactions={props.allTransactions} /></div>
+      <div className="walletCard-transactionsFeed">{structuredTransactions}</div>
     </div>
     <button id={`${props.name}-dropdown`} onClick={clickToExpandCards} className="walletCard-button">▼</button>
   </div>
