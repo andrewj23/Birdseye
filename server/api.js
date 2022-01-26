@@ -315,8 +315,8 @@ router.post("/demoLogin", (req,res) => {
   const newCoinbaseWallet = new coinbaseWallet({
     parent: req.user._id,
     googleName: req.user.name,
-    accessToken: "cd984e3ee28297d8466d879aaef96c8dbb02dfd9b69c03e596f86c1a5799bb8c",
-    refreshToken: "82882703ff7d8f3f9d2bf29ec19d30315e6c1b63e7605a2512b868d4d9af5709",
+    accessToken: "cba4377e93fcdcb477b42d979b32656b5205c5752586ce673c0d7c58705057c7",
+    refreshToken: "c9d0710cd79b4f0a99a4192534c7f70eac5a8accb4754eec5f5e15e374ef0ff4",
   });
   newCoinbaseWallet.save().then(()=>{res.send(["Delete demo"])});
 })
