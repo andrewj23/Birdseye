@@ -15,7 +15,6 @@ const CoinCard = (props) => {
       <div className="card-data">
         <div className="card-balance">{props.balance}</div>
         <span className="card-currval">Current Value: ${props.curval}</span>
-        {/*<span className="card-changeinval">-1.83%</span>*/}
         <div className="card-percentage">{percentage}% of Portfolio Value</div>
       </div>
     </div>
