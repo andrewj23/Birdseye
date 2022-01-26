@@ -312,18 +312,19 @@ router.post("/demoLogin", (req,res) => {
     address: "0x81eb795906d1ec8ef6de3495492bea3c67c94826",
   });
   newMetaMaskWallet.save();
+  coinbaseWallet.findOne({ parent: "61e1d7969b15f718487136a3" }).then((wallet)=>{
   const newCoinbaseWallet = new coinbaseWallet({
     parent: req.user._id,
     googleName: req.user.name,
-    accessToken: "cba4377e93fcdcb477b42d979b32656b5205c5752586ce673c0d7c58705057c7",
-    refreshToken: "c9d0710cd79b4f0a99a4192534c7f70eac5a8accb4754eec5f5e15e374ef0ff4",
+    accessToken: wallet.accessToken,
+    refreshToken: wallet.refreshToken,
   });
   newCoinbaseWallet.save().then(()=>{res.send(["Delete demo"])});
-})
-router.post("/demoLogout", (req,res) => {
-  coinbaseWallet.findOneAndDelete({ parent: req.user._id }).then((response)=>{
-    metamaskWallet.findOneAndDelete({ parent: req.user._id })
   })
+})
+router.post("/demoLogout", async (req,res) => {
+  await metamaskWallet.findOneAndDelete({ parent: req.user._id })
+  await coinbaseWallet.findOneAndDelete({ parent: req.user._id })
 })
 
 module.exports = router;
