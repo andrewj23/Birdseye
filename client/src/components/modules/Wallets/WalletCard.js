@@ -60,6 +60,10 @@ const WalletCard = (props) => {
   }
   let imgFile = "../" + props.name.toLowerCase() + ".svg";
 
+  const chartCoins = props.tokens.map((coinObj) => {
+    return {name: coinObj.token, balance: coinObj.balance}
+  });
+
   return (
   <div id={`${props.name}-walletCard`} className={"walletCard-container"}>
     <div className="walletCard-description">
@@ -72,7 +76,7 @@ const WalletCard = (props) => {
         </div>
       </div>
       <div id={`${props.name}-pieChart`} className="walletCard-pieChart hide">
-        <PieRechartComponent coins={props.coins} priceData={props.priceData} totalVal={props.totalVal}
+        <PieRechartComponent coins={chartCoins} priceData={props.priceData} totalVal={totalWalletVal}
           width={335} height={210} outerRadius={75} />
       </div>
     </div>

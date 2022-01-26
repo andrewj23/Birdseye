@@ -7,9 +7,8 @@ const PieRechartComponent = (props)=> {
 
   let pieData = [];
   for (const coin of props.coins){
-    let name = coin.currency.code;
-    let value = parseFloat((100*props.priceData[name]*coin.balance.amount/props.totalVal).toFixed(2));
-    pieData.push({'name':name, 'value':value})
+    let value = parseFloat((100*props.priceData[coin.name]*coin.balance/props.totalVal).toFixed(2));
+    pieData.push({'name': coin.name, 'value': value})
     // console.log(pieData)
   }
 
