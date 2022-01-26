@@ -8,7 +8,7 @@ const Wallets = (props) => {
     return (
         <div className={"wallets-container"}>
             <WalletFeed userId={props.userId} wallets={props.wallets} allTransactions={props.allTransactions}
-                priceData={props.priceData} totalVal={props.totalVal} />
+                priceData={props.priceData} totalVal={props.totalVal} coins={props.coins} />
         </div>
     );
 };

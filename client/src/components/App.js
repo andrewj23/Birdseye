@@ -178,7 +178,7 @@ const App = () => {
               allCoins={allCoins} coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
           percentChange={percentChange} classname='content'/>
         <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId}
-          priceData={priceData} wallets={wallets} allTransactions={allTransactions} totalVal={totalVal} />
+          priceData={priceData} wallets={wallets} allTransactions={allTransactions} totalVal={totalVal} coins={filteredCoins} />
         <Forum path="/forum/" userId={userId} userName = {userName} />
         <NotFound default />
       </Router>

@@ -6,7 +6,6 @@ const PieRechartComponent = (props)=> {
   const COLORS = ['var(--primarylight)', 'var(--pink)', 'var(--purple)', 'var(--primary--dim)', 'var(--brightpink)',];
 
   let pieData = [];
-
   for (const coin of props.coins){
     let name = coin.currency.code;
     let value = parseFloat((100*props.priceData[name]*coin.balance.amount/props.totalVal).toFixed(2));

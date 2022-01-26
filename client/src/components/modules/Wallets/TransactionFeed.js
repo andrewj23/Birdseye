@@ -18,7 +18,6 @@ const Transaction = (props) => {
 
 
 const TransactionFeed = (props) => {
-  console.log(props.allTransactions);
   function getTimeAsNumberOfMinutes(time) {
     let timeParts = time.split(":");
     let timeInMinutes = (parseFloat(timeParts[0]) * 60) + parseFloat(timeParts[1])+parseFloat(timeParts[2])/60;
