@@ -125,6 +125,7 @@ const App = () => {
     post("/api/logout");
   };
 
+
   return (
     <div className='wrapper'>
       <div className='SideBar-name'/>

@@ -4,7 +4,7 @@
     border-radius: 9.1px;
     height: 150px;
     box-shadow: 5px 5px 5px var(--shadow);
-    width: auto;
+    width: 1000px;
     -webkit-transition: all .5s ease-in-out;
     -moz-transition: all .5s ease-in-out;
     -ms-transition: all .5s ease-in-out;

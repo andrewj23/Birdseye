@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import "./Summary.css";
+import PieRechartComponent from "./PieChart";
 import { getTotalDeposited } from "../../../../../server/coinImports";
 
 const Summary = (props) => {
@@ -18,6 +19,7 @@ const Summary = (props) => {
       <span className="Summary-percentage">{props.percentChange}%</span>
       <div className="Summary-principal">Principal: {props.principal}</div>
       <div className="Summary-change">Net Change: ${props.netChange}</div>
+      <PieRechartComponent coins={props.coins} priceData={props.priceData} totalVal={props.totalVal}/>
     </div>
   
     );
