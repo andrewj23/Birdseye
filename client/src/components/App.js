@@ -165,6 +165,8 @@ const App = () => {
   const handleLogout = () => {
     setUserId(undefined);
     setUserName(undefined);
+    setAllCoins([])
+    setWallets([])
     post("/api/logout");
   };
 
@@ -184,6 +186,8 @@ const App = () => {
     setDemo(false)
     setUserId(undefined);
     setUserName(undefined);
+    setAllCoins([])
+    setWallets([])
     post("/api/demoLogout").then(()=>{
     post("/api/logout");
     })
