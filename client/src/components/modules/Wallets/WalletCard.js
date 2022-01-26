@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./WalletCard.css"
 import TransactionFeed from "./TransactionFeed";
+import PieRechartComponent from "../Home/PieChart";
 
 
 const HoldingCard = (props) => {
@@ -68,7 +69,8 @@ const WalletCard = (props) => {
         </div>
       </div>
       <div id= "walletCard-pieChart" className="walletCard-pieChart hide">
-        <p>chart</p>
+        <PieRechartComponent coins={props.coins} priceData={props.priceData} totalVal={props.totalVal}
+          width={335} height={210} outerRadius={75} />
       </div>
     </div>
     <div id="walletCard-holdingsContainer" className="walletCard-holdingsContainer hide">

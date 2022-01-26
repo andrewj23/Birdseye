@@ -94,6 +94,11 @@
     font-size: 15px;
 }
 
+.walletCard-pieChart {
+    height: 200px;
+    width: 200px;
+}
+
 .walletCard-holdingsContainer {
     display: flex;
     flex-direction: column;
@@ -147,6 +152,7 @@
     overflow-x: hidden;
     color: white;
     padding-bottom: 5px;
+    height: 272px;
 }
 
 .walletCard-transactionsFeed::-webkit-scrollbar {

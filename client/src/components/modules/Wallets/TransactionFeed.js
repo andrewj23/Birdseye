@@ -75,7 +75,9 @@ const TransactionFeed = (props) => {
       ))}
     </div>
   ) : (
-    <div>No Transactions</div>
+    <div className="transFeed-container">
+      <div>No Transactions</div>
+    </div>
   )
 }
 
