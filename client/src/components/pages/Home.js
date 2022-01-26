@@ -5,13 +5,15 @@ import Summary from "../modules/Home/Summary";
 import CoinFeed from "../modules/Home/CoinFeed";
 
 
+
 const Home = (props) => {
   return (
     <div className={"home-container"}>
       <Summary userId ={props.userId} principal={props.principal} totalVal={props.totalVal}
                netChange={props.netChange} percentChange={props.percentChange} allCoins={props.allCoins} coins={props.coins}
                priceData={props.priceData}/>
-      <CoinFeed allCoins={props.allCoins} userId={props.userId} totalVal={props.totalVal} coins={props.coins} priceData={props.priceData} />
+      <CoinFeed allCoins={props.allCoins} userId={props.userId} totalVal={props.totalVal} coins={props.coins} priceData={props.priceData}
+                handleLoginDemo={props.handleLoginDemo}/>
     </div>
   );
 };

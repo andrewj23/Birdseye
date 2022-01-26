@@ -2,6 +2,8 @@ import React, { Component, useEffect, useState } from "react";
 import CoinCard from "./CoinCard";
 import AddWalletPopup from "../AddWalletPopup";
 import './CoinFeed.css'
+const GOOGLE_CLIENT_ID = "950199412699-d6sfpl52prce9n34uu94qgh1f0ubd5gn.apps.googleusercontent.com";
+import GoogleLogin, { GoogleLogout } from "react-google-login";
 
 
 const CoinFeed = (props) => {
@@ -10,7 +12,18 @@ const CoinFeed = (props) => {
   const hasCoins = props.allCoins.length !== 0;
 
   if (!props.userId) {
-    return (<div>Log in with Google!</div>);
+    return (
+      <div className={"demo"}>
+      <div>Log in with Google above and add your own wallets!</div>
+        <div>Or... test Our features with a demo account below!</div>
+        <GoogleLogin
+          clientId={GOOGLE_CLIENT_ID}
+          buttonText="Login Demo"
+          onSuccess={props.handleLoginDemo}
+          onFailure={(err) => console.log(err)}
+        />
+      </div>
+    );
   }
   
 
@@ -35,7 +48,7 @@ const CoinFeed = (props) => {
       }).map((CoinObj) => (
           <CoinCard
             token={CoinObj.token}
-            balance={CoinObj.balance.amount}
+            balance={CoinObj.balance}
             curval={(CoinObj.balance*props.priceData[CoinObj.token]).toFixed(2)}
             totalVal={props.totalVal}
           />

@@ -23,7 +23,6 @@ const coinbaseUser = require("./models/coinbaseUser");
 
 // import authentication library
 const auth = require("./auth");
-const coinbaseAuth = require("./coinbaseAuth")
 
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
@@ -57,12 +56,15 @@ router.post("/initsocket", (req, res) => {
 
 
 //coinbase
-const CLIENT_ID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678";
-const CLIENT_SECRET = "4514e203850ae432ce980d16ba56b7c06b2c5726ac7bb7c28a50bc8aaea721d0";
+// const CLIENT_ID = process.env.COINBASE_CLIENT_ID;
+// const CLIENT_SECRET = process.env.COINBASE_SECRET_ID;
+// const SECRET = process.env.COINBASE_SECRET_STRING
 //USE FOR LOCALHOST///////////////////////////
 // const REDIRECT_URI = "http://localhost:3000/api/callback/"
 //USE FOR HEROKU DEPLOYMENT///////////////////////////
 const REDIRECT_URI = "https://birdseye-crypto.herokuapp.com/api/callback/"
+const CLIENT_ID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678"
+const CLIENT_SECRET = "4514e203850ae432ce980d16ba56b7c06b2c5726ac7bb7c28a50bc8aaea721d0"
 const SECRET = "134ef5504a94"
 
 // User gets redirected to this endpoint on successful login
@@ -291,6 +293,9 @@ router.get("/allMetaMaskWallets", (req,res) =>{
     metamaskWallet.find({ parent: req.user._id }).then((metamaskUsers) => {
       // console.log("api/allMetaMaskWallets: pulled wallet list from Mongo.")
       //  may need to send [] if empty
+      if (!metamaskUsers){
+        res.send([])
+      }
       res.send(metamaskUsers)
     });
   }
@@ -299,5 +304,26 @@ router.get("/allMetaMaskWallets", (req,res) =>{
     res.send([])
   }
 });
+
+router.post("/demoLogin", (req,res) => {
+  const newMetaMaskWallet = new metamaskWallet({
+    parent: req.user._id,
+    googleName: req.user.name,
+    address: "0x81eb795906d1ec8ef6de3495492bea3c67c94826",
+  });
+  newMetaMaskWallet.save();
+  const newCoinbaseWallet = new coinbaseWallet({
+    parent: req.user._id,
+    googleName: req.user.name,
+    accessToken: "cba4377e93fcdcb477b42d979b32656b5205c5752586ce673c0d7c58705057c7",
+    refreshToken: "c9d0710cd79b4f0a99a4192534c7f70eac5a8accb4754eec5f5e15e374ef0ff4",
+  });
+  newCoinbaseWallet.save().then(()=>{res.send(["Delete demo"])});
+})
+router.post("/demoLogout", (req,res) => {
+  coinbaseWallet.findOneAndDelete({ parent: req.user._id }).then((response)=>{
+    metamaskWallet.findOneAndDelete({ parent: req.user._id })
+  })
+})
 
 module.exports = router;

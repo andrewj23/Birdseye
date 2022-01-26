@@ -1,22 +1,14 @@
 import React, { Component, useEffect, useState } from "react";
 import "./Summary.css";
 import PieRechartComponent from "./PieChart";
-import { getTotalDeposited } from "../../../../../server/coinImports";
+
 
 const Summary = (props) => {
-//   const [principal, setPrincipal] = useState(0);
-//
-// useEffect(()=>{
-//   if (props.userId){
-//   getTotalDeposited().then((response) =>{
-//     setPrincipal(response)
-//   })}
-// },[props.userId])
-const chartCoins = props.coins.map((coinObj) => {
-  return {name: coinObj.currency.code, balance: coinObj.balance.amount}
-});
+  const chartCoins = props.coins.map((coinObj) => {
+    return {name: coinObj.currency.code, balance: coinObj.balance.amount}
+  });
 
-return (
+  return (
     <div className="Summary-container">
       <span className="Summary-PV">${props.totalVal.toFixed(2)}</span>
       <span className="Summary-percentage">{props.percentChange}%</span>
@@ -27,6 +19,7 @@ return (
     </div>
   
     );
-};
+  };
+
 
 export default Summary;

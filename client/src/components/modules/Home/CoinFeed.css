@@ -82,3 +82,17 @@
 .notConnected{
     margin-right: var(--m);
 }
+
+.demo {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.demo-button {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 10px;
+    border-radius: 9.10004px;
+    cursor: pointer;
+}
