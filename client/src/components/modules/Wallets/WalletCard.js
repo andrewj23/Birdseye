@@ -1,15 +1,16 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import "./WalletCard.css"
 import TransactionFeed from "./TransactionFeed";
+
 
 const HoldingCard = (props) => {
   let imgFile = "../icons/" + props.tokenObj.slug + ".png";
   return (
-    <div className={"holdingCard"}>
-      <img src={imgFile} className={"coinHolding-img"}/>
-      <div className={"holdingText"}>
-        <div className={"holdingAmount"}>{props.tokenObj.balance} {props.tokenObj.token}</div>
-        <div className={"holdingPerc"}>{(((props.tokenObj.balance*props.priceData[props.tokenObj.token]) / props.totalWalletVal) * 100).toFixed(2)}% of wallet value</div>
+    <div className={"holdingCard-container"}>
+      <img src={imgFile} className={"holdingCard-img"}/>
+      <div className={"holdingCard-text"}>
+        <div className={"holdingCard-amount"}>{props.tokenObj.balance} {props.tokenObj.token}</div>
+        <div className={"holdingCard-percent"}>{(((props.tokenObj.balance*props.priceData[props.tokenObj.token]) / props.totalWalletVal) * 100).toFixed(2)}% of wallet value</div>
       </div>
     </div>
   )
@@ -17,25 +18,27 @@ const HoldingCard = (props) => {
 
 
 const WalletCard = (props) => {
-const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+
   function clickToExpandCards(){
-      let holdings = document.getElementById("holdings");
-    let transactions = document.getElementById("transactions");
-    let walletCard = document.getElementById("walletCard");
-    let button = document.getElementById("dropdown");
+    let holdings = document.getElementById("walletCard-holdingsContainer");
+    let transactions = document.getElementById("walletCard-transactionsContainer");
+    let walletCard = document.getElementById("walletCard-container");
+    let button = document.getElementById("walletCard-button");
     holdings.classList.toggle("hide");
-      transactions.classList.toggle("hide");
-      if (expanded) {
-        walletCard.style.height = "150px";
-        button.innerHTML = "▼";
-        setExpanded(false)
-      }
-      else {
-        walletCard.style.height = "300px";
-        button.innerHTML = "▲";
-        setExpanded(true)
-      }
+    transactions.classList.toggle("hide");
+    if (expanded) {
+      walletCard.style.height = "125px";
+      button.innerHTML = "▼";
+      setExpanded(false)
+    }
+    else {
+      walletCard.style.height = "320px";
+      button.innerHTML = "▲";
+      setExpanded(true)
+    }
   };
+
   let coinsList = null;
   let totalWalletVal = 0;
   const hasCoins = props.tokens.length !== 0;
@@ -50,23 +53,24 @@ const [expanded, setExpanded] = useState(false)
     coinsList = <div>No coins in wallet!</div>;
   }
   let imgFile = "../" + props.name.toLowerCase() + ".svg";
+  
   return (
-  <div id="walletCard" className={"walletCard-container"}>
-    <img src={imgFile} alt="icon" className="wallet-img" />
-    <div className={"walletType"}>
+  <div id="walletCard-container" className={"walletCard-container"}>
+    <img src={imgFile} alt="icon" className="walletCard-img" />
+    <div className={"walletCard-info"}>
       <div className="walletCard-type">{props.name}</div>
-      <div className={"totalValue"}>Total: ${totalWalletVal.toFixed(2)}</div>
-      <div className={"totalPerc"}>{((totalWalletVal / props.totalVal) * 100).toFixed(2)}% of Portfolio Value</div>
+      <div className={"walletCard-totalVal"}>Total: ${totalWalletVal.toFixed(2)}</div>
+      <div className={"walletCard-totalPercent"}>{((totalWalletVal / props.totalVal) * 100).toFixed(2)}% of Portfolio Value</div>
     </div>
-    <div id="holdings" className="walletCard-holdings hide">
-      <div className="holdings-title">Holdings:</div>
-      <div className="walletCard-balance">{coinsList}</div>
+    <div id="walletCard-holdingsContainer" className="walletCard-holdingsContainer hide">
+      <div className="walletCard-holdingsTitle">Holdings:</div>
+      <div className="walletCard-holdingsFeed">{coinsList}</div>
     </div>
-    <div id="transactions" className="walletCard-transactions hide">
-      <div className="transactions-title">Transaction History:</div>
-      <div className="transactions-feed"><TransactionFeed allTransactions={props.allTransactions} /></div>
+    <div id="walletCard-transactionsContainer" className="walletCard-transactionsContainer hide">
+      <div className="walletCard-transactionsTitle">Transaction History:</div>
+      <div className="walletCard-transactionsFeed"><TransactionFeed allTransactions={props.allTransactions} /></div>
     </div>
-    <button id="dropdown" onClick={clickToExpandCards} className={"expand"}>▼</button>
+    <button id="walletCard-button" onClick={clickToExpandCards} className="walletCard-button">▼</button>
   </div>
   );
 };
