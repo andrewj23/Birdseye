@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const Transaction = (props) => {
   // time={transactionObj.updated_at}
   // type={transactionObj.type}
@@ -62,20 +63,21 @@ const TransactionFeed = (props) => {
 
   return hasTransactions ? (
     <div className="transFeed-container">
-  {allSortedTransactions.map((transactionObj) => (
-    <Transaction
-      time={transactionObj.updated_at}
-      type={transactionObj.type}
-      amount={transactionObj.amount.amount}
-      token={transactionObj.amount.currency}
-      value={transactionObj.native_amount.amount}
-      title={transactionObj.details.title}
-    />
-  ))}
+      {allSortedTransactions.map((transactionObj) => (
+        <Transaction
+          time={transactionObj.updated_at}
+          type={transactionObj.type}
+          amount={transactionObj.amount.amount}
+          token={transactionObj.amount.currency}
+          value={transactionObj.native_amount.amount}
+          title={transactionObj.details.title}
+        />
+      ))}
     </div>
   ) : (
     <div>No Transactions</div>
   )
 }
+
 
 export default TransactionFeed;

@@ -25,8 +25,10 @@ const WalletCard = (props) => {
     let transactions = document.getElementById("walletCard-transactionsContainer");
     let walletCard = document.getElementById("walletCard-container");
     let button = document.getElementById("walletCard-button");
+    let pieChart = document.getElementById("walletCard-pieChart");
     holdings.classList.toggle("hide");
     transactions.classList.toggle("hide");
+    pieChart.classList.toggle("hide");
     if (expanded) {
       walletCard.style.height = "125px";
       button.innerHTML = "▼";
@@ -56,11 +58,18 @@ const WalletCard = (props) => {
   
   return (
   <div id="walletCard-container" className={"walletCard-container"}>
-    <img src={imgFile} alt="icon" className="walletCard-img" />
-    <div className={"walletCard-info"}>
-      <div className="walletCard-type">{props.name}</div>
-      <div className={"walletCard-totalVal"}>Total: ${totalWalletVal.toFixed(2)}</div>
-      <div className={"walletCard-totalPercent"}>{((totalWalletVal / props.totalVal) * 100).toFixed(2)}% of Portfolio Value</div>
+    <div className="walletCard-description">
+      <div className="walletCard-descriptionTop">
+        <img src={imgFile} alt="icon" className="walletCard-img" />
+        <div className={"walletCard-info"}>
+          <div className="walletCard-type">{props.name}</div>
+          <div className={"walletCard-totalVal"}>Total: ${totalWalletVal.toFixed(2)}</div>
+          <div className={"walletCard-totalPercent"}>{((totalWalletVal / props.totalVal) * 100).toFixed(2)}% of Portfolio Value</div>
+        </div>
+      </div>
+      <div id= "walletCard-pieChart" className="walletCard-pieChart hide">
+        <p>chart</p>
+      </div>
     </div>
     <div id="walletCard-holdingsContainer" className="walletCard-holdingsContainer hide">
       <div className="walletCard-holdingsTitle">Holdings:</div>
