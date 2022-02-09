@@ -9,7 +9,9 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 const CoinFeed = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const hasCoins = props.allCoins.length !== 0;
+  // const hasCoins = props.allCoins.length !== 0;
+  const hasCoins = props.wallets.length !== 0;
+
 
   if (!props.userId) {
     return (
@@ -37,7 +39,24 @@ const CoinFeed = (props) => {
       <AddWalletPopup />
     </div>
     <div className="coinfeed-coins">
-      {props.allCoins.filter((CoinObj) => {
+      {/*{props.allCoins.filter((CoinObj) => {*/}
+      {/*  if (searchTerm === "") {*/}
+      {/*    return CoinObj*/}
+      {/*  } else if (CoinObj.token.toLowerCase().includes(searchTerm.toLowerCase())) {*/}
+      {/*    return CoinObj*/}
+      {/*  } else if (CoinObj.name.toLowerCase().includes(searchTerm.toLowerCase())) {*/}
+      {/*    return CoinObj*/}
+      {/*  }*/}
+      {/*}).map((CoinObj) => (*/}
+      {/*    <CoinCard*/}
+      {/*      token={CoinObj.token}*/}
+      {/*      balance={CoinObj.balance}*/}
+      {/*      curval={(CoinObj.balance*props.priceData[CoinObj.token]).toFixed(2)}*/}
+      {/*      totalVal={props.totalVal}*/}
+      {/*    />*/}
+      {/*  )*/}
+      {/*)}*/}
+      {props.newCoins.filter((CoinObj) => {
         if (searchTerm === "") {
           return CoinObj
         } else if (CoinObj.token.toLowerCase().includes(searchTerm.toLowerCase())) {

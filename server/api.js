@@ -60,9 +60,9 @@ router.post("/initsocket", (req, res) => {
 // const CLIENT_SECRET = process.env.COINBASE_SECRET_ID;
 // const SECRET = process.env.COINBASE_SECRET_STRING
 //USE FOR LOCALHOST///////////////////////////
-// const REDIRECT_URI = "http://localhost:3000/api/callback/"
+const REDIRECT_URI = "http://localhost:3000/api/callback/"
 //USE FOR HEROKU DEPLOYMENT///////////////////////////
-const REDIRECT_URI = "https://birdseye-crypto.herokuapp.com/api/callback/"
+// const REDIRECT_URI = "https://birdseye-crypto.herokuapp.com/api/callback/"
 const CLIENT_ID = "1b64cf309a86bd5f5a4d817e728c4dc5682463397d23b24a8f2f06f4ab433678"
 const CLIENT_SECRET = "4514e203850ae432ce980d16ba56b7c06b2c5726ac7bb7c28a50bc8aaea721d0"
 const SECRET = "134ef5504a94"
@@ -100,9 +100,9 @@ router.get("/callback", async (req, res) => {
       newWallet.save();
       // console.log("api/callback: Coinbase auth callback succeeded. Redirecting back...")
       //USE FOR LOCALHOST///////////////////////////
-      // res.redirect('http://localhost:5000/');
+      res.redirect('http://localhost:5000/');
       //USE FOR HEROKU DEPLOYMENT///////////////////////////
-      res.redirect('https://birdseye-crypto.herokuapp.com/');
+      // res.redirect('https://birdseye-crypto.herokuapp.com/');
     } catch (e) {
       // console.log("ERROR: api/callback: Could not trade code for access token with Coinbase. See error: ", e)
     }
@@ -178,12 +178,16 @@ router.get("/allCoinbaseWallets", (req,res) =>{
   try {
     coinbaseWallet.find({ parent: req.user._id }).then((coinbaseUsers) => {
       // console.log("api/allWallets: pulled wallet list from Mongo.")
+      if (Object.keys(coinbaseUsers).length===0){
+        res.send(["undefined"])
+        return
+      }
       res.send(coinbaseUsers)
     });
   }
   catch(e) {
     // console.log("ERROR: api/allWallets: Failed to pull wallet list from Mongo. See Error: ",e)
-    res.send({})
+    res.send(["undefined"])
   }
 });
 
@@ -293,15 +297,16 @@ router.get("/allMetaMaskWallets", (req,res) =>{
     metamaskWallet.find({ parent: req.user._id }).then((metamaskUsers) => {
       // console.log("api/allMetaMaskWallets: pulled wallet list from Mongo.")
       //  may need to send [] if empty
-      if (!metamaskUsers){
-        res.send([])
+      if (Object.keys(metamaskUsers).length===0){
+        res.send(["undefined"])
+        return
       }
       res.send(metamaskUsers)
     });
   }
   catch(e) {
     // console.log("ERROR: api/allMetaMaskWallets: Failed to pull wallet list from Mongo. See Error: ",e)
-    res.send([])
+    res.send(["undefined"])
   }
 });
 

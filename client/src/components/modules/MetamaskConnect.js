@@ -13,7 +13,6 @@ async function checkMetaMaskProvider() {
 
 async function getMetaMaskAccounts() {
   const MetaMaskAccounts = await get("/api/allMetaMaskWallets");
-  console.log("getWallets: "+ MetaMaskAccounts)
   const accountsRes = await ethereum.request({ method: 'eth_requestAccounts' })
     .catch((err) => {
       if (err.code === 4001) {
@@ -44,8 +43,8 @@ async function getMetaMaskAccounts() {
   async function MetaMaskEthBalances() {
     const tokens = [];
     const MetaMaskAccounts = await get("/api/allMetaMaskWallets");
-    if (!MetaMaskAccounts) {
-      return {}
+    if (MetaMaskAccounts[0]==="undefined") {
+      return undefined
     }
     const web3 = new Web3(window.ethereum)
     const balance = await web3.eth.getBalance(MetaMaskAccounts[0].address)

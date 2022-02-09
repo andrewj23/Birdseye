@@ -4,7 +4,7 @@ async function verifyCoinbaseWallet() {
   // checks if wallet list is empty. Returns false if empty. If not, checks if access token is expired. If expired,
   // exchanges refresh token for new access token and updates wallet.
   const wallets = await get("/api/allCoinbaseWallets");
-  if (wallets) {
+  if (wallets[0] !== "undefined") {
     try {
       await verifyToken(wallets[0]);
       return true
@@ -47,7 +47,7 @@ async function verifyToken(walletObj) {
 async function getTransactions() {
   // fetches all transactions (unordered) from Coinbase account
   const wallets = await get("/api/allCoinbaseWallets");
-  if (!wallets) {
+  if (wallets[0]==="undefined") {
     // console.log("ERROR: getTransactions: wallet list in Mongo is empty.")
     return {}
   }
@@ -93,7 +93,7 @@ async function getTotalDeposited() {
 async function getCoins() {
   // returns list of all coin accounts on Coinbase
   const wallets = await get("/api/allCoinbaseWallets");
-  if (!wallets) {
+  if (wallets[0]==="undefined") {
     return []
   }
       return await getCoinsHelper(wallets[0]);
@@ -102,7 +102,7 @@ async function getCoins() {
 async function getWallets() {
   // returns list of wallets: {Wallet name: Token list}
   const wallets = await get("/api/allCoinbaseWallets");
-  if (!wallets) { return [] }
+  if (wallets[0]==="undefined") { return undefined }
   let name = "Coinbase";  // set to Coinbase because currently only supported wallet type
   let tokens = [];
   const tokensObj = await getCoinsHelper(wallets[0]);

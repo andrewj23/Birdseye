@@ -30,6 +30,21 @@ const App = () => {
   const [allCoins, setAllCoins] = useState([])
   const [demo, setDemo] = useState(false)
 
+
+  async function getCoinbaseWallets (userId, ValidCoinbaseWallet) {
+    if (userId && ValidCoinbaseWallet) {
+      return await getWallets()
+    }
+    return undefined
+  }
+
+  async function getMetaMaskWallets (userId, MetaMaskInstalled) {
+    if (userId && MetaMaskInstalled) {
+      return await MetaMaskEthBalances()
+    }
+    return undefined
+  }
+
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
@@ -82,24 +97,63 @@ const App = () => {
 
   const filteredCoins = coins.filter((CoinObj)=>(parseFloat(CoinObj.balance.amount)!==0))
 
-  useEffect(() => {
-    if (userId && ValidCoinbaseWallet) {
-      getWallets().then((walletsObj) => {
-        if (walletsObj.length === 0) {
-          return
+  useEffect(()=>{
+    const existing = wallets.map(function(d) { return d["name"]; });
+    getCoinbaseWallets(userId, ValidCoinbaseWallet).then((coinbaseWallets)=>{
+      console.log("coinbase: "+JSON.stringify(coinbaseWallets))
+      getMetaMaskWallets(userId, MetaMaskInstalled).then((metamaskWallets)=>{
+        console.log("metamask: "+JSON.stringify(metamaskWallets))
+        console.log("existing"+existing)
+        let currentWallets = [];
+        if (coinbaseWallets && !(coinbaseWallets["name"] in existing)){
+          currentWallets.push(coinbaseWallets)
         }
-        // wallets.push(walletsObj)
-        setWallets([...wallets, walletsObj])
-        return walletsObj.tokens
-      }).then((tokens)=>{
-        if (tokens === []) {
-          return
+        if (metamaskWallets && !(metamaskWallets["name"] in existing)){
+          currentWallets.push(metamaskWallets)
         }
-        // console.log("COINBASE TOKENS: "+JSON.stringify(tokens))
-        setAllCoins([...allCoins, ...tokens])
-      });
-    }
-  }, [userId, ValidCoinbaseWallet]);
+        setWallets(currentWallets)
+      })
+    })
+  },[userId, MetaMaskInstalled, ValidCoinbaseWallet])
+
+  // useEffect(() => {
+  //   if (userId && ValidCoinbaseWallet) {
+  //     console.log("COINBASE")
+  //     getWallets().then((walletsObj) => {
+  //       if (walletsObj.length === 0) {
+  //         return
+  //       }
+  //       // console.log(walletsObj)
+  //       setWallets([...wallets, walletsObj])
+  //       return walletsObj.tokens
+  //     }).then((tokens)=>{
+  //       if (tokens === []) {
+  //         return
+  //       }
+  //       // console.log("COINBASE TOKENS: "+JSON.stringify(tokens))
+  //       setAllCoins([...allCoins, ...tokens])
+  //     });
+  //   }
+  // }, [userId, ValidCoinbaseWallet]);
+
+  // useEffect(() => {
+  //   if (userId && MetaMaskInstalled) {
+  //     console.log("METAMASK")
+  //     MetaMaskEthBalances().then((walletObj) => {
+  //       if (walletObj === {}) {
+  //         return
+  //       }
+  //       setWallets([...wallets, walletObj])
+  //       return walletObj.tokens;
+  //     }).then((tokens)=>{
+  //       if (tokens === []) {
+  //         return
+  //       }
+  //       // console.log("METAMASK TOKENS: "+JSON.stringify(tokens))
+  //       setAllCoins([...allCoins, ...tokens])
+  //     });
+  //   }
+  // }, [userId, MetaMaskInstalled]);
 
   useEffect(()=>{
     let prices={}
@@ -119,25 +173,6 @@ const App = () => {
     totalVal+=priceData[coin.currency.code]*coin.balance.amount;
     // console.log('Portfolio Value: '+ JSON.stringify(totalVal))
   };
-
-  useEffect(() => {
-    if (userId && MetaMaskInstalled) {
-      MetaMaskEthBalances().then((walletObj) => {
-        // console.log("walletobj: "+JSON.stringify(walletObj))
-        if (walletObj === {}) {
-          return
-        }
-        setWallets([...wallets, walletObj])
-        return walletObj.tokens;
-      }).then((tokens)=>{
-        if (tokens === []) {
-          return
-        }
-        // console.log("METAMASK TOKENS: "+JSON.stringify(tokens))
-        setAllCoins([...allCoins, ...tokens])
-      });
-    }
-  }, [userId, MetaMaskInstalled]);
 
   useEffect(()=>{
     if (principal!=="Loading...") {
@@ -208,7 +243,7 @@ const App = () => {
       <Router>
         <Home path="/" userId={userId} principal={principal}
               allCoins={allCoins} coins={filteredCoins} priceData={priceData} totalVal={totalVal} netChange={netChange}
-          percentChange={percentChange} handleLoginDemo={handleLoginDemo} classname='content'/>
+          percentChange={percentChange} handleLoginDemo={handleLoginDemo} wallets={wallets} classname='content'/>
         <Wallets path="/wallets/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId}
           priceData={priceData} wallets={wallets} allTransactions={allTransactions} totalVal={totalVal} coins={filteredCoins} />
         <Forum path="/forum/" userId={userId} userName = {userName} />
