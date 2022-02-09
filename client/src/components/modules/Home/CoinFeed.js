@@ -10,7 +10,7 @@ const CoinFeed = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // const hasCoins = props.allCoins.length !== 0;
-  const hasCoins = props.wallets.length !== 0;
+  const hasCoins = Object.keys(props.newCoins).length !== 0;
 
 
   if (!props.userId) {
@@ -39,38 +39,20 @@ const CoinFeed = (props) => {
       <AddWalletPopup />
     </div>
     <div className="coinfeed-coins">
-      {/*{props.allCoins.filter((CoinObj) => {*/}
-      {/*  if (searchTerm === "") {*/}
-      {/*    return CoinObj*/}
-      {/*  } else if (CoinObj.token.toLowerCase().includes(searchTerm.toLowerCase())) {*/}
-      {/*    return CoinObj*/}
-      {/*  } else if (CoinObj.name.toLowerCase().includes(searchTerm.toLowerCase())) {*/}
-      {/*    return CoinObj*/}
-      {/*  }*/}
-      {/*}).map((CoinObj) => (*/}
-      {/*    <CoinCard*/}
-      {/*      token={CoinObj.token}*/}
-      {/*      balance={CoinObj.balance}*/}
-      {/*      curval={(CoinObj.balance*props.priceData[CoinObj.token]).toFixed(2)}*/}
-      {/*      totalVal={props.totalVal}*/}
-      {/*    />*/}
-      {/*  )*/}
-      {/*)}*/}
-
-
-      {props.newCoins.filter((CoinObj) => {
+      {Object.keys(props.newCoins).filter((CoinObj) => {
         if (searchTerm === "") {
-          return CoinObj
-        } else if (CoinObj.token.toLowerCase().includes(searchTerm.toLowerCase())) {
-          return CoinObj
+          return props.newCoins[CoinObj]
+        } else if (props.newCoins[CoinObj].token.toLowerCase().includes(searchTerm.toLowerCase())) {
+          return props.newCoins[CoinObj]
         } else if (CoinObj.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-          return CoinObj
+          return props.newCoins[CoinObj]
         }
-      }).map((CoinObj) => (
+      })
+        .map((CoinObj) => (
           <CoinCard
-            token={CoinObj.token}
-            balance={CoinObj.balance}
-            curval={(CoinObj.balance*props.priceData[CoinObj.token]).toFixed(2)}
+            token={props.newCoins[CoinObj].token}
+            balance={props.newCoins[CoinObj].balance}
+            curval={(props.newCoins[CoinObj].balance*props.priceData[props.newCoins[CoinObj].token]).toFixed(2)}
             totalVal={props.totalVal}
           />
         )
