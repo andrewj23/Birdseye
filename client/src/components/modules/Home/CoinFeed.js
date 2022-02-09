@@ -56,6 +56,8 @@ const CoinFeed = (props) => {
       {/*    />*/}
       {/*  )*/}
       {/*)}*/}
+
+
       {props.newCoins.filter((CoinObj) => {
         if (searchTerm === "") {
           return CoinObj
